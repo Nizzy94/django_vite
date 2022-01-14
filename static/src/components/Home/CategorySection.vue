@@ -1,21 +1,21 @@
 <template>
-   <div class="row q-gutter-xl q-px-xl">
-            <div class="col" v-for="cat in (i, categories)" :key="cat.id">
-              <div class="" style="height:300px">
-                <q-card  class="category-card full-height column justify-evenly shadow-5" tag="a" href="#">
-                    <q-card-section class="row justify-center">
-                        <q-icon :name="cat.icon" size="50px" color="primary" />
-                    </q-card-section>
+   <div class="row q-col-gutter-xl q-px-xl">
+        <div class="col-xs-12 col-sm-6 col-md-3" v-for="(cat,i) in categories" :key="cat.id">
+            <div class="" style="height:300px">
+            <q-card  class="category-card full-height column justify-evenly shadow-10" tag="a" href="#">
+                <q-card-section class="row justify-center">
+                    <q-icon :name="cat.icon" size="50px" color="primary" />
+                </q-card-section>
 
-                    <q-separator inset spaced />
+                <q-separator inset spaced />
 
-                    <q-card-section>
-                        <div class="text-h4 text-center">{{ cat.name }}</div>
-                    </q-card-section>
-                </q-card>
-              </div>
+                <q-card-section>
+                    <div class="text-h4 text-center">{{ cat.name }}</div>
+                </q-card-section>
+            </q-card>
             </div>
-          </div>
+        </div>
+    </div>
 </template>
 
 <script setup>
