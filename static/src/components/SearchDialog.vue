@@ -19,23 +19,14 @@
 </template>
 
 <script setup>
-import {defineProps, toRefs, ref, watch} from "vue"
-
-// const props = defineProps({
-//   search_d: Boolean,
-// })
-// const {search_d} = toRefs(props) 
-
-// watch(search_d, () => {
-//   console.log(search_d)
-// })
+import {ref} from "vue"
 
 const search_term= ref("")
 const search_d = ref(false)
 
 
 
-const openSearch = () => {search_d.value =true}
+const openSearch = () => search_d.value =true
 
 defineExpose({
   openSearch,

@@ -25,15 +25,12 @@
         <q-separator dark vertical v-if="!isSmallScreen" />
         <q-btn stretch flat label="Contact"  v-if="!isSmallScreen"/>
         <q-separator dark vertical v-if="!isSmallScreen" />
-        <q-btn  color="white" stretch icon="mdi-account" flat />
+        <q-btn  color="white" stretch icon="mdi-account" flat @click="openAccountDia"  />
 
       </q-toolbar>
 
-        <search-dialog ref="search_d" >
-          <!-- <template #input_field>
-            <q-input dense v-model="search_term" autofocus @keyup.enter="search_d = false" />
-          </template> -->
-        </search-dialog>
+        <search-dialog ref="search_d" />
+        <account-dialog ref="account_d" />
 
 
 </template>
@@ -44,8 +41,9 @@ import NavbarBlogCategory from '../NavbarBlogCategory.vue'
 import {useQuasar} from 'quasar'
 import { computed, ref } from '@vue/reactivity'
 import SearchDialog from "../SearchDialog.vue"
+import AccountDialog from "../AccountDialog.vue"
 export default {
-    components: { NavbarBlogCategory, SearchDialog },
+    components: { NavbarBlogCategory, SearchDialog, AccountDialog },
     emits: ['toggleDrawer'],
     
     setup (props,{emit}) { 
@@ -57,25 +55,23 @@ export default {
             // toggleLeftDrawer()
             emit("toggleDrawer")
         }
-
-        // const search_term= ref("")
-
-
         const search_d = ref(null)
-        console.log(search_d.value)
+        const account_d = ref(null)
+        
 
         const openSearch = () => {search_d.value.openSearch()}
+        const openAccountDia = () => {account_d.value.openAccountDia()}
 
         const isSmallScreen = computed(()=>$q.screen.lt.md)
 
 
         return{
-            // leftDrawerOpen,
             search_d,
+            account_d,
             toggleLeftDrawerLocal,
             isSmallScreen,
             openSearch,
-            // search_term,
+            openAccountDia,
         }
     } 
 }
