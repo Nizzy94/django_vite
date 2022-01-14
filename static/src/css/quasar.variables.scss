@@ -8,9 +8,17 @@ $positive: #21BA45;
 $negative: #C10015;
 $info: #31CCEC;
 $warning: #F2C037;
-$typography-font-family : Helvetica,
+$typography-font-family: Helvetica,
 Arial,
 'Helvetica Neue',
 'Roboto',
 '-apple-system',
 sans-serif !default;
+$layout-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.02),
+0 0px 10px rgba(0, 0, 0, 0.1) !default;
+$shadow-color: #000 !default;
+$elevation-umbra: rgba($shadow-color, .09) !default;
+$elevation-penumbra: rgba($shadow-color, .04) !default;
+$elevation-ambient: rgba($shadow-color, .02) !default;
+$rating-grade-color: $primary !default;
+$rating-shadow: 0 0px 0px rgba(0, 0, 0, 0) !default;

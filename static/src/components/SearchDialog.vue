@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="search_d" >
+  <q-dialog v-model="search_d" position="top">
       <q-card style="min-width: 350px">
         <q-card-section>
           <div class="text-h6">Search</div>

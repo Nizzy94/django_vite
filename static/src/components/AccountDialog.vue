@@ -1,5 +1,8 @@
 <template>
-  <q-dialog v-model="account_d" transition-show="slide-down" transition-hide="slide-up" transition-duration="600">
+  <q-dialog v-model="account_d" 
+    transition-show="slide-down" 
+    transition-hide="slide-up"
+    position="top" >
       <q-card style="min-width: 350px">
         <q-card-section>
           <div class="text-h6">What would you like to do?</div>
