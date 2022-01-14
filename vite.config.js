@@ -13,7 +13,7 @@ module.exports = {
         })
     ],
     root: resolve(__dirname, './static/src'),
-    base: resolve(__dirname, '/static/'),
+    base: '/static/',
     // server: {
     //     host: 'localhost',
     //     port: 3000,

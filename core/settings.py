@@ -123,9 +123,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = "collectedstatic"
 
 DJANGO_VITE_ASSETS_PATH = BASE_DIR / "static" / "dist"
+
+STATIC_ROOT = 'collectedstaticfiles'
+
+
 STATICFILES_DIRS = [
     DJANGO_VITE_ASSETS_PATH,
     # os.path.join(DJANGO_VITE_ASSETS_PATH, "dist"),
