@@ -1,5 +1,26 @@
 <template>
-    <q-card class="news-card" tag="a" href="#" square>
+    
+    <q-card class="news-card" tag="a" href="#" square v-if="horizontal">
+      <q-card-section horizontal>
+        <q-img
+          class="col-5"
+          src="https://cdn.quasar.dev/img/parallax1.jpg"
+        />
+        <!-- <q-card-section class="q-pa-none"> -->
+            <q-card-section class="q-pt-none">
+                <div class="text-body2 ellipsis-2-lines">{{ title }}</div>
+                <small class="text-grey-6">{{ subtitle }}</small>
+            </q-card-section>
+            
+            <!-- <q-card-section class="ellipsis q-pt-none">
+            {{ body }}
+            </q-card-section> -->
+        <!-- </q-card-section> -->
+
+      </q-card-section>
+    </q-card>
+
+    <q-card class="news-card" tag="a" href="#" square v-else>
         <img src="https://cdn.quasar.dev/img/mountains.jpg">
 
         <q-card-section>
@@ -7,10 +28,14 @@
             <div class="text-subtitle2">{{ subtitle }}</div>
         </q-card-section>
 
-        <q-card-section class="q-pt-none ellipsis">
+        <q-card-section class="q-pt-none">
+            <p class="ellipsis-3-lines">
+
             {{ body }}
+            </p>
         </q-card-section>
     </q-card>
+
 </template>
 
 <script setup>
@@ -29,10 +54,14 @@ const props = defineProps({
     subtitle: {
         type: String,
         required: false
+    },
+    horizontal: {
+        type: Boolean,
+        default: false
     }
 })
 
-const {title, body, subtitle} = toRefs(props)
+const {title, body, subtitle, horizontal} = toRefs(props)
 
 </script>
 
@@ -43,5 +72,7 @@ a.news-card
 
     &:hover
         .text-h6
+            color: $primary
+        .text-body2
             color: $primary
 </style>
