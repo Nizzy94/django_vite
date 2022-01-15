@@ -42,6 +42,26 @@ const latest = [
             title: 'Entertainment Titlesd',
             body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
         },
+        {
+            id:5,
+            title: 'General Title',
+            body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua consectetur adipiscing elit,.'
+        },
+        {
+            id:6,
+            title: 'Sports Title',
+            body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        },
+        {
+            id:7,
+            title: 'Politics Title',
+            body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        },
+        {
+            id:8,
+            title: 'Entertainment Titlesd',
+            body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        },
         
     ]
 </script>

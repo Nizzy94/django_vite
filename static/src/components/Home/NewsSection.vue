@@ -44,7 +44,7 @@
       </div>
   </div>
   <div class=" q-mt-md-xl flex justify-center">
-      <q-btn label="Read More" color="secondary" type="a" href="#" />
+      <q-btn label="Read More" color="secondary" text-color="dark" type="a" href="#" />
   </div>
 </template>
 
