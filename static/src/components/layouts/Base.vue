@@ -6,17 +6,20 @@
       <slot name="page_content" />
       </q-page>
     </q-page-container>
+    <CustomFooter />
   </q-layout>
 </template>
 
 <script>
 import { ref } from "@vue/reactivity";
 import CustomHeader from "./Header.vue";
+import CustomFooter from "./Footer.vue";
 
 export default {
   name: "Base",
   components: {
     CustomHeader,
+    CustomFooter
   },
   setup() {
     const name = ref("my name");

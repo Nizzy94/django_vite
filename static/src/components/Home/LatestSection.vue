@@ -4,7 +4,7 @@
     <div class="row justify-center q-mb-lg">
         <div class="text-h2 text-center">Latest</div>
     </div>
-    <div class="row q-col-gutter-md q-px-xl">
+    <div class="row q-col-gutter-md q-px-xl justify-center">
         <div class="col-xs-12 col-sm-6 col-md-3" v-for="(news,i) in latest" :key="news.id">
             <!-- <div class="" style="height:300px"> -->
                
@@ -52,16 +52,16 @@ const latest = [
             title: 'Sports Title',
             body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
         },
-        {
-            id:7,
-            title: 'Politics Title',
-            body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        },
-        {
-            id:8,
-            title: 'Entertainment Titlesd',
-            body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        },
+        // {
+        //     id:7,
+        //     title: 'Politics Title',
+        //     body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        // },
+        // {
+        //     id:8,
+        //     title: 'Entertainment Titlesd',
+        //     body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        // },
         
     ]
 </script>

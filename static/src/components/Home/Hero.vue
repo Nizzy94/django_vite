@@ -2,8 +2,8 @@
     <q-carousel
         arrows
         animated
-        v-model="slide"
-        height="95vh"
+        v-model="slide" style="z-index: 1"
+        height="95.5vh"
         autoplay infinite navigation navigation-position="top"
     >
         <q-carousel-slide name="first" img-src="https://cdn.quasar.dev/img/mountains.jpg">

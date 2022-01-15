@@ -1,20 +1,26 @@
 <template>
-   <div class="row q-col-gutter-xl q-px-xl">
-        <div class="col-xs-12 col-sm-6 col-md-3" v-for="(cat,i) in categories" :key="cat.id">
-            <div class="" style="height:300px">
-            <q-card  class="category-card full-height column justify-evenly shadow-10" tag="a" href="#">
-                <q-card-section class="row justify-center">
-                    <q-icon :name="cat.icon" size="50px" color="primary" />
-                </q-card-section>
+   <div  class="row q-col-gutter-lg q-px-xl justify-center">
+       <!-- <q-intersection > -->
+        <q-intersection transition="slide-up" once 
+            :transition-duration="500+(200*i)" 
+            class="col-xs-12 col-sm-6 col-md-3" 
+            v-for="(cat,i) in categories" :key="cat.id">
+           
+            <div  class="" style="height:200px">
+                <q-card  class="category-card full-height column justify-evenly shadow-10" tag="a" href="#">
+                    <q-card-section class="row justify-center">
+                        <q-icon :name="cat.icon" size="50px" color="primary" />
+                    </q-card-section>
 
-                <q-separator inset spaced />
+                    <q-separator inset spaced />
 
-                <q-card-section>
-                    <div class="text-h4 text-center">{{ cat.name }}</div>
-                </q-card-section>
-            </q-card>
+                    <q-card-section>
+                        <div class="text-h4 text-center">{{ cat.name }}</div>
+                    </q-card-section>
+                </q-card>
             </div>
-        </div>
+        </q-intersection>
+       <!-- </q-intersection> -->
     </div>
 </template>
 
@@ -40,6 +46,11 @@
             name: 'Entertainment',
             icon: 'mdi-music'
         },
+        {
+            id:4,
+            name: 'Health',
+            icon: 'mdi-stethoscope'
+        },
         
     ]
 
@@ -50,8 +61,8 @@
 a.category-card
     text-decoration: none
     color: $dark
-    transition: transform 200ms ease
+    transition: transform 500ms ease
 
     &:hover
-        transform: scale(1.1)
+        transform: scale(1.05)
 </style>

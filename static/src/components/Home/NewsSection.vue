@@ -1,5 +1,5 @@
 <template>
-  <div class="row q-px-md q-col-gutter-lg-md">
+  <div class="row q-px-md q-col-gutter-lg-md ">
       <div class="col-xs-12 col-md-6">
           <div class="category_title_container">
               <p class="text-h5 ">Category One</p>
@@ -20,7 +20,7 @@
               </div>
           </div>
       </div>
-      <div class="col-xs-12 col-md-6  " :class="{
+      <div class="col-xs-12 col-md-6" :class="{
           'q-mt-lg' : $q.screen.lt.md, 'q-mt-none': $q.screen.gt.sm 
       }">
           <div class="category_title_container">
@@ -35,15 +35,15 @@
               <div id="small_side" class="col-xs-12 col-sm-6 ">
                   <div class="q-mb-sm"  v-for="n in 4" :key="n">
 
-                  <news-card :title="'Title Small'"
-                  :body="'Body small'"
+                  <news-card :title="'Title Small add some to it test mike one two tesitng ellipsisadd some to it test mike one two tesitng ellipsis'"
+                  :body="'Body small '"
                   :subtitle="'by John Doe'" horizontal />
                   </div>
               </div>
           </div>
       </div>
   </div>
-  <div class=" q-mt-md-xl flex justify-center">
+  <div class=" q-mt-xl flex justify-center">
       <q-btn label="Read More" color="secondary" text-color="dark" type="a" href="#" />
   </div>
 </template>

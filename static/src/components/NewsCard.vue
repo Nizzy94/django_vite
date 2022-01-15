@@ -8,7 +8,7 @@
         />
         <!-- <q-card-section class="q-pa-none"> -->
             <q-card-section class="q-pt-none">
-                <div class="text-body2 ellipsis-2-lines">{{ title }}</div>
+                <div class="text-body2 ellipsis-3-lines">{{ title }}</div>
                 <small class="text-grey-6">{{ subtitle }}</small>
             </q-card-section>
             
