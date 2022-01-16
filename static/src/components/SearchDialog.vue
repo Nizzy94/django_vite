@@ -1,12 +1,12 @@
 <template>
   <q-dialog v-model="search_d" position="top">
       <q-card style="min-width: 350px">
-        <q-card-section>
+        <!-- <q-card-section>
           <div class="text-h6">Search</div>
-        </q-card-section>
+        </q-card-section> -->
 
-        <q-card-section class="q-pt-none">
-          <q-input dense v-model="search_term" autofocus @keyup.enter="search_d = false" />
+        <q-card-section class="q-pt-md">
+          <q-input v-model="search_term" label="Search" autofocus @keyup.enter="search_d = false" />
           <!-- <slot name=input_field /> -->
         </q-card-section>
 

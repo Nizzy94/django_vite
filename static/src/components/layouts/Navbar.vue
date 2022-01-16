@@ -21,11 +21,11 @@
           <navbar-blog-category />
         </q-btn-dropdown>
         <q-separator dark vertical v-if="!isSmallScreen" />
-        <q-btn stretch flat label="About Us" v-if="!isSmallScreen" tag="a" :href="routes.about" />
+        <q-btn stretch flat label="About Us" v-if="!isSmallScreen" :class="{'nav-link-active': currentRoute == routes.about}" tag="a" :href="routes.about" />
         <q-separator dark vertical v-if="!isSmallScreen" />
-        <q-btn stretch flat label="Contact"  v-if="!isSmallScreen" tag="a" :href="routes.contact"/>
+        <q-btn stretch flat label="Contact"  v-if="!isSmallScreen" tag="a" :class="{'nav-link-active': currentRoute == routes.contact}" :href="routes.contact"/>
         <q-separator dark vertical v-if="!isSmallScreen" />
-        <q-btn  color="white" stretch icon="mdi-account" flat @click="openAccountDia"  />
+        <q-btn  color="secondary" :label="$q.screen.gt.md? 'Account': ''" stretch icon="mdi-account" text-color="dark" @click="openAccountDia"  />
 
       </q-toolbar>
 
@@ -62,6 +62,18 @@ export default {
         }
         const search_d = ref(null)
         const account_d = ref(null)
+
+        // const isCurrentRoute = ref(false)
+        const currentRoute = ref(window.location.href)
+
+
+        // if (routes.value) {
+        //   console.log(window.location.href)
+        //   console.log(routes.value)
+        //   if(routes.value == window.location.href) {
+        //     isCurrentRoute.value = true
+        //   }
+        // }
         
 
         const openSearch = () => {search_d.value.openSearch()}
@@ -71,7 +83,8 @@ export default {
 
 
         return{
-          routes,
+            routes,
+            currentRoute,
             search_d,
             account_d,
             toggleLeftDrawerLocal,
@@ -84,11 +97,16 @@ export default {
 
 </script>
 
-<style>
+<style lang="sass">
 
-#toolbar_title{
-  text-decoration: none;
-  color: white;
-}
+#toolbar_title
+  text-decoration: none
+  color: white
+
+.nav-link-active
+  border-bottom: 2px solid $secondary !important
+  color: $secondary !important
+  font-weight: bold !important
+
 
 </style>

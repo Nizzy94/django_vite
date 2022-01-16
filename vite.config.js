@@ -35,6 +35,8 @@ module.exports = {
         rollupOptions: {
             input: {
                 home: resolve('./static/src/js/main.js'),
+                about: resolve('./static/src/js/about.js'),
+                contact: resolve('./static/src/js/contact.js'),
             },
             output: {
                 chunkFileNames: undefined,

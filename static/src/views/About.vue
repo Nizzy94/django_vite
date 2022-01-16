@@ -8,7 +8,7 @@
         <section class="q-py-xl" style="padding-bottom: 200px; padding-top:200px">
           <mission-vision />
         </section>
-        <section class="" style="padding-bottom: 100px; padding-top:100px">
+        <section class="" style="padding-bottom: 50px;">
           <author />
         </section>
 
