@@ -1,8 +1,8 @@
 <template>
   <div class="row q-px-xl justify-center">
-      <div class="col-8">
+      <div class="col-md-8">
           <div class="row q-col-gutter-xl">
-              <div class="col">
+              <div class="col-md-6">
                 <div class="text-h4 text-primary">Mission</div>
                 <div>
                     <p class="text-body2">Lorem ipsum dolor sit amet 
@@ -13,7 +13,7 @@
                         </p>
                 </div>
             </div>
-            <div class="col">
+            <div class="col-md-6">
                 <div class="text-h4 text-primary">Vission</div>
                 <div>
                     <p class="text-body2">Lorem ipsum dolor sit amet 
