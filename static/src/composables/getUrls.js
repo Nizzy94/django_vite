@@ -1,4 +1,5 @@
 import { ref } from "@vue/runtime-dom"
+import { Loading, QSpinnerPie } from "quasar"
 import { fetchAllowAny } from "./axios"
 
 
@@ -6,23 +7,38 @@ import { fetchAllowAny } from "./axios"
 
 const getUrls = () => {
 
+    // const $q = useQuasar()
+
     const routes = ref({})
 
     const callUrls = async() => {
-        const res = await fetchAllowAny.get('/get-routes/')
-
-
-        console.log(res)
-
-        if (res.status == 200) {
+        Loading.show({
+            spinner: QSpinnerPie
+        })
+        try {
+            const res = await fetchAllowAny.get('/get-routes/')
             routes.value = res.data
-        } else {
-            if (res.status == 400) {
-                console.log(res.data)
-            } else {
-                console.log('error')
-            }
+
+            // console.log(res)
+        } catch (e) {
+
+            console.log(e.response)
+        } finally {
+            setTimeout(() => {
+                Loading.hide()
+            }, 1000);
+
         }
+
+
+
+        // if (res.status == 200) {
+        // } else {
+        //     if (res.status == 400) {
+        //     } else {
+        //         console.log('error')
+        //     }
+        // }
     }
 
     return { callUrls, routes }

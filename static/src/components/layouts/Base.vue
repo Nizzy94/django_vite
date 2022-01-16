@@ -16,7 +16,8 @@ import CustomHeader from "./Header.vue";
 import CustomFooter from "./Footer.vue";
 
 import getUrls from "../../composables/getUrls"
-import { provide } from '@vue/runtime-core';
+import { onBeforeMount, onBeforeUnmount, provide } from '@vue/runtime-core';
+import { useQuasar } from 'quasar';
 
 export default {
   name: "Base",
@@ -26,6 +27,7 @@ export default {
   },
   setup() {
     const name = ref("my name");
+    const $q= useQuasar()
 
     const {routes, callUrls} = getUrls()
 
@@ -39,6 +41,17 @@ export default {
 
          provide('routes', computed(()=>routes.value))
        }
+
+      //  onBeforeMount(()=>{
+      //     $q.loading.show({
+      //       spinner: 'QSpinnerBall'
+      //   })
+      //  })
+       onBeforeUnmount(()=>{
+          $q.loading.show({
+            spinner: 'QSpinnerPie'
+        })
+       })
   
     // })
 
