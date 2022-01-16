@@ -27,7 +27,7 @@
                 <q-intersection transition-duration="1000" transition="slide-left" once>
 
                     <div class="text-center q-mb-xl">
-                        <div class="text-h3 text-white">Author</div>
+                        <div class="text-h3 text-white">Hi, I'm John Doe</div>
                     </div>
                     <p>Lorem ipsum dolor sit amet, 
                         consectetur adipiscing elit, 
