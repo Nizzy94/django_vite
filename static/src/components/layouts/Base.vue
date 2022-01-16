@@ -1,13 +1,13 @@
 <template>
-  <q-layout view="hHh lpR lFf">
-    <CustomHeader />
-    <q-page-container style="">
-      <q-page>
-      <slot name="page_content" />
-      </q-page>
-    </q-page-container>
-    <CustomFooter />
-  </q-layout>
+    <q-layout view="hHh lpR lFf">
+        <CustomHeader />
+        <q-page-container>
+            <q-page style="max-width: 1440px" class="q-mx-auto">
+                <slot name="page_content" />
+            </q-page>
+        </q-page-container>
+        <CustomFooter />
+    </q-layout>
 </template>
 
 <script>
@@ -15,51 +15,46 @@ import { computed, ref } from "@vue/reactivity";
 import CustomHeader from "./Header.vue";
 import CustomFooter from "./Footer.vue";
 
-import getUrls from "../../composables/getUrls"
-import { onBeforeMount, onBeforeUnmount, provide } from '@vue/runtime-core';
-import { useQuasar } from 'quasar';
+import getUrls from "../../composables/getUrls";
+import { onBeforeUnmount, provide } from "@vue/runtime-core";
+import { useQuasar } from "quasar";
 
 export default {
-  name: "Base",
-  components: {
-    CustomHeader,
-    CustomFooter
-  },
-  setup() {
-    const name = ref("my name");
-    const $q= useQuasar()
+    name: "Base",
+    components: {
+        CustomHeader,
+        CustomFooter,
+    },
+    setup() {
+        const name = ref("my name");
+        const $q = useQuasar();
 
-    const {routes, callUrls} = getUrls()
+        const { routes, callUrls } = getUrls();
 
-    // onMounted(async () => {
+        // onMounted(async () => {
 
-       callUrls()
-       
-       console.log(routes)
+        callUrls();
 
-       if(routes.value) {
+        console.log(routes);
 
-         provide('routes', computed(()=>routes.value))
-       }
+        if (routes.value) {
+            provide(
+                "routes",
+                computed(() => routes.value)
+            );
+        }
 
-      //  onBeforeMount(()=>{
-      //     $q.loading.show({
-      //       spinner: 'QSpinnerBall'
-      //   })
-      //  })
-       onBeforeUnmount(()=>{
-          $q.loading.show({
-            spinner: 'QSpinnerPie'
-        })
-       })
-  
-    // })
+        // console.log($sizes.xl)
+        onBeforeUnmount(() => {
+            $q.loading.show({
+                spinner: "QSpinnerPie",
+            });
+        });
 
+        // })
 
-
-
-    return { name, routes };
-  },
+        return { name, routes };
+    },
 };
 </script>
 
