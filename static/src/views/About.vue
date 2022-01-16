@@ -1,15 +1,17 @@
 <template>
-  <h1>About</h1>
-  <div>
-    <q-icon name="font_download" />
+  <Base >
+    <template #page_content>
 
-  </div>
+        <section>
+          <about-blog />
+        </section> 
+    </template>
+  </Base>
 </template>
 
-<script>
-export default {
-
-}
+<script setup>
+import AboutBlog from "../components/About/AboutBlog.vue";
+import Base from "../components/layouts/Base.vue"
 </script>
 
 <style>

@@ -11,9 +11,12 @@
 </template>
 
 <script>
-import { ref } from "@vue/reactivity";
+import { computed, ref } from "@vue/reactivity";
 import CustomHeader from "./Header.vue";
 import CustomFooter from "./Footer.vue";
+
+import getUrls from "../../composables/getUrls"
+import { provide } from '@vue/runtime-core';
 
 export default {
   name: "Base",
@@ -23,7 +26,26 @@ export default {
   },
   setup() {
     const name = ref("my name");
-    return { name };
+
+    const {routes, callUrls} = getUrls()
+
+    // onMounted(async () => {
+
+       callUrls()
+       
+       console.log(routes)
+
+       if(routes.value) {
+
+         provide('routes', computed(()=>routes.value))
+       }
+  
+    // })
+
+
+
+
+    return { name, routes };
   },
 };
 </script>

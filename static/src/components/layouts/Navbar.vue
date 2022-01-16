@@ -4,7 +4,7 @@
         <!-- {{ isSmallScreen }} -->
 
         <q-toolbar-title shrink>
-            <a href="#" id="toolbar_title">
+            <a :href="routes.home" id="toolbar_title">
 
               <q-avatar>
                 <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
@@ -21,9 +21,9 @@
           <navbar-blog-category />
         </q-btn-dropdown>
         <q-separator dark vertical v-if="!isSmallScreen" />
-        <q-btn stretch flat label="About Us" v-if="!isSmallScreen" />
+        <q-btn stretch flat label="About Us" v-if="!isSmallScreen" tag="a" :href="routes.about" />
         <q-separator dark vertical v-if="!isSmallScreen" />
-        <q-btn stretch flat label="Contact"  v-if="!isSmallScreen"/>
+        <q-btn stretch flat label="Contact"  v-if="!isSmallScreen" tag="a" :href="routes.contact"/>
         <q-separator dark vertical v-if="!isSmallScreen" />
         <q-btn  color="white" stretch icon="mdi-account" flat @click="openAccountDia"  />
 
@@ -31,6 +31,7 @@
 
         <search-dialog ref="search_d" />
         <account-dialog ref="account_d" />
+        <!-- {{ routes }} -->
 
 
 </template>
@@ -42,6 +43,7 @@ import {useQuasar} from 'quasar'
 import { computed, ref } from '@vue/reactivity'
 import SearchDialog from "../SearchDialog.vue"
 import AccountDialog from "../AccountDialog.vue"
+import { inject } from '@vue/runtime-core'
 export default {
     components: { NavbarBlogCategory, SearchDialog, AccountDialog },
     emits: ['toggleDrawer'],
@@ -49,10 +51,13 @@ export default {
     setup (props,{emit}) { 
         // const { toggleLeftDrawer} = drawerFunctionality()
 
+        const routes = computed(() => inject('routes').value)
+
+        // console.log(routes.value)
+
         const $q = useQuasar()
 
         const toggleLeftDrawerLocal = () => {
-            // toggleLeftDrawer()
             emit("toggleDrawer")
         }
         const search_d = ref(null)
@@ -66,6 +71,7 @@ export default {
 
 
         return{
+          routes,
             search_d,
             account_d,
             toggleLeftDrawerLocal,

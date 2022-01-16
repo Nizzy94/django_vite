@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     #
     # third party
     'django_vite',
+    'rest_framework',
     #
     # custom apps
     'main',
@@ -57,6 +58,14 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'core.urls'
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 TEMPLATES = [
     {
