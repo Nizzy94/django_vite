@@ -94,16 +94,6 @@ export default {
         const search_d = ref(null);
         const account_d = ref(null);
 
-        // const isCurrentRoute = ref(false)
-
-        // if (routes.value) {
-        //   console.log(window.location.href)
-        //   console.log(routes.value)
-        //   if(routes.value == window.location.href) {
-        //     isCurrentRoute.value = true
-        //   }
-        // }
-
         const openSearch = () => {
             search_d.value.openSearch();
         };
@@ -129,15 +119,15 @@ export default {
 
 <style lang="sass">
 #toolbar_title
-  text-decoration: none
-  color: white
+    text-decoration: none
+    color: white
 
 .q-toolbar
-  max-width: 1440px !important
-  margin: auto
+    max-width: 1440px !important
+    margin: auto
 
 .nav-link-active
-  border-bottom: 2px solid $secondary !important
-  color: $secondary !important
-  font-weight: bold !important
+    border-bottom: 2px solid $secondary !important
+    color: $secondary !important
+    font-weight: bold !important
 </style>
