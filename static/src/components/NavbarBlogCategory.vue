@@ -1,5 +1,8 @@
 <template>
     <q-list>
+        <q-item tag="a" :href="routes?.blog?.all">
+            <q-item-section>All</q-item-section>
+        </q-item>
         <q-item
             v-for="cat in routes?.blog?.categories"
             :key="cat.url"
