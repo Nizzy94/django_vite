@@ -22,7 +22,7 @@ class APIRootView(APIView):
     def get(self, request):
         categories = Category.objects.order_by('name')
         blog_cats = {
-            'all': reverse('blog:blog', request=request),
+            'all': reverse('blog:blogs', request=request),
             'categories': []
         }
 
@@ -36,25 +36,19 @@ class APIRootView(APIView):
         """
 
         for cat in categories:
-            # link_name = cat.name.lower().replace(" ", "_")
 
             blog_cats['categories'].append({
                 'name': cat.name,
-                'url': reverse('blog:blog_cat', kwargs={
-                    'slug': cat.slug}, request=request)
+                'url': reverse('blog:blogs_cat', kwargs={
+                    'category': cat.slug}, request=request)
             })
-
-            # blog_cats[link_name] = {}
-
-            # blog_cats[link_name]['name'] = cat.name
-            # blog_cats[link_name]['url'] = reverse(
-            #     'blog:blog_cat', kwargs={'slug': cat.slug}, request=request)
 
         data = {
             'home': reverse('main:home', request=request),
             'about': reverse('main:about', request=request),
             'contact': reverse('main:contact', request=request),
-            'blog': blog_cats
+            'blog': blog_cats,
+            # 'blog_detail': reverse('blog:blog_detail', kwargs={'categoryes'})
         }
 
         return Response(data)
