@@ -145,6 +145,9 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static/src")
 ]
 
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+
 DJANGO_VITE_DEV_MODE = DEBUG
 
 # Default primary key field type
