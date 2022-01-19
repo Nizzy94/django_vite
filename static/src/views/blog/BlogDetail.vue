@@ -9,7 +9,7 @@
                 style="max-width: 920px; width"
             >
                 <section>
-                    <h1 class="text-h4">
+                    <h1 class="text-h1">
                         Asperiores, aliquam quidem molestias quod excepturi
                         alias dolorum corrupti quis suscipit ab.
                     </h1>
