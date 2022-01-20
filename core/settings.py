@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     # third party
     'django_vite',
     'rest_framework',
+    'ckeditor',
+    'ckeditor_uploader',
     #
     # custom apps
     'main',
@@ -154,3 +156,15 @@ DJANGO_VITE_DEV_MODE = DEBUG
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
+CKEDITOR_UPLOAD_PATH = "ck-uploads/"
+
+# CKEDITOR_CONFIGS = {
+#     "default": {
+#         'skin': 'moono_dark',
+#     }
+# }
+
+CKEDITOR_ALLOW_NONIMAGE_FILES = False

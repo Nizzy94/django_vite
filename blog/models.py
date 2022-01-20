@@ -4,6 +4,8 @@ from django.db import models
 from django.utils.text import slugify
 from django.contrib.auth.models import User
 from PIL import Image
+from django.urls import reverse
+from ckeditor.fields import RichTextField
 
 
 class Category(models.Model):
@@ -28,12 +30,16 @@ class Blog(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255)
     image = models.ImageField(upload_to="blog_images/%Y/%m/%d")
-    body = models.TextField()
+    # body = models.TextField()
+    body = RichTextField(blank=True, null=True)
     category = models.ForeignKey(
         Category, related_name="blogs", on_delete=CASCADE)
     author = models.ForeignKey(User, related_name="blogs", on_delete=CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(default=timezone.now)
+
+    def get_absolute_url(self):
+        return reverse("blog:blog_detail", kwargs={"slug": self.slug})
 
     def __str__(self) -> str:
         return self.title

@@ -1,0 +1,16 @@
+{
+  "js/main.js": {
+    "file": "home.aba36b9a.js",
+    "src": "js/main.js",
+    "isEntry": true,
+    "imports": [
+      "_vendor-3be037dc.js"
+    ],
+    "css": [
+      "home.47381641.css"
+    ]
+  },
+  "_vendor-3be037dc.js": {
+    "file": "vendor-3be037dc.js"
+  }
+}
