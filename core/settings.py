@@ -144,7 +144,8 @@ STATIC_ROOT = 'collectedstaticfiles'
 STATICFILES_DIRS = [
     DJANGO_VITE_ASSETS_PATH,
     # os.path.join(DJANGO_VITE_ASSETS_PATH, "dist"),
-    os.path.join(BASE_DIR, "static/src")
+    os.path.join(BASE_DIR, "static/src"),
+    os.path.join(BASE_DIR, "media/")
 ]
 
 MEDIA_URL = "/media/"

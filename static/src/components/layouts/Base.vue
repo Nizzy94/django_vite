@@ -28,6 +28,9 @@ export default {
     setup() {
         const name = ref("my name");
         const $q = useQuasar();
+        // const domain = window.location.origin;
+
+        provide("domain", window.location.origin);
 
         const { routes, callUrls } = getUrls();
 

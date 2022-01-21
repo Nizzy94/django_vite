@@ -1,27 +1,22 @@
 <template>
-    
     <q-card class="news-card" tag="a" href="#" square v-if="horizontal">
-      <q-card-section horizontal>
-        <q-img
-          class="col-5"
-          src="https://cdn.quasar.dev/img/parallax1.jpg"
-        />
-        <!-- <q-card-section class="q-pa-none"> -->
+        <q-card-section horizontal>
+            <q-img class="col-5" :src="imageSrc" />
+            <!-- <q-card-section class="q-pa-none"> -->
             <q-card-section class="q-pt-none">
                 <div class="text-body2 ellipsis-3-lines">{{ title }}</div>
                 <small class="text-grey-6">{{ subtitle }}</small>
             </q-card-section>
-            
+
             <!-- <q-card-section class="ellipsis q-pt-none">
             {{ body }}
             </q-card-section> -->
-        <!-- </q-card-section> -->
-
-      </q-card-section>
+            <!-- </q-card-section> -->
+        </q-card-section>
     </q-card>
 
     <q-card class="news-card" tag="a" href="#" square v-else>
-        <img src="https://cdn.quasar.dev/img/mountains.jpg">
+        <img :src="imageSrc" />
 
         <q-card-section>
             <div class="text-h6">{{ title }}</div>
@@ -29,40 +24,41 @@
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-            <p class="ellipsis-3-lines">
-
-            {{ body }}
-            </p>
+            <div class="ellipsis-3-lines" v-html="body"></div>
+            <!-- {{ body }} -->
         </q-card-section>
     </q-card>
-
 </template>
 
 <script setup>
-import { toRefs } from "@vue/reactivity"
-
+import { toRefs } from "@vue/reactivity";
 
 const props = defineProps({
     title: {
         type: String,
-        required: true
+        required: true,
     },
     body: {
         type: String,
-        required: true
+        required: true,
     },
     subtitle: {
         type: String,
-        required: false
+        required: false,
     },
     horizontal: {
         type: Boolean,
-        default: false
-    }
-})
+        default: false,
+    },
+    imageSrc: {
+        type: String,
+        required: true,
+    },
+});
 
-const {title, body, subtitle, horizontal} = toRefs(props)
+const { title, body, subtitle, horizontal, imageSrc } = toRefs(props);
 
+// console.log(domain);
 </script>
 
 <style lang="sass" scope>
