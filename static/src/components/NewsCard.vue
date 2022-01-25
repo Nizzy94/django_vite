@@ -1,7 +1,7 @@
 <template>
-    <q-card class="news-card" tag="a" href="#" square v-if="horizontal">
+    <q-card class="news-card" tag="a" :href="url" square v-if="horizontal">
         <q-card-section horizontal>
-            <q-img class="col-5" :src="imageSrc" />
+            <q-img class="col-5" :src="imageSrc" fit="cover" height="100px" />
             <!-- <q-card-section class="q-pa-none"> -->
             <q-card-section class="q-pt-none">
                 <div class="text-body2 ellipsis-3-lines">{{ title }}</div>
@@ -15,11 +15,11 @@
         </q-card-section>
     </q-card>
 
-    <q-card class="news-card" tag="a" href="#" square v-else>
-        <img :src="imageSrc" />
+    <q-card class="news-card" tag="a" :href="url" square v-else>
+        <q-img :src="imageSrc" fit="cover" height="250px" />
 
         <q-card-section>
-            <div class="text-h6">{{ title }}</div>
+            <div class="text-h6 text-capitalize">{{ title }}</div>
             <div class="text-subtitle2">{{ subtitle }}</div>
         </q-card-section>
 
@@ -54,11 +54,12 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    url: {
+        type: String,
+    },
 });
 
-const { title, body, subtitle, horizontal, imageSrc } = toRefs(props);
-
-// console.log(domain);
+const { title, body, subtitle, horizontal, imageSrc, url } = toRefs(props);
 </script>
 
 <style lang="sass" scope>

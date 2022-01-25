@@ -6,7 +6,7 @@
         <div class="row q-col-gutter-md q-px-xl justify-center">
             <div
                 class="col-xs-12 col-sm-6 col-md-3"
-                v-for="(news, i) in latest_p"
+                v-for="(news, i) in latest"
                 :key="news.id"
             >
                 <!-- <div class="" style="height:300px"> -->
@@ -16,6 +16,7 @@
                     :body="news.body"
                     subtitle="By John Doe"
                     :imageSrc="`${news.image}`"
+                    :url="news.url"
                 />
                 <!-- </div> -->
             </div>
@@ -25,60 +26,58 @@
 
 <script setup>
 import NewsCard from "../NewsCard.vue";
-import getLatestPosts from "../../composables/getLatestPosts";
-import { computed, inject, onBeforeMount } from "@vue/runtime-core";
+import { computed, inject, onBeforeMount, toRefs } from "@vue/runtime-core";
 
-const { callLatestPosts, latest_p } = getLatestPosts();
-
-onBeforeMount(async () => {
-    await callLatestPosts();
-    console.log(latest_p.value);
+const props = defineProps({
+    latest: Array,
 });
+
+const { latest } = toRefs(props);
 
 // const domain = computed(() => inject("domain"));
 
-const latest = [
-    {
-        id: 1,
-        title: "General Title",
-        body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua consectetur adipiscing elit,.",
-    },
-    {
-        id: 2,
-        title: "Sports Title",
-        body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    },
-    {
-        id: 3,
-        title: "Politics Title",
-        body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    },
-    {
-        id: 4,
-        title: "Entertainment Titlesd",
-        body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    },
-    {
-        id: 5,
-        title: "General Title",
-        body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua consectetur adipiscing elit,.",
-    },
-    {
-        id: 6,
-        title: "Sports Title",
-        body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    },
-    // {
-    //     id:7,
-    //     title: 'Politics Title',
-    //     body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-    // },
-    // {
-    //     id:8,
-    //     title: 'Entertainment Titlesd',
-    //     body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-    // },
-];
+// const latest = [
+//     {
+//         id: 1,
+//         title: "General Title",
+//         body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua consectetur adipiscing elit,.",
+//     },
+//     {
+//         id: 2,
+//         title: "Sports Title",
+//         body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+//     },
+//     {
+//         id: 3,
+//         title: "Politics Title",
+//         body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+//     },
+//     {
+//         id: 4,
+//         title: "Entertainment Titlesd",
+//         body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+//     },
+//     {
+//         id: 5,
+//         title: "General Title",
+//         body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua consectetur adipiscing elit,.",
+//     },
+//     {
+//         id: 6,
+//         title: "Sports Title",
+//         body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+//     },
+// {
+//     id:7,
+//     title: 'Politics Title',
+//     body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+// },
+// {
+//     id:8,
+//     title: 'Entertainment Titlesd',
+//     body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+// },
+// ];
 </script>
 
 <style>

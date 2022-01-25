@@ -2,27 +2,40 @@
     <div class="row q-px-md q-col-gutter-lg-md">
         <div class="col-xs-12 col-md-6">
             <div class="category_title_container">
-                <p class="text-h5">Category One</p>
+                <a :href="cats[0]?.url" class="text-h5">{{ cats[0]?.name }}</a>
             </div>
             <div class="row q-col-gutter-sm">
-                <div id="big_side" class="col-xs-12 col-sm-6">
-                    <news-card
-                        :title="'Title Big'"
-                        :body="'Body big'"
-                        :subtitle="'by John Doe'"
-                        :imageSrc="'https://cdn.quasar.dev/img/parallax1.jpg'"
-                    />
-                </div>
-                <div id="small_side" class="col-xs-12 col-sm-6">
-                    <div class="q-mb-sm" v-for="n in 4" :key="n">
+                <div id="big_side1" class="col-xs-12 col-sm-6">
+                    <a
+                        :href="cat1_blogs[0]?.url"
+                        class="big_blog_link"
+                        v-if="cat1_blogs.length"
+                    >
                         <news-card
-                            :title="'Title Small add some to it test mike one two tesitng ellipsis'"
-                            :body="'Body small'"
+                            v-if="cat1_blogs.length"
+                            :title="cat1_blogs[0]?.title"
+                            :body="cat1_blogs[0]?.body"
+                            :subtitle="'by John Doe'"
+                            :imageSrc="cat1_blogs[0]?.image"
+                        />
+                    </a>
+                </div>
+                <div id="small_side1" class="col-xs-12 col-sm-6">
+                    <a
+                        :href="blog.url"
+                        v-if="cat1_blogs.length"
+                        class="q-mb-sm small_blog_link"
+                        v-for="(blog, i) in cat1_blogs.slice(1)"
+                        :key="i"
+                    >
+                        <news-card
+                            :title="blog.title"
+                            :body="blog.body"
                             :subtitle="'by John Doe'"
                             horizontal
-                            :imageSrc="'https://cdn.quasar.dev/img/parallax1.jpg'"
+                            :imageSrc="blog.image"
                         />
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -34,27 +47,39 @@
             }"
         >
             <div class="category_title_container">
-                <p class="text-h5">Category Two</p>
+                <a :href="cats[1]?.url" class="text-h5">{{ cats[1]?.name }}</a>
             </div>
             <div class="row q-col-gutter-sm">
-                <div id="big_side" class="col-xs-12 col-sm-6">
-                    <news-card
-                        :title="'Title Big'"
-                        :body="'Body big'"
-                        :subtitle="'by John Doe'"
-                        :imageSrc="'https://cdn.quasar.dev/img/parallax1.jpg'"
-                    />
-                </div>
-                <div id="small_side" class="col-xs-12 col-sm-6">
-                    <div class="q-mb-sm" v-for="n in 4" :key="n">
+                <div id="big_side2" class="col-xs-12 col-sm-6">
+                    <a
+                        :href="cat2_blogs[0]?.url"
+                        class="big_blog_link"
+                        v-if="cat2_blogs.length"
+                    >
                         <news-card
-                            :title="'Title Small add some to it test mike one two tesitng ellipsisadd some to it test mike one two tesitng ellipsis'"
-                            :body="'Body small '"
+                            :title="cat2_blogs[0]?.title"
+                            :body="cat2_blogs[0]?.body"
+                            :subtitle="'by John Doe'"
+                            :imageSrc="cat2_blogs[0]?.image"
+                        />
+                    </a>
+                </div>
+                <div id="small_side2" class="col-xs-12 col-sm-6">
+                    <a
+                        v-if="cat2_blogs.length"
+                        :href="blog.url"
+                        class="q-mb-sm small_blog_link"
+                        v-for="(blog, i) in cat2_blogs.slice(1)"
+                        :key="i"
+                    >
+                        <news-card
+                            :title="blog.title"
+                            :body="blog.body"
                             :subtitle="'by John Doe'"
                             horizontal
-                            :imageSrc="'https://cdn.quasar.dev/img/parallax1.jpg'"
+                            :imageSrc="blog.image"
                         />
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -65,13 +90,31 @@
             color="secondary"
             text-color="dark"
             type="a"
-            href="#"
+            :href="routes?.blog?.all"
         />
     </div>
 </template>
 
 <script setup>
 import NewsCard from "../NewsCard.vue";
+import getHomePosts from "../../composables/getHomePosts";
+import { computed, ref, toRefs } from "@vue/reactivity";
+import { inject } from "@vue/runtime-core";
+
+const props = defineProps({
+    cats: {
+        type: Array,
+    },
+    cat1_blogs: {
+        type: Array,
+    },
+    cat2_blogs: {
+        type: Array,
+    },
+});
+const { cats, cat1_blogs, cat2_blogs } = toRefs(props);
+
+const routes = computed(() => inject("routes").value);
 </script>
 
 <style lang="sass">
@@ -80,7 +123,11 @@ import NewsCard from "../NewsCard.vue";
     color: #fff
     margin-bottom: 20px
     border-bottom: 2px $primary solid
-    p.text-h5
+
+    a.text-h5
+        display: block
+        color: #fff
+        text-decoration: none
         padding-left: 10px
         padding-right: 10px
         padding-top: 2px
@@ -88,5 +135,11 @@ import NewsCard from "../NewsCard.vue";
         width: fit-content
         background-color: $primary
         margin-bottom: 0
-            // line-height: 0
+
+        &:hover
+            background-color: $primary_hover
+
+.small_blog_link, .big_blog_link
+    display: block
+    text-decoration: none
 </style>

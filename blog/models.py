@@ -25,6 +25,9 @@ class Category(models.Model):
         self.slug = slugify(self.name, allow_unicode=True)
         super().save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        return reverse("blog:blogs_cat", kwargs={"category": self.slug})
+
 
 class Blog(models.Model):
     title = models.CharField(max_length=255)
@@ -39,7 +42,7 @@ class Blog(models.Model):
     updated_at = models.DateTimeField(default=timezone.now)
 
     def get_absolute_url(self):
-        return reverse("blog:blog_detail", kwargs={"slug": self.slug})
+        return reverse("blog:blog_detail", kwargs={"blog_slug": self.slug, "category": self.category.slug})
 
     def __str__(self) -> str:
         return self.title
