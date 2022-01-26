@@ -1,5 +1,13 @@
 add sidebar to blog page and blog details page
 
+add news carousel to sidebar(below subscription form)
+
 add tag to blog model
 
 make home page cats dynamic
+
+work on pagination
+
+search functionality
+
+reader accounts authentication

@@ -33,7 +33,6 @@
             v-if="!isSmallScreen"
             :class="{ 'nav-link-active': currentRouteIsBlog }"
         >
-            {{ currentRouteIsBlog }}
             <!-- :class="{ 'nav-link-active': routes?.blog?.includes(currentRoute) }" -->
             <navbar-blog-category :routes="routes" />
         </q-btn-dropdown>

@@ -10,7 +10,8 @@
                         Have anything to tell us?
                     </div>
                     <div class="text-body1">Send us a message below.</div>
-                    <div class="row q-mt-md"
+                    <div
+                        class="row q-mt-md"
                         :class="{ 'q-col-gutter-md': $q.screen.gt.sm }"
                     >
                         <div class="col-md-6 col-xs-12">
@@ -63,30 +64,8 @@
                     <div class="text-h4 text-primary">
                         Subscribe to our newsletter
                     </div>
-                    <!-- <div class="text-body1">Send us a message below.</div> -->
-                    <div class="" style="margin-top: 57px">
-                        <q-input
-                            v-model="subscriptionFormData.name"
-                            hint="Enter full name"
-                            hide-hint
-                            label="Name"
-                        />
-                    </div>
-                    <div class="">
-                        <q-input
-                            v-model="subscriptionFormData.email"
-                            type="email"
-                            hint="Enter email address"
-                            hide-hint
-                            label="Email"
-                        />
-                    </div>
-                    <div class="flex justify-center">
-                        <q-btn
-                            label="Subscribe"
-                            color="secondary"
-                            text-color="dark"
-                        />
+                    <div style="margin-top: 57px">
+                        <subscription-form />
                     </div>
                 </div>
             </div>
@@ -97,16 +76,13 @@
 <script setup>
 import { reactive } from "@vue/reactivity";
 import Base from "../components/layouts/Base.vue";
+import SubscriptionForm from "../components/blog/SubscriptionForm.vue";
 
 const contactFormData = reactive({
     name: "",
     email: "",
     subject: "",
     message: "",
-});
-const subscriptionFormData = reactive({
-    name: "",
-    email: "",
 });
 </script>
 
