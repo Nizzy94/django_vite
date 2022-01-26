@@ -17,7 +17,7 @@ const getAllPosts = () => {
         }
         const res = await fetchBlogAllowAny.get(`/get-blog-by-category/${category.value}/`)
 
-        console.log(res.data)
+        // console.log(res.data)
 
         blogs.value = res.data
 

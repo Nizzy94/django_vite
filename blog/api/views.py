@@ -65,3 +65,16 @@ def get_all_posts(request, category):
     serializer = BlogSerializer(blogs, many=True)
 
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_post_detail(request, post_slug):
+    blog = Blog.objects.filter(slug=post_slug).get()
+
+    serializer = BlogSerializer(blog)
+    # serializer = BlogSerializer()
+
+    print(repr(serializer))
+
+    return Response(serializer.data)

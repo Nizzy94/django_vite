@@ -116,11 +116,11 @@ export default {
         const isSmallScreen = computed(() => $q.screen.lt.md);
 
         const currentRouteIsBlog = ref(false);
-        console.log(routes?.value);
+        // console.log(routes?.value);
         watch(routes, () => {
-            console.log(routes.value);
+            // console.log(routes.value);
             if (Object.keys(routes.value).length) {
-                console.log(Object.values(routes.value));
+                // console.log(Object.values(routes.value));
 
                 if (
                     Object.values(routes.value.blog).includes(

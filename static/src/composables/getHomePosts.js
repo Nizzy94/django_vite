@@ -13,7 +13,7 @@ const getHomePosts = () => {
         // console.log(res.data)
 
 
-        console.log(JSON.parse(res.data))
+        // console.log(JSON.parse(res.data))
 
         const home_posts = JSON.parse(res.data)
 

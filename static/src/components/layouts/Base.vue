@@ -40,7 +40,7 @@ export default {
             await callUrls();
         });
 
-        console.log(routes.value);
+        // console.log(routes.value);
 
         if (routes.value) {
             provide(

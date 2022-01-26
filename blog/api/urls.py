@@ -10,4 +10,7 @@ urlpatterns = [
 
     path('get-blog-by-category/<slug:category>/', views.get_all_posts,
          name="get_all_posts"),
+
+    path('get-post-detail/<slug:post_slug>/', views.get_post_detail,
+         name="get_post_detail"),
 ]

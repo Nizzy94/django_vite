@@ -11,11 +11,11 @@
             >
                 <!-- <div class="" style="height:300px"> -->
 
-                <news-card
+                <!-- <news-card
                     :title="news.title"
                     :body="news.body"
                     subtitle="By John Doe"
-                />
+                /> -->
                 <!-- </div> -->
             </div>
         </div>

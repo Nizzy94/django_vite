@@ -1,5 +1,5 @@
 <template>
-    <div class="column">
+    <div class="column side_bar">
         <div class="bg-grey-4" style="height: 200px"></div>
         <div class="text-h6 q-mt-xl text-primary">
             Subscribe to our newsletter
@@ -12,5 +12,8 @@
 import SubscriptionForm from "./SubscriptionForm.vue";
 </script>
 
-<style>
+<style lang="sass">
+.side_bar
+    position: sticky
+    top: 15px
 </style>

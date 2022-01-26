@@ -21,7 +21,6 @@ const getUrls = () => {
 
             // console.log(res)
         } catch (e) {
-
             console.log(e.response)
         } finally {
             setTimeout(() => {
@@ -31,14 +30,6 @@ const getUrls = () => {
         }
 
 
-
-        // if (res.status == 200) {
-        // } else {
-        //     if (res.status == 400) {
-        //     } else {
-        //         console.log('error')
-        //     }
-        // }
     }
 
     return { callUrls, routes }
