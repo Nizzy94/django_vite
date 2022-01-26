@@ -164,7 +164,8 @@ export default {
 .q-toolbar
     max-width: 1440px !important
     margin: auto
-
+</style>
+<style lang="sass" scoped>
 .nav-link-active
     border-bottom: 2px solid $secondary !important
     color: $secondary !important
