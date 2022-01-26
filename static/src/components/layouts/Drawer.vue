@@ -34,10 +34,11 @@
                             flat
                             label="About Us"
                             :class="{
-                                'nav-link-active': currentRoute == routes.about,
+                                'nav-link-active':
+                                    currentRoute == routes?.about,
                             }"
                             tag="a"
-                            :href="routes.about"
+                            :href="routes?.about"
                         />
                     </q-item-section>
                 </q-item>
@@ -51,9 +52,9 @@
                             tag="a"
                             :class="{
                                 'nav-link-active':
-                                    currentRoute == routes.contact,
+                                    currentRoute == routes?.contact,
                             }"
-                            :href="routes.contact"
+                            :href="routes?.contact"
                         />
                     </q-item-section>
                 </q-item>
@@ -73,13 +74,17 @@ import { inject } from "@vue/runtime-core";
 
 export default {
     components: { NavbarBlogCategory },
-    setup() {
+    props: {
+        routes: Object,
+    },
+    setup(props) {
         // const store = useStore()
 
         const { toggleLeftDrawer, leftDrawerOpen } = drawerFunctionality();
         const toggleDrawer = () => toggleLeftDrawer();
 
         const routes = computed(() => inject("routes").value);
+        // const routes = ref(props.routes);
         const currentRoute = ref(window.location.href);
 
         return {

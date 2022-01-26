@@ -1,6 +1,10 @@
 <template>
     <q-list>
-        <q-item tag="a" :href="routes?.blog?.all">
+        <q-item
+            tag="a"
+            :href="routes?.blog?.all"
+            :class="{ 'text-primary': currentRoute == routes?.blog?.all }"
+        >
             <q-item-section>All</q-item-section>
         </q-item>
         <q-item
@@ -9,8 +13,10 @@
             clickable
             v-close-popup
             tag="a"
-            :href="cat.url"
+            :href="cat?.url"
+            :class="{ 'text-primary': currentRoute == cat?.url }"
         >
+            <!-- {{ currentRoute == cat?.url }} -->
             <!-- <q-item-section avatar>
                 <q-avatar
                     icon="mdi-folder"
@@ -27,10 +33,19 @@
 </template>
 
 <script setup>
-import { computed, inject, ref } from "@vue/runtime-core";
+import { computed, inject, ref, toRefs, watch } from "@vue/runtime-core";
 
-const routes = computed(() => inject("routes").value);
+const routes = inject("routes");
 const currentRoute = ref(window.location.href);
+
+// watch(routes, () => {
+//     console.log(routes.value);
+//     if (Object.keys(routes.value).length) {
+//         currentRouteIsBlog.value = Object.values(routes.value.blog).includes(
+//             currentRoute.value
+//         );
+//     }
+// });
 </script>
 
 <style>

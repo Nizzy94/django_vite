@@ -16,7 +16,7 @@ import CustomHeader from "./Header.vue";
 import CustomFooter from "./Footer.vue";
 
 import getUrls from "../../composables/getUrls";
-import { onBeforeUnmount, provide } from "@vue/runtime-core";
+import { onBeforeMount, onBeforeUnmount, provide } from "@vue/runtime-core";
 import { useQuasar } from "quasar";
 
 export default {
@@ -36,9 +36,11 @@ export default {
 
         // onMounted(async () => {
 
-        callUrls();
+        onBeforeMount(async () => {
+            await callUrls();
+        });
 
-        console.log(routes);
+        console.log(routes.value);
 
         if (routes.value) {
             provide(
@@ -61,14 +63,17 @@ export default {
 };
 </script>
 
-<style>
-@charset "UTF-8";
-/* #base {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-} */
+<style lang="sass">
+.card_link
+    display: block
+    text-decoration: none
+
+// #base {
+//  font-family: Avenir, Helvetica, Arial, sans-serif;
+//  -webkit-font-smoothing: antialiased;
+//  -moz-osx-font-smoothing: grayscale;
+//  text-align: center;
+//  color: #2c3e50;
+//  margin-top: 60px;
+// } 
 </style>

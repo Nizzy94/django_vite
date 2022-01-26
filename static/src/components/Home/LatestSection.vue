@@ -1,7 +1,7 @@
 <template>
     <div class="column">
         <div class="row justify-center q-mb-lg">
-            <div class="text-h2 text-center">Latest</div>
+            <div class="text-h2 text-center text-primary q-mb-xl">Latest</div>
         </div>
         <div class="row q-col-gutter-md q-px-xl justify-center">
             <div
@@ -33,51 +33,6 @@ const props = defineProps({
 });
 
 const { latest } = toRefs(props);
-
-// const domain = computed(() => inject("domain"));
-
-// const latest = [
-//     {
-//         id: 1,
-//         title: "General Title",
-//         body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua consectetur adipiscing elit,.",
-//     },
-//     {
-//         id: 2,
-//         title: "Sports Title",
-//         body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-//     },
-//     {
-//         id: 3,
-//         title: "Politics Title",
-//         body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-//     },
-//     {
-//         id: 4,
-//         title: "Entertainment Titlesd",
-//         body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-//     },
-//     {
-//         id: 5,
-//         title: "General Title",
-//         body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua consectetur adipiscing elit,.",
-//     },
-//     {
-//         id: 6,
-//         title: "Sports Title",
-//         body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-//     },
-// {
-//     id:7,
-//     title: 'Politics Title',
-//     body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-// },
-// {
-//     id:8,
-//     title: 'Entertainment Titlesd',
-//     body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-// },
-// ];
 </script>
 
 <style>

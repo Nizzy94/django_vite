@@ -11,7 +11,7 @@ from ckeditor.fields import RichTextField
 class Category(models.Model):
     icon = models.CharField(max_length=255, default="nothing")
     name = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(default=timezone.now)
 
@@ -31,7 +31,7 @@ class Category(models.Model):
 
 class Blog(models.Model):
     title = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True)
     image = models.ImageField(upload_to="blog_images/%Y/%m/%d")
     # body = models.TextField()
     body = RichTextField(blank=True, null=True)

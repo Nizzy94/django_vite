@@ -6,25 +6,21 @@
             </div>
             <div class="row q-col-gutter-sm">
                 <div id="big_side1" class="col-xs-12 col-sm-6">
-                    <a
-                        :href="cat1_blogs[0]?.url"
-                        class="big_blog_link"
+                    <!-- <a :href="cat1_blogs[0]?.url" class="card_link"> -->
+                    <news-card
                         v-if="cat1_blogs.length"
-                    >
-                        <news-card
-                            v-if="cat1_blogs.length"
-                            :title="cat1_blogs[0]?.title"
-                            :body="cat1_blogs[0]?.body"
-                            :subtitle="'by John Doe'"
-                            :imageSrc="cat1_blogs[0]?.image"
-                        />
-                    </a>
+                        :title="cat1_blogs[0]?.title"
+                        :body="cat1_blogs[0]?.body"
+                        :subtitle="'by John Doe'"
+                        :imageSrc="cat1_blogs[0]?.image"
+                        :url="cat1_blogs[0]?.url"
+                    />
+                    <!-- </a> -->
                 </div>
                 <div id="small_side1" class="col-xs-12 col-sm-6">
-                    <a
-                        :href="blog.url"
+                    <div
                         v-if="cat1_blogs.length"
-                        class="q-mb-sm small_blog_link"
+                        class="q-mb-sm"
                         v-for="(blog, i) in cat1_blogs.slice(1)"
                         :key="i"
                     >
@@ -34,8 +30,9 @@
                             :subtitle="'by John Doe'"
                             horizontal
                             :imageSrc="blog.image"
+                            :url="blog.url"
                         />
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -51,24 +48,25 @@
             </div>
             <div class="row q-col-gutter-sm">
                 <div id="big_side2" class="col-xs-12 col-sm-6">
-                    <a
+                    <!-- <a
                         :href="cat2_blogs[0]?.url"
-                        class="big_blog_link"
+                        class="card_link"
                         v-if="cat2_blogs.length"
-                    >
-                        <news-card
-                            :title="cat2_blogs[0]?.title"
-                            :body="cat2_blogs[0]?.body"
-                            :subtitle="'by John Doe'"
-                            :imageSrc="cat2_blogs[0]?.image"
-                        />
-                    </a>
+                    > -->
+                    <news-card
+                        v-if="cat2_blogs.length"
+                        :title="cat2_blogs[0]?.title"
+                        :body="cat2_blogs[0]?.body"
+                        :subtitle="'by John Doe'"
+                        :imageSrc="cat2_blogs[0]?.image"
+                        :url="cat2_blogs[0]?.url"
+                    />
+                    <!-- </a> -->
                 </div>
                 <div id="small_side2" class="col-xs-12 col-sm-6">
-                    <a
+                    <div
                         v-if="cat2_blogs.length"
-                        :href="blog.url"
-                        class="q-mb-sm small_blog_link"
+                        class="q-mb-sm"
                         v-for="(blog, i) in cat2_blogs.slice(1)"
                         :key="i"
                     >
@@ -78,8 +76,9 @@
                             :subtitle="'by John Doe'"
                             horizontal
                             :imageSrc="blog.image"
+                            :url="blog.url"
                         />
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -139,7 +138,7 @@ const routes = computed(() => inject("routes").value);
         &:hover
             background-color: $primary_hover
 
-.small_blog_link, .big_blog_link
-    display: block
-    text-decoration: none
+// .card_link, .card_link
+//     display: block
+//     text-decoration: none
 </style>

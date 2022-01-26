@@ -1,0 +1,5 @@
+add sidebar to blog page and blog details page
+
+add tag to blog model
+
+make home page cats dynamic
