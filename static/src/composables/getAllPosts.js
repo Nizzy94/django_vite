@@ -7,15 +7,23 @@ const getAllPosts = () => {
 
     const callAllPosts = async() => {
         const category = ref("")
+        const tag = ref("")
 
         const pathArray = window.location.pathname.slice(1, -1).split("/")
 
+        console.log(pathArray)
         if (pathArray.length >= 2) {
-            category.value = pathArray[1]
+            if (pathArray[1] == 'tag') {
+                console.log('tag')
+                tag.value = pathArray[2]
+            } else {
+
+                category.value = pathArray[1]
+            }
         } else {
             category.value = 'all'
         }
-        const res = await fetchBlogAllowAny.get(`/get-blog-by-category/${category.value}/`)
+        const res = tag.value == "" ? await fetchBlogAllowAny.get(`/get-blog-by-category/${category.value}/`) : await fetchBlogAllowAny.get(`/get-blog-by-tag/${tag.value}/`)
 
         // console.log(res.data)
 

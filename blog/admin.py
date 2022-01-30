@@ -1,6 +1,6 @@
 from django.contrib import admin
 from PIL import Image
-from .models import Blog, Category
+from .models import Blog, Category, Tag
 
 
 @admin.register(Category)
@@ -12,11 +12,20 @@ class CategoryAdmin(admin.ModelAdmin):
     exclude = ["created_at", "updated_at"]
 
 
+@admin.register(Tag)
+class TagAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("name",)}
+    list_display = ["name", "slug"]
+    # list_filter = ["category"]
+    date_hierarchy = "created_at"
+    exclude = ["created_at", "updated_at"]
+
+
 @admin.register(Blog)
 class BlogAdmin(admin.ModelAdmin):
     # prepopulated_fields = {"slug": ("title",)}
     list_display = ["title", "author"]
-    list_filter = ["category"]
+    list_filter = ["category", "tags"]
     date_hierarchy = "created_at"
     exclude = ["created_at", "updated_at", 'author', 'slug']
 

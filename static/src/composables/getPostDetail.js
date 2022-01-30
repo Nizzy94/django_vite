@@ -3,6 +3,7 @@ import { fetchBlogAllowAny } from "./axios"
 
 const getPostDetail = () => {
     const post = ref({})
+    const tags = ref({})
     const callPostDetail = async() => {
 
         try {
@@ -14,7 +15,8 @@ const getPostDetail = () => {
             const res = await fetchBlogAllowAny.get(`/get-post-detail/${post_slug}/`)
 
             console.log(res)
-            post.value = await res.data
+            post.value = await res.data.blog
+            tags.value = await res.data.tags
         } catch (e) {
             console.log(e.response)
         }
@@ -24,7 +26,7 @@ const getPostDetail = () => {
 
     }
 
-    return { callPostDetail, post }
+    return { callPostDetail, post, tags }
 }
 
 export default getPostDetail

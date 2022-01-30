@@ -1,5 +1,5 @@
 
-from blog.api.serializers import BlogSerializer, CategorySerializer
+from blog.api.serializers import BlogSerializer, CategorySerializer, TagSerializer
 from blog.models import Blog, Category
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
@@ -60,7 +60,8 @@ def get_all_posts(request, category):
         blogs = Blog.objects.order_by("-created_at")
 
     else:
-        blogs = Blog.objects.filter(category__slug=category)
+        blogs = Blog.objects.filter(
+            category__slug=category).order_by("-created_at")
 
     serializer = BlogSerializer(blogs, many=True)
 
@@ -69,12 +70,65 @@ def get_all_posts(request, category):
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def get_post_detail(request, post_slug):
+def get_posts_by_tag(request, tag):
+
+    blogs = Blog.objects.filter(tags__slug=tag).order_by("-created_at")
+
+    serializer = BlogSerializer(blogs, many=True)
+
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_releted_posts_by_tag(request, post_slug):
+
     blog = Blog.objects.filter(slug=post_slug).get()
 
-    serializer = BlogSerializer(blog)
-    # serializer = BlogSerializer()
+    tags = blog.tags.all()
+    print(tags)
+    blogs_set = {}
+    tag_names = []
+    blogs = []
 
-    print(repr(serializer))
+    if tags.count() > 0:
+        for tag in tags:
+            tag_q = tag.blogs.all().exclude(id=blog.id)
+            if len(blogs) == 0:
+                print('0')
+                blogs = tag_q
+            elif len(blogs) > 0:
+                print('>0')
+                blogs = blogs.union(tag_q)
+            # blogs.union(tag.blogs.all())
+
+    print('blogs count:', blogs.count())
+    print('blogs:', blogs.order_by('-created_at'))
+    related = blogs.order_by('-created_at')[:8]
+
+    serializer = BlogSerializer(related, many=True)
+
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_post_detail(request, post_slug):
+    blog = Blog.objects.filter(slug=post_slug).get()
+    tags = blog.tags.all()
+
+    serializer = BlogSerializer(blog)
+    serializer_tag = TagSerializer(tags, many=True)
+
+    return Response({'blog': serializer.data, 'tags': serializer_tag.data})
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_tags(request, post_slug):
+    blog = Blog.objects.filter(slug=post_slug).get()
+    tags = blog.tags.all()
+
+    serializer = BlogSerializer(tags)
 
     return Response(serializer.data)

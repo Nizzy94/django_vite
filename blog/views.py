@@ -5,6 +5,10 @@ def blogs(request):
     return render(request, "blog/blog.html")
 
 
+def blogs_by_tag(request, tag):
+    return render(request, "blog/blog.html")
+
+
 def blogs_cat(request, category):
     print(category)
     return render(request, "blog/blog.html")

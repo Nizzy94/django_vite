@@ -29,11 +29,32 @@ class Category(models.Model):
         return reverse("blog:blogs_cat", kwargs={"category": self.slug})
 
 
+class Tag(models.Model):
+    # icon = models.CharField(max_length=255, default="nothing")
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(default=timezone.now)
+
+    class Meta():
+        verbose_name_plural = 'Tags'
+
+    def __str__(self) -> str:
+        return self.name
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name, allow_unicode=True)
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("blog:blogs_by_tag", kwargs={"tag": self.slug})
+
+
 class Blog(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
     image = models.ImageField(upload_to="blog_images/%Y/%m/%d")
-    # body = models.TextField()
+    tags = models.ManyToManyField(Tag, related_name='blogs')
     body = RichTextField(blank=True, null=True)
     category = models.ForeignKey(
         Category, related_name="blogs", on_delete=CASCADE)

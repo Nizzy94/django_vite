@@ -10,18 +10,29 @@
                     :href="backUrl"
                 />
             </div>
-            <div class="row q-mx-auto q-col-gutter-md q-px-xl">
+            <div
+                class="row q-col-gutter-md q-mb-xl"
+                :class="{
+                    ' q-px-xl': $q.screen.gt.xs,
+                    ' q-px-md': $q.screen.lt.sm,
+                }"
+            >
                 <div class="col-xs-12 col-md-9">
                     <div class="">
                         <section>
-                            <h1 class="text-h1">
+                            <h1 class="text-h1 text-capitalize">
                                 {{ post.title }}
                             </h1>
                         </section>
 
                         <section>
                             <div>
-                                <q-img height="400px" :src="post.image" />
+                                <q-img
+                                    :height="
+                                        $q.screen.gt.xs ? '450px' : '300px'
+                                    "
+                                    :src="post.image"
+                                />
                             </div>
                             <q-separator spaced="16px" />
                             <div class="row q-gutter-md">
@@ -45,6 +56,22 @@
                         <section v-html="post.body"></section>
                     </div>
                     <q-separator spaced="16px" />
+                    <section>
+                        <div class="text-h6 q-mb-md">Tags:</div>
+                        <div class="q-gutter-sm">
+                            <a
+                                :href="tag.url"
+                                v-for="tag in tags"
+                                :key="tag.id"
+                            >
+                                <q-badge color="accent">
+                                    #{{ tag.name }}
+                                </q-badge>
+                            </a>
+                        </div>
+                    </section>
+                    <q-separator spaced="16px" />
+
                     <div>
                         <section>
                             <related />
@@ -69,7 +96,7 @@ import getPostDetail from "../../composables/getPostDetail";
 import { onBeforeMount, ref, watch } from "@vue/runtime-core";
 import { date } from "quasar";
 
-const { callPostDetail, post } = getPostDetail();
+const { callPostDetail, post, tags } = getPostDetail();
 onBeforeMount(() => {
     callPostDetail();
 });
@@ -90,5 +117,10 @@ watch(post, () => {
 });
 </script>
 
-<style>
+<style lang="sass">
+// .blog_image
+//     height: 100px
+
+//     @media (min-width: $breakpoint-sm-min)
+//         height: 450px
 </style>
