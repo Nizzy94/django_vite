@@ -7,7 +7,7 @@ const getCategories = () => {
         try {
             const res = await fetchBlogAllowAny.get('/get-all-categories/')
 
-            console.log(res.data)
+            // console.log(res.data)
 
             categories.value = await res.data
         } catch (e) {
