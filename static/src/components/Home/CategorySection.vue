@@ -11,13 +11,13 @@
             v-for="(cat,i) in categories" :key="cat.id"> -->
         <div
             data-aos="fade-up"
-            :data-aos-delay="(i + 1) * 200"
-            :data-aos-duration="1000"
+            :data-aos-delay="(i + 1) * 100"
+            :data-aos-duration="800"
             class="col-xs-12 col-sm-6 col-md-3"
             v-for="(cat, i) in categories"
             :key="cat.id"
         >
-            <div class="" style="height: 200px">
+            <div class="" style="height: 100px">
                 <q-card
                     class="
                         category-card
@@ -27,13 +27,13 @@
                         shadow-10
                     "
                     tag="a"
-                    href="#"
+                    :href="cat.url"
                 >
-                    <q-card-section class="row justify-center">
+                    <!-- <q-card-section class="row justify-center">
                         <q-icon :name="cat.icon" size="50px" color="primary" />
                     </q-card-section>
 
-                    <q-separator inset spaced />
+                    <q-separator inset spaced /> -->
 
                     <q-card-section>
                         <div
@@ -54,40 +54,45 @@
 </template>
 
 <script setup>
-const categories = [
-    {
-        id: 1,
-        name: "General",
-        icon: "mdi-newspaper-variant-outline",
-    },
-    {
-        id: 2,
-        name: "Sports",
-        icon: "mdi-tennis-ball",
-    },
-    {
-        id: 3,
-        name: "Politics",
-        icon: "mdi-account-tie",
-    },
-    {
-        id: 4,
-        name: "Entertainment",
-        icon: "mdi-music",
-    },
-    {
-        id: 4,
-        name: "Health",
-        icon: "mdi-stethoscope",
-    },
-];
+import getCategories from "../../composables/getCategories";
+
+const { callCategories, categories } = getCategories();
+
+callCategories();
+// const categories = [
+//     {
+//         id: 1,
+//         name: "General",
+//         icon: "mdi-newspaper-variant-outline",
+//     },
+//     {
+//         id: 2,
+//         name: "Sports",
+//         icon: "mdi-tennis-ball",
+//     },
+//     {
+//         id: 3,
+//         name: "Politics",
+//         icon: "mdi-account-tie",
+//     },
+//     {
+//         id: 4,
+//         name: "Entertainment",
+//         icon: "mdi-music",
+//     },
+//     {
+//         id: 4,
+//         name: "Health",
+//         icon: "mdi-stethoscope",
+//     },
+// ];
 </script>
 
 <style lang="sass">
 a.category-card
     text-decoration: none
     color: $dark
-    transition: transform 500ms ease
+    transition: transform 200ms ease
 
     &:hover
         transform: scale(1.05)

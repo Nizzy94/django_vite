@@ -5,6 +5,9 @@ from django.urls import path
 # app_name = 'main_api'
 
 urlpatterns = [
+    path('get-all-categories/', views.get_all_categories,
+         name="get_all_categories"),
+
     path('get-home-posts/', views.get_home_posts,
          name="get_home_posts"),
 

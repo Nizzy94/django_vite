@@ -4,7 +4,7 @@ add news carousel to sidebar(below subscription form)
 
 add tag to blog model DONE
 
-make home page cats dynamic
+make home page cats dynamic DONE
 
 work on pagination
 

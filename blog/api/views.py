@@ -11,6 +11,24 @@ from django.db.models import Count
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
+def get_all_categories(request):
+
+    # categories = Category.objects.order_by('blogs__count')
+    categories = Category.objects.annotate(
+        Count('blogs')).order_by('-blogs__count')[:8]
+
+    # print(categories.order_by('-blogs__count'))
+
+    # for cat in categories:
+    #     print(cat.blogs.count())
+
+    serializer = CategorySerializer(categories, many=True)
+
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
 def get_home_posts(request):
 
     blogs = Blog.objects.order_by("-created_at")
