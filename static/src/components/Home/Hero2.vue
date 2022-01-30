@@ -13,257 +13,55 @@
         vertical
     >
         <q-carousel-slide name="first" class="row">
-            <div
-                class="custom-caption col-xs-12 col-sm-5"
-                v-if="$q.screen.gt.xs"
-            >
-                <div class="column justify-center full-height">
-                    <div>
-                        <div class="text-h2 text-primary">First stop</div>
-                        <div class="text-subtitle1">Mountains</div>
-                    </div>
-                </div>
-            </div>
-            <q-intersection
-                :transition="$q.screen.gt.xs ? 'slide-down' : ''"
-                transition-duration="1500"
-                class="custom-caption col-xs-12 col-sm-7"
-            >
-                <q-img
-                    height="95vh"
-                    src="https://cdn.quasar.dev/img/mountains.jpg"
-                >
-                    <div
-                        class="text-subtitle2 flex flex-center caption__div"
-                        style="width: 10%; background: rgba(255, 255, 255, 0.9)"
-                        :class="{
-                            'absolute-full': $q.screen.lt.sm,
-                            'absolute-left': $q.screen.gt.xs,
-                        }"
-                    >
-                        <div v-if="$q.screen.lt.sm">
-                            <div class="text-h2">First stop</div>
-                            <div class="text-subtitle1">Mountains</div>
-                        </div>
-                    </div>
-                    <div
-                        class="text-subtitle2 flex flex-center caption__div"
-                        :class="{
-                            'absolute-full': $q.screen.lt.sm,
-                            'absolute-left': $q.screen.gt.xs,
-                        }"
-                    >
-                        <div v-if="$q.screen.lt.sm">
-                            <div class="text-h2">First stop</div>
-                            <div class="text-subtitle1">Mountains</div>
-                        </div>
-                    </div>
-                </q-img>
-            </q-intersection>
+            <carousel-slide
+                :header="'First Stop'"
+                :subtitle="'Subtitle for first stop'"
+                imageSrc="https://cdn.quasar.dev/img/mountains.jpg"
+            />
         </q-carousel-slide>
         <q-carousel-slide name="second" class="row">
-            <div
-                class="custom-caption col-xs-12 col-sm-5"
-                v-if="$q.screen.gt.xs"
-            >
-                <div class="column justify-center full-height">
-                    <div>
-                        <div class="text-h2 text-primary">Second stop</div>
-                        <div class="text-subtitle1">Mountains</div>
-                    </div>
-                </div>
-            </div>
-            <q-intersection
-                :transition="$q.screen.gt.xs ? 'slide-down' : ''"
-                transition-duration="1500"
-                class="custom-caption col-xs-12 col-sm-7"
-            >
-                <q-img
-                    height="95vh"
-                    src="https://cdn.quasar.dev/img/mountains.jpg"
-                >
-                    <div
-                        class="text-subtitle2 flex flex-center caption__div"
-                        style="width: 10%; background: rgba(255, 255, 255, 0.9)"
-                        :class="{
-                            'absolute-full': $q.screen.lt.sm,
-                            'absolute-left': $q.screen.gt.xs,
-                        }"
-                    >
-                        <div v-if="$q.screen.lt.sm">
-                            <div class="text-h2">First stop</div>
-                            <div class="text-subtitle1">Mountains</div>
-                        </div>
-                    </div>
-                    <div
-                        class="text-subtitle2 flex flex-center caption__div"
-                        :class="{
-                            'absolute-full': $q.screen.lt.sm,
-                            'absolute-left': $q.screen.gt.xs,
-                        }"
-                    >
-                        <div v-if="$q.screen.lt.sm">
-                            <div class="text-h2">First stop</div>
-                            <div class="text-subtitle1">Mountains</div>
-                        </div>
-                    </div>
-                </q-img>
-            </q-intersection>
+            <carousel-slide
+                :header="'Second Stop'"
+                :subtitle="'Subtitle for second stop'"
+                imageSrc="https://cdn.quasar.dev/img/parallax1.jpg"
+            />
         </q-carousel-slide>
         <q-carousel-slide name="third" class="row">
-            <div
-                class="custom-caption col-xs-12 col-sm-5"
-                v-if="$q.screen.gt.xs"
-            >
-                <div class="column justify-center full-height">
-                    <div>
-                        <div class="text-h2 text-primary">Third stop</div>
-                        <div class="text-subtitle1">Mountains</div>
-                    </div>
-                </div>
-            </div>
-            <q-intersection
-                :transition="$q.screen.gt.xs ? 'slide-down' : ''"
-                transition-duration="1500"
-                class="custom-caption col-xs-12 col-sm-7"
-            >
-                <q-img
-                    height="95vh"
-                    src="https://cdn.quasar.dev/img/mountains.jpg"
-                >
-                    <div
-                        class="text-subtitle2 flex flex-center caption__div"
-                        style="width: 10%; background: rgba(255, 255, 255, 0.9)"
-                        :class="{
-                            'absolute-full': $q.screen.lt.sm,
-                            'absolute-left': $q.screen.gt.xs,
-                        }"
-                    >
-                        <div v-if="$q.screen.lt.sm">
-                            <div class="text-h2">First stop</div>
-                            <div class="text-subtitle1">Mountains</div>
-                        </div>
-                    </div>
-                    <div
-                        class="text-subtitle2 flex flex-center caption__div"
-                        :class="{
-                            'absolute-full': $q.screen.lt.sm,
-                            'absolute-left': $q.screen.gt.xs,
-                        }"
-                    >
-                        <div v-if="$q.screen.lt.sm">
-                            <div class="text-h2">First stop</div>
-                            <div class="text-subtitle1">Mountains</div>
-                        </div>
-                    </div>
-                </q-img>
-            </q-intersection>
+            <carousel-slide
+                :header="'Third Stop'"
+                :subtitle="'Subtitle for third stop'"
+                imageSrc="https://cdn.quasar.dev/img/parallax2.jpg"
+            />
         </q-carousel-slide>
-        <!-- <q-carousel-slide name="second" class="row">
-            <div class="custom-caption col">
-                <div class="column justify-center full-height">
-                    <div>
-                        <div class="text-h2 text-primary">Second stop</div>
-                        <div class="text-subtitle1">Mountains</div>
-                    </div>
-                </div>
-            </div>
-            <q-intersection
-                :transition="$q.screen.gt.xs ? 'slide-down' : ''"
-                transition-duration="1500"
-                class="custom-caption col-sm-6 col-xs-12"
-            >
-                <q-img
-                    height="95vh"
-                    src="https://cdn.quasar.dev/img/parallax1.jpg"
-                >
-                    <div
-                        class="
-                            absolute-full
-                            text-subtitle2
-                            flex flex-center
-                            caption__div
-                        "
-                    >
-                        <div v-if="$q.screen.lt.sm">
-                            <div class="text-h2">First stop</div>
-                            <div class="text-subtitle1">Mountains</div>
-                        </div>
-                    </div>
-                </q-img>
-            </q-intersection>
-        </q-carousel-slide>
-        <q-carousel-slide name="third" class="row">
-            <div class="custom-caption col">
-                <div class="column justify-center full-height">
-                    <div>
-                        <div class="text-h2 text-primary">Third stop</div>
-                        <div class="text-subtitle1">Mountains</div>
-                    </div>
-                </div>
-            </div>
-            <q-intersection
-                :transition="$q.screen.gt.xs ? 'slide-down' : ''"
-                transition-duration="1500"
-                class="custom-caption col-sm-6 col-xs-12"
-            >
-                <q-img
-                    height="95vh"
-                    src="https://cdn.quasar.dev/img/parallax2.jpg"
-                >
-                    <div
-                        class="
-                            absolute-full
-                            text-subtitle2
-                            flex flex-center
-                            caption__div
-                        "
-                    >
-                        <div v-if="$q.screen.lt.sm">
-                            <div class="text-h2">First stop</div>
-                            <div class="text-subtitle1">Mountains</div>
-                        </div>
-                    </div>
-                </q-img>
-            </q-intersection>
-        </q-carousel-slide> -->
-        <!-- <q-carousel-slide
-            name="second"
-            img-src="https://cdn.quasar.dev/img/parallax1.jpg"
-        >
-            <div class="absolute-left custom-caption">
-                <div class="text-h2">Second stop</div>
-                <div class="text-subtitle1">Famous City</div>
-            </div>
-        </q-carousel-slide>
-        <q-carousel-slide
-            name="third"
-            img-src="https://cdn.quasar.dev/img/parallax2.jpg"
-        >
-            <div class="absolute-left custom-caption">
-                <div class="text-h2">Third stop</div>
-                <div class="text-subtitle1">Famous Bridge</div>
-            </div>
-        </q-carousel-slide> -->
     </q-carousel>
 </template>
 
 <script setup>
 import { ref } from "vue";
+import CarouselSlide from "./CarouselSlide.vue";
+
 const slide = ref("first");
 </script>
 
 <style lang="sass" scoped>
-.caption__div
-    // background: rgba(38, 166, 154, 0.7)
-    background: rgba(255, 255, 255, 0.7)
-    width: 25%
+// .caption__div_1
+//     background: rgba(38, 166, 154, 0.9)
+//     width: 10%
+
+//     @media (min-width: $breakpoint-sm-min)
+//         background: rgba(255, 255, 255, 0.7)
+//         width: 25%
+// .caption__div
+//     // background: rgba(38, 166, 154, 0.7)
+//     // width: 25%
+
+//     @media (min-width: $breakpoint-sm-min)
+//         background: rgba(255, 255, 255, 0.7)
+//         width: 25%
+
 .q-carousel__slide
     // padding-top: 0 !important
     padding: 0 !important
 .custom-caption
     text-align: center
-    // padding: 12px
-    // color: white
-    // background-color: rgba(0, 0, 0, .3)
 </style>

@@ -3,7 +3,7 @@
         <div class="row justify-center q-mb-lg">
             <div class="text-h2 text-center text-primary q-mb-xl">Latest</div>
         </div>
-        <div class="row q-col-gutter-md q-px-xl justify-center">
+        <div class="row q-col-gutter-md q-px-md justify-center">
             <div
                 class="col-xs-12 col-sm-6 col-md-3"
                 v-for="(news, i) in latest"

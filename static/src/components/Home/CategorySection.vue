@@ -1,5 +1,8 @@
 <template>
-    <div class="row q-col-gutter-lg q-px-xl justify-center">
+    <div
+        class="row q-col-gutter-lg justify-center"
+        :class="{ 'q-px-xl': $q.screen.gt.md, 'q-px-md': $q.screen.lt.lg }"
+    >
         <!-- <q-intersection > -->
         <!-- <q-intersection transition="slide-up" once 
             :transition-duration="500+(200*i)" 
@@ -33,7 +36,15 @@
                     <q-separator inset spaced />
 
                     <q-card-section>
-                        <div class="text-h4 text-center">{{ cat.name }}</div>
+                        <div
+                            class="text-center"
+                            :class="{
+                                'text-h5': $q.screen.gt.xs,
+                                'text-h6': $q.screen.lt.sm,
+                            }"
+                        >
+                            {{ cat.name }}
+                        </div>
                     </q-card-section>
                 </q-card>
             </div>

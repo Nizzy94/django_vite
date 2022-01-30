@@ -79,7 +79,7 @@
                         size="200px"
                         class=""
                         data-aos-duration="1000"
-                        data-aos="fade-right"
+                        data-aos="fade-up"
                     >
                         <img src="https://cdn.quasar.dev/img/avatar.png" />
                     </q-avatar>
@@ -88,7 +88,7 @@
                 <q-separator dark />
 
                 <q-card-section>
-                    <div data-aos-duration="1500" data-aos="fade-left">
+                    <div data-aos-duration="1500" data-aos="fade-up">
                         <div class="text-center q-mb-xl">
                             <div class="text-h3 text-white">Author</div>
                         </div>
