@@ -1,4 +1,4 @@
-add sidebar to blog page and blog details page 
+add sidebar to blog page and blog details page DONE
 
 add news carousel to sidebar(below subscription form)
 
