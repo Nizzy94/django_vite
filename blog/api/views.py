@@ -4,7 +4,8 @@ from blog.models import Blog, Category
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
-import random
+from .paginations import BlogListPagination
+import math
 import json
 from django.db.models import Count
 
@@ -71,30 +72,73 @@ def get_home_posts(request):
     return Response(data)
 
 
+def perform_pagination(request, queryset, page_size, paginator):
+    page_size = page_size
+    sortBy = request.GET.get('sortBy', 'created_at')
+    # filter = request.GET.get('filter', '')
+    decending = request.GET.get('decending', 'true')
+
+    if decending == 'true':
+        decending = True
+    else:
+        decending = False
+
+    if decending:
+        blogs = queryset.order_by(f'-{sortBy}')
+    else:
+        blogs = queryset.order_by(f'{sortBy}')
+
+    result = paginator.paginate_queryset(blogs, request)
+
+    return result
+
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def get_all_posts(request, category):
+    page_size = request.GET.get('rowsPerPage', 2)
+
     if category == 'all':
-        blogs = Blog.objects.order_by("-created_at")
+        # blogs = Blog.objects.order_by("-created_at")
+        blogs = Blog.objects.all()
 
     else:
-        blogs = Blog.objects.filter(
-            category__slug=category).order_by("-created_at")
+        blogs = Blog.objects.filter(category__slug=category)
 
-    serializer = BlogSerializer(blogs, many=True)
+    if page_size:
+        page_size = page_size
+    else:
+        page_size = math.ceil(len(blogs)/2)
 
-    return Response(serializer.data)
+    paginator = BlogListPagination(page_size, math.ceil(len(blogs)/page_size))
+
+    result = perform_pagination(request, blogs, page_size, paginator)
+    print(result)
+
+    # serializer = BlogSerializer(blogs, many=True)
+    serializer = BlogSerializer(result, many=True)
+
+    # return Response(serializer.data)
+    return paginator.get_paginated_response(serializer.data)
 
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def get_posts_by_tag(request, tag):
 
+    page_size = request.GET.get('rowsPerPage', 4)
+
     blogs = Blog.objects.filter(tags__slug=tag).order_by("-created_at")
 
-    serializer = BlogSerializer(blogs, many=True)
+    paginator = BlogListPagination(page_size, math.ceil(len(blogs)/page_size))
 
-    return Response(serializer.data)
+    result = perform_pagination(request, blogs, page_size, paginator)
+    print(result)
+
+    serializer = BlogSerializer(result, many=True)
+
+    # return Response(serializer.data)
+    return paginator.get_paginated_response(serializer.data)
 
 
 @api_view(['GET'])

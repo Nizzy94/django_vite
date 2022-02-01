@@ -2,6 +2,7 @@
     <Base>
         <template #page_content>
             <section class="row justify-center q-my-lg">
+                <!-- {{ data.num_pages }} -->
                 <q-pagination
                     dense
                     boundary-numbers
@@ -9,8 +10,9 @@
                     :direction-links="$q.screen.gt.xs"
                     :boundary-links="$q.screen.gt.xs"
                     :size="$q.screen.lt.md ? '12px' : 'md'"
-                    v-model="currentPage"
-                    :max="24"
+                    v-model="pagination.page"
+                    @update:model-value="onRequest"
+                    :max="pagination.totalNumberOfPages"
                     icon-first="skip_previous"
                     icon-last="skip_next"
                     icon-prev="fast_rewind"
@@ -54,8 +56,9 @@
                     :direction-links="$q.screen.gt.xs"
                     :boundary-links="$q.screen.gt.xs"
                     :size="$q.screen.lt.md ? '12px' : 'md'"
-                    v-model="currentPage"
-                    :max="24"
+                    v-model="pagination.page"
+                    @update:model-value="onRequest"
+                    :max="pagination.totalNumberOfPages"
                     icon-first="skip_previous"
                     icon-last="skip_next"
                     icon-prev="fast_rewind"
@@ -68,19 +71,46 @@
 
 <script setup>
 import { ref } from "@vue/reactivity";
-import { onBeforeMount } from "@vue/runtime-core";
+import { onBeforeMount, onMounted, watch } from "@vue/runtime-core";
 import Base from "../../components/layouts/Base.vue";
 import NewsCard from "../../components/NewsCard.vue";
 import getAllPosts from "../../composables/getAllPosts";
 import Sidebar from "../../components/blog/Sidebar.vue";
+import { useQuasar } from "quasar";
+
+const $q = useQuasar();
+
+const pagination = ref({
+    sortBy: "created_at",
+    // descending: true,
+    page: 1,
+    // rowsPerPage: 2,
+    rowsNumber: 0,
+    totalNumberOfPages: 0,
+});
 
 const currentPage = ref(2);
 
-const { callAllPosts, blogs } = getAllPosts();
+const { callAllPosts, data } = getAllPosts();
+const blogs = ref([]);
 
+watch(data, () => {
+    if (Object.keys(data.value).length) {
+        blogs.value = data.value.results;
+        pagination.value.totalNumberOfPages = parseInt(data.value.num_pages);
+    }
+});
 onBeforeMount(async () => {
     await callAllPosts();
 });
+
+const pageLink = (page) => {
+    return `${window.location.href}?page=${page}`;
+};
+
+const onRequest = async (props) => {
+    await callAllPosts(props);
+};
 </script>
 
 <style lang="sass">
