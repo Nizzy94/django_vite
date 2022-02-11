@@ -1,22 +1,5 @@
-add sidebar to blog page and blog details page DONE
-
-add news carousel to sidebar(below subscription form)
-
-add tag to blog model DONE
-
-make home page cats dynamic DONE
-
-work on pagination DONE
-
-search functionality
-
-reader accounts authentication
-
-add SEO to pages
-
-
-{% comment %}  {% endcomment %}
 version: '3'
+
 services:
 
   db:
@@ -49,10 +32,9 @@ services:
   #     - 8000:8000
   #   image: web:django_vite
   #   container_name: django_vite_container
-  #   command: python3 manage.py runserver 0.0.0.0:8000
   #   depends_on:
   #     - db
-
+  #   command: python3 manage.py runserver 0.0.0.0:8000
   pgadmin:
     container_name: pgadmin4
     image: dpage/pgadmin4
@@ -78,4 +60,3 @@ networks:
       config:
         - subnet: "192.168.0.0/24"
           gateway: 192.168.0.1
-

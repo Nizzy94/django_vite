@@ -4,6 +4,7 @@ import { fetchBlogAllowAny } from "./axios"
 const getCategories = () => {
     const categories = ref([])
     const callCategories = async() => {
+
         try {
             const res = await fetchBlogAllowAny.get('/get-all-categories/')
 

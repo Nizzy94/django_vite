@@ -1,9 +1,7 @@
 <template>
     <div class="column side_bar">
         <div class="bg-grey-4" style="height: 200px"></div>
-        <div class="text-h6 q-mt-xl text-primary">
-            Subscribe to our newsletter
-        </div>
+        <div class="text-h6 q-mt-xl text-primary">Subscribe for update</div>
         <subscription-form />
     </div>
 </template>

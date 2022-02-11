@@ -96,7 +96,7 @@ def perform_pagination(request, queryset, page_size, paginator):
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def get_all_posts(request, category):
-    page_size = request.GET.get('rowsPerPage', 2)
+    page_size = request.GET.get('rowsPerPage', 12)
 
     if category == 'all':
         # blogs = Blog.objects.order_by("-created_at")

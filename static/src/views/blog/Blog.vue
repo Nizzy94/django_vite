@@ -23,7 +23,7 @@
                 class="row q-mx-auto q-px-md q-col-gutter-md q-my-xl"
                 style="max-width: 1440px"
             >
-                <div class="col-xs-12 col-md-9">
+                <div class="col-xs-12 col-md-9 col-lg-10">
                     <div class="row q-col-gutter-sm">
                         <div
                             class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
@@ -42,7 +42,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-12 col-md-3">
+                <div class="col-xs-12 col-md-3 col-lg-2">
                     <div class="side_bar">
                         <sidebar />
                     </div>
