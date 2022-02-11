@@ -8,18 +8,23 @@
         :autoplay="10000"
         navigation
         navigation-position="right"
-        transition-next="jump-left"
-        transition-prev="jump-right"
+        transition-next="jump-up"
+        transition-prev="jump-down"
         vertical
     >
-        <q-carousel-slide name="first" class="row">
+        <q-carousel-slide
+            :name="i"
+            class="row"
+            v-for="(news, i) in latest"
+            :key="news.id"
+        >
             <carousel-slide
-                :header="'First Stop'"
-                :subtitle="'Subtitle for first stop'"
-                imageSrc="https://cdn.quasar.dev/img/mountains.jpg"
+                :header="news.title"
+                :subtitle="news.body"
+                :imageSrc="news.image"
             />
         </q-carousel-slide>
-        <q-carousel-slide name="second" class="row">
+        <!-- <q-carousel-slide name="second" class="row">
             <carousel-slide
                 :header="'Second Stop'"
                 :subtitle="'Subtitle for second stop'"
@@ -32,15 +37,23 @@
                 :subtitle="'Subtitle for third stop'"
                 imageSrc="https://cdn.quasar.dev/img/parallax2.jpg"
             />
-        </q-carousel-slide>
+        </q-carousel-slide> -->
     </q-carousel>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, toRefs } from "vue";
 import CarouselSlide from "./CarouselSlide.vue";
 
-const slide = ref("first");
+const props = defineProps({
+    latest: {
+        type: Array,
+    },
+});
+
+const { latest } = toRefs(props);
+
+const slide = ref(0);
 </script>
 
 <style lang="sass" scoped>

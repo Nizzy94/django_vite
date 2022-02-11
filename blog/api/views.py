@@ -37,7 +37,7 @@ def get_home_posts(request):
     categories = Category.objects.annotate(Count('blogs'))
 
     selected_cats = categories.filter(
-        blogs__count__gt=4).order_by('?')[:2]
+        blogs__count__gt=4).order_by('?')[:4]
 
     sel_cat_list = list(selected_cats)
 
@@ -45,6 +45,8 @@ def get_home_posts(request):
 
     sel_cat1_blogs = sel_cat_list[0].blogs.order_by("-created_at")
     sel_cat2_blogs = sel_cat_list[1].blogs.order_by("-created_at")
+    sel_cat3_blogs = sel_cat_list[2].blogs.order_by("-created_at")
+    sel_cat4_blogs = sel_cat_list[3].blogs.order_by("-created_at")
 
     for lat in latest:
         for blog in sel_cat1_blogs:
@@ -55,20 +57,48 @@ def get_home_posts(request):
             if blog.id == lat.id:
                 sel_cat2_blogs = sel_cat2_blogs.exclude(id=blog.id)
 
+        for blog in sel_cat3_blogs:
+            if blog.id == lat.id:
+                sel_cat3_blogs = sel_cat3_blogs.exclude(id=blog.id)
+
+        for blog in sel_cat4_blogs:
+            if blog.id == lat.id:
+                sel_cat4_blogs = sel_cat4_blogs.exclude(id=blog.id)
+
     latest_serializer = BlogSerializer(latest, many=True)
     sel_cat1_blogs_serializer = BlogSerializer(sel_cat1_blogs[:5], many=True)
     sel_cat2_blogs_serializer = BlogSerializer(sel_cat2_blogs[:5], many=True)
+    sel_cat3_blogs_serializer = BlogSerializer(sel_cat3_blogs[:5], many=True)
+    sel_cat4_blogs_serializer = BlogSerializer(sel_cat4_blogs[:5], many=True)
 
     cats = CategorySerializer(selected_cats, many=True)
 
-    data = json.dumps({
+    data = {
         'latest': latest_serializer.data,
-        'cat1_blogs': sel_cat1_blogs_serializer.data,
-        'cat2_blogs': sel_cat2_blogs_serializer.data,
+        'news_section': [
+            {'cat': cats.data[0], 'blogs': sel_cat1_blogs_serializer.data},
+            {'cat': cats.data[1], 'blogs': sel_cat2_blogs_serializer.data},
+            {'cat': cats.data[2], 'blogs': sel_cat3_blogs_serializer.data},
+            {'cat': cats.data[3], 'blogs': sel_cat4_blogs_serializer.data},
+        ],
+        # 'news_section': {
+        #     'cat1_blogs': {'cats': cats.data[0], 'blogs': sel_cat1_blogs_serializer.data},
+        #     'cat2_blogs': {'cats': cats.data[1], 'blogs': sel_cat2_blogs_serializer.data},
+        #     'cat3_blogs': {'cats': cats.data[2], 'blogs': sel_cat3_blogs_serializer.data},
+        #     'cat4_blogs': {'cats': cats.data[3], 'blogs': sel_cat4_blogs_serializer.data},
+        # },
         'cats': cats.data
-    })
+    }
+    # data = json.dumps({
+    #     'latest': latest_serializer.data,
+    #     'cat1_blogs': sel_cat1_blogs_serializer.data,
+    #     'cat2_blogs': sel_cat2_blogs_serializer.data,
+    #     'cat3_blogs': sel_cat3_blogs_serializer.data,
+    #     'cat4_blogs': sel_cat4_blogs_serializer.data,
+    #     'cats': cats.data
+    # })
 
-    # return Response(latest_serializer.data)
+    # return Response(home_posts_serializer.data)
     return Response(data)
 
 

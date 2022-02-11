@@ -8,6 +8,7 @@ make home page cats dynamic DONE
 
 work on pagination DONE
 
+sub(before continuing, check loop in newSection Home) DONE
 search functionality
 
 reader accounts authentication

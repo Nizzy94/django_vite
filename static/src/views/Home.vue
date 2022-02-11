@@ -3,27 +3,23 @@
         <template #page_content>
             <section class="">
                 <div class="window-height">
-                    <hero />
+                    <hero :latest="latest" />
                 </div>
             </section>
             <section class="q-my-xl">
                 <category-section />
             </section>
-            <section
+            <!-- <section
                 style="margin-top: 150px; margin-bottom: 150px"
                 class="column justify-center"
             >
                 <latest-section :latest="latest" />
-            </section>
+            </section> -->
             <section
                 style="margin-top: 150px; margin-bottom: 150px"
                 class="justify-center"
             >
-                <news-section
-                    :cats="cats"
-                    :cat1_blogs="cat1_blogs"
-                    :cat2_blogs="cat2_blogs"
-                />
+                <news-section :cats="cats" :news_section="news_section" />
             </section>
             <section style="padding-top: 100px">
                 <Author />
@@ -34,6 +30,7 @@
         </template>
     </Layout>
 </template>
+        
 
 <script setup>
 import Layout from "../components/layouts/Base.vue";
@@ -46,7 +43,7 @@ import Author from "../components/Home/Author.vue";
 import getHomePosts from "../composables/getHomePosts";
 import { onBeforeMount } from "@vue/runtime-core";
 
-const { callHomePosts, latest, cats, cat1_blogs, cat2_blogs } = getHomePosts();
+const { callHomePosts, latest, cats, news_section } = getHomePosts();
 
 onBeforeMount(async () => {
     await callHomePosts();

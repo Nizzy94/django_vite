@@ -1,8 +1,8 @@
 <template>
-    <div class="custom-caption col-xs-12 col-sm-6" v-if="$q.screen.gt.xs">
+    <div class="custom-caption col-xs-12 col-sm-5" v-if="$q.screen.gt.xs">
         <div class="column justify-center full-height">
-            <div>
-                <div class="text-h2 text-primary">{{ header }}</div>
+            <div class="q-pa-xl">
+                <div class="text-h4 text-primary">{{ header }}</div>
                 <div class="text-subtitle1">{{ subtitle }}</div>
             </div>
         </div>
@@ -10,7 +10,7 @@
     <q-intersection
         :transition="$q.screen.gt.xs ? 'slide-down' : ''"
         transition-duration="1500"
-        class="custom-caption col-xs-12 col-sm-6"
+        class="custom-caption col-xs-12 col-sm-7"
     >
         <q-img height="95vh" :src="imageSrc">
             <div
