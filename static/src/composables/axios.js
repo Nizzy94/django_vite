@@ -31,5 +31,14 @@ const fetchBlogAllowAny = axios.create({
     },
 })
 
+const fetchSearchAllowAny = axios.create({
+    baseURL: `${domain}/search/api/query`,
+    timeout: 50000,
+    headers: {
+        'X-CSRFToken': Cookies.get('csrftoken'),
+        "Content-Type": "Application/json",
+    },
+})
 
-export { fetchWithCredentials, fetchAllowAny, fetchBlogAllowAny }
+
+export { fetchWithCredentials, fetchAllowAny, fetchBlogAllowAny, fetchSearchAllowAny }

@@ -11,7 +11,7 @@ const getHomePosts = () => {
     const callHomePosts = async() => {
         const res = await fetchBlogAllowAny.get('/get-home-posts/')
 
-        console.log(res.data)
+        // console.log(res.data)
 
 
         // console.log(JSON.parse(res.data))

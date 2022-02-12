@@ -10,24 +10,37 @@
                     v-model="search_term"
                     label="Search"
                     autofocus
-                    @keyup.enter="search_d = false"
+                    @keyup.enter="searchQuery"
                 />
                 <!-- <slot name=input_field /> -->
             </q-card-section>
 
             <q-card-actions align="right" class="text-primary">
                 <q-btn flat label="Cancel" v-close-popup />
-                <q-btn flat label="Search" v-close-popup />
+                <q-btn flat label="Search" @click="searchQuery" />
             </q-card-actions>
         </q-card>
     </q-dialog>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { inject, ref } from "vue";
+
+const routes = inject("routes");
 
 const search_term = ref("");
 const search_d = ref(false);
+
+const searchQuery = () => {
+    if (search_term.value == "") {
+        search_d.value = false;
+        return;
+    }
+
+    // console.log(search_term.value);
+
+    window.location.href = `${routes.value.search}?q=${search_term.value}`;
+};
 
 const openSearch = () => (search_d.value = true);
 

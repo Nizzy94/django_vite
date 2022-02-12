@@ -101,7 +101,18 @@ watch(data, () => {
     }
 });
 onBeforeMount(async () => {
-    await callAllPosts();
+    let query = ref(window.location.search); // get query string
+
+    let queries = ref(new URLSearchParams(query.value)); //get all query params
+    // console.log(queries.value.get("q"));
+    let q_param = queries.value.get("q");
+    if (queries.value.has("q")) {
+        // console.log("has q");
+        await callAllPosts({ query: q_param });
+    } else {
+        // console.log("has q not");
+        await callAllPosts({});
+    }
 });
 
 const pageLink = (page) => {
@@ -109,7 +120,13 @@ const pageLink = (page) => {
 };
 
 const onRequest = async (props) => {
-    await callAllPosts(props);
+    let query = ref(window.location.search); // get query string
+
+    let queries = ref(new URLSearchParams(query.value)); //get all query params
+    // console.log(queries.value.get("q"));
+    let q_param = queries.value.has("q") ? queries.value.get("q") : "";
+
+    await callAllPosts({ page: props, query: q_param });
 };
 </script>
 

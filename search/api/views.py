@@ -10,6 +10,21 @@ import math
 
 
 def global_search(query):
+    # return Q(
+    #     'bool',
+    #     # must=[
+    #     #     Q('match', title='language'),
+    #     # ],
+    #     # must_not=[
+    #     #     Q('match', title='ruby'),
+    #     #     Q('match', title='javascript'),
+    #     # ],
+    #     should=[
+    #         Q('match', title=query),
+    #         Q('match', tag__name__contains=query),
+    #         Q('match', body=query),
+    #     ],
+    #     minimum_should_match=1)
     return Q(
         'multi_match',
         query=query,
@@ -24,7 +39,7 @@ def global_search(query):
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def search(request, query):
-    page_size = request.GET.get('rowsPerPage', 12)
+    page_size = request.GET.get('rowsPerPage', 2)
     query = query
     q = global_search(query)
     search = BlogDocument.search().query(q)

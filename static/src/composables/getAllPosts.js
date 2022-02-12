@@ -1,5 +1,5 @@
 import { ref } from "vue"
-import { fetchBlogAllowAny } from "./axios"
+import { fetchBlogAllowAny, fetchSearchAllowAny } from "./axios"
 import { Loading, QSpinnerPie } from "quasar"
 
 
@@ -8,7 +8,8 @@ const getAllPosts = () => {
         // const data = ref([])
         const data = ref({})
 
-        const callAllPosts = async(page = 0) => {
+        const callAllPosts = async({ page = 0, query = "" }) => {
+                // console.log(query)
                 const category = ref("")
                 const tag = ref("")
 
@@ -27,26 +28,44 @@ const getAllPosts = () => {
                     category.value = 'all'
                 }
 
+                if (query == "") {
+                    try {
+                        Loading.show({
+                                spinner: QSpinnerPie
+                            })
+                            // const res = ref([])
 
-                try {
-                    Loading.show({
-                        spinner: QSpinnerPie
-                    })
+                        // console.log('paging all')
 
-                    const res = tag.value == "" ?
-                        await fetchBlogAllowAny.get(`/get-blog-by-category/${category.value}/${page > 1 ? `?page=${page}` : ``}`) :
-                    await fetchBlogAllowAny.get(`/get-blog-by-tag/${tag.value}/${page > 1 ? `?page=${page}` : ``}`)
-                    // console.log(res.data)
+
+                        const res = tag.value == "" ?
+                            await fetchBlogAllowAny.get(`/get-blog-by-category/${category.value}/${page > 1 ? `?page=${page}` : ``}`) :
+                        await fetchBlogAllowAny.get(`/get-blog-by-tag/${tag.value}/${page > 1 ? `?page=${page}` : ``}`)
+                        // console.log(res.data)
             
-                    data.value = await res.data
-                } catch (e) {
-                    console.log(e.response)
-                }finally {
-            setTimeout(() => {
-                Loading.hide()
-            }, 500);
+                        data.value = await res.data
+                    } catch (e) {
+                        console.log(e.response)
+                    }finally {
+                        setTimeout(() => {
+                            Loading.hide()
+                        }, 500);
+                    }
 
-        }
+                } else {
+                    try {
+                        // console.log('paging search')
+                        const res = await fetchSearchAllowAny.get(`/${query}/${page > 1 ? `?page=${page}` : ``}`)
+                        
+                        data.value = await res.data
+                    } catch (e) {
+                         console.log(e.response)
+                    }finally {
+                        setTimeout(() => {
+                            Loading.hide()
+                        }, 500);
+                    }
+                }
 
 
     }

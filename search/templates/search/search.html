@@ -1,0 +1,14 @@
+{% extends 'main/base.html' %}
+
+{% load django_vite %}
+
+
+{% block title %}Search{% endblock title %}
+
+{% block head_scripts %}
+    {% vite_asset 'js/blog/blog.js' %}
+
+    {% comment %} {% vite_asset 'js/search.js' %} {% endcomment %}
+{% endblock head_scripts %}
+
+{% block bottom_scripts %}{% endblock bottom_scripts %}

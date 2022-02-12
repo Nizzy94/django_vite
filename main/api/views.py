@@ -47,8 +47,8 @@ class APIRootView(APIView):
             'home': reverse('main:home', request=request),
             'about': reverse('main:about', request=request),
             'contact': reverse('main:contact', request=request),
+            'search': reverse('search:search_view', request=request),
             'blog': blog_cats,
-            # 'blog_detail': reverse('blog:blog_detail', kwargs={'categoryes'})
         }
 
         return Response(data)
