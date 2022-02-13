@@ -1,7 +1,13 @@
 <template>
     <q-card class="news-card" tag="a" :href="url" square v-if="horizontal">
         <q-card-section horizontal>
-            <q-img class="col-5" :src="imageSrc" fit="cover" height="100px" />
+            <q-img
+                class="col-5"
+                :src="imageSrc"
+                fit="cover"
+                height="100px"
+                width="100px"
+            />
             <!-- <q-card-section class="q-pa-none"> -->
             <q-card-section class="q-pt-none">
                 <div class="text-body2 ellipsis-3-lines">{{ title }}</div>

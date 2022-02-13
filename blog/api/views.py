@@ -156,7 +156,7 @@ def get_all_posts(request, category):
 @permission_classes([AllowAny])
 def get_posts_by_tag(request, tag):
 
-    page_size = request.GET.get('rowsPerPage', 4)
+    page_size = request.GET.get('rowsPerPage', 12)
 
     blogs = Blog.objects.filter(tags__slug=tag).order_by("-created_at")
 

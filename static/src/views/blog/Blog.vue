@@ -71,7 +71,7 @@
 
 <script setup>
 import { ref } from "@vue/reactivity";
-import { onBeforeMount, onMounted, watch } from "@vue/runtime-core";
+import { onBeforeMount, watch } from "@vue/runtime-core";
 import Base from "../../components/layouts/Base.vue";
 import NewsCard from "../../components/NewsCard.vue";
 import getAllPosts from "../../composables/getAllPosts";

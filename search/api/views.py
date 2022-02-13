@@ -25,7 +25,7 @@ def global_search(query):
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def search(request, query):
-    page_size = request.GET.get('rowsPerPage', 2)
+    page_size = request.GET.get('rowsPerPage', 10)
     query = query
     q = global_search(query)
     search = BlogDocument.search().query(q)
