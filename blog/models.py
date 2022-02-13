@@ -68,8 +68,8 @@ class Blog(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(default=timezone.now)
 
-    def body_to_str(self):
-        return self.body
+    # def body_to_str(self):
+    #     return self.body
 
     def get_absolute_url(self):
         return reverse("blog:blog_detail", kwargs={"blog_slug": self.slug, "category": self.category.slug})

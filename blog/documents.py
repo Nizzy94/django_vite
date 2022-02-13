@@ -7,7 +7,11 @@ from .models import Blog
 class BlogDocument(Document):
 
     tags = fields.ObjectField(properties={
-        'id': fields.IntegerField(),
+        # 'id': fields.IntegerField(),
+        'name': fields.TextField(),
+    })
+    category = fields.ObjectField(properties={
+        # 'id': fields.IntegerField(),
         'name': fields.TextField(),
     })
     body = fields.TextField()
@@ -28,18 +32,4 @@ class BlogDocument(Document):
         fields = [
             'id',
             'title',
-            # 'tags',
-            # 'description',
-
         ]
-
-        # Ignore auto updating of Elasticsearch when a model is saved
-        # or deleted:
-        # ignore_signals = True
-
-        # Don't perform an index refresh after every update (overrides global setting):
-        # auto_refresh = False
-
-        # Paginate the django queryset used to populate the index with the specified size
-        # (by default it uses the database driver's default setting)
-        # queryset_pagination = 5000

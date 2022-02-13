@@ -10,29 +10,15 @@ import math
 
 
 def global_search(query):
-    # return Q(
-    #     'bool',
-    #     # must=[
-    #     #     Q('match', title='language'),
-    #     # ],
-    #     # must_not=[
-    #     #     Q('match', title='ruby'),
-    #     #     Q('match', title='javascript'),
-    #     # ],
-    #     should=[
-    #         Q('match', title=query),
-    #         Q('match', tag__name__contains=query),
-    #         Q('match', body=query),
-    #     ],
-    #     minimum_should_match=1)
+
     return Q(
         'multi_match',
         query=query,
         fields=[
             'title',
             'body',
-            'tags',
-            # 'category'
+            'tags.name',
+            'category.name'
         ], fuzziness='auto')
 
 
@@ -43,6 +29,7 @@ def search(request, query):
     query = query
     q = global_search(query)
     search = BlogDocument.search().query(q)
+    # search = BlogDocument.search().filter(q)
     # response = search.execute()
 
     paginator = BlogListPagination(
