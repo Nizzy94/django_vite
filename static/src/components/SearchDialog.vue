@@ -10,6 +10,7 @@
                     v-model="search_term"
                     label="Search"
                     autofocus
+                    clearable
                     @keyup.enter="searchQuery"
                 />
                 <!-- <slot name=input_field /> -->
@@ -24,12 +25,23 @@
 </template>
 
 <script setup>
-import { inject, ref } from "vue";
+import { inject, ref, watch } from "vue";
 
 const routes = inject("routes");
 
 const search_term = ref("");
 const search_d = ref(false);
+const query_string = ref();
+// watch(search_term, () => {
+//     query_string.value = encodeURIComponent(search_term.value);
+// });
+
+const query = ref(window.location.search);
+const queries = ref(new URLSearchParams(query.value));
+
+if (queries.value.has("q")) {
+    search_term.value = queries.value.get("q");
+}
 
 const searchQuery = () => {
     if (search_term.value == "") {
@@ -37,9 +49,9 @@ const searchQuery = () => {
         return;
     }
 
-    // console.log(search_term.value);
+    query_string.value = search_term.value.replace(/ /g, "+");
 
-    window.location.href = `${routes.value.search}?q=${search_term.value}`;
+    window.location.href = `${routes.value.search}?q=${query_string.value}`;
 };
 
 const openSearch = () => (search_d.value = true);
