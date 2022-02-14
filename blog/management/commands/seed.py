@@ -75,6 +75,7 @@ class Command(BaseCommand):
         if not_super_user.count() > 0:
             not_super_user.delete()
 
+        self.stdout.write(self.style.NOTICE("Adding users..."))
         for _ in range(5):
 
             User.objects.create(
@@ -86,6 +87,8 @@ class Command(BaseCommand):
             )
 
         self.stdout.write(self.style.SUCCESS("Users added."))
+
+        self.stdout.write(self.style.NOTICE("Adding categories..."))
 
         for _ in range(len(CATEGORIES)):
             name = fake.unique.categories()
@@ -99,6 +102,7 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS("Categories added."))
 
+        self.stdout.write(self.style.NOTICE("Adding tags..."))
         for _ in range(len(TAGS)):
             name = fake.unique.tags()
             Tag.objects.get_or_create(
@@ -112,10 +116,14 @@ class Command(BaseCommand):
 
         blogs = Blog.objects.all()
 
+        self.stdout.write(self.style.NOTICE("Deleting blogs..."))
         blogs.delete()
-        # blogs_num = 0
+        self.stdout.write(self.style.SUCCESS("Blogs deleted."))
 
-        for _ in range(50):
+        # blogs_num = 0
+        self.stdout.write(self.style.NOTICE("Adding blogs..."))
+
+        for _ in range(500):
             image_name = fake.save_image()
 
             img_obj = open(IMG_DIR / image_name, 'rb')
@@ -125,7 +133,8 @@ class Command(BaseCommand):
             cat = fake.random_category()
             title = fake.sentence(nb_words=10)
             author = fake.random_author()
-            body = fake.paragraph(nb_sentences=5)
+            body = fake.paragraphs(nb=10)
+
             blog = Blog.objects.create(
                 category=cat,
                 title=title,

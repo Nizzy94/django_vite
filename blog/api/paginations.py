@@ -7,12 +7,13 @@ import math
 
 class BlogListPagination(PageNumberPagination):
     def __init__(self, page_size, max_page_size) -> None:
-        super().__init__()
+        super(BlogListPagination, self).__init__()
         self.page_size = page_size
         self.max_page_size = max_page_size
         # self.last_page_strings = ('last',)
 
     def get_paginated_response(self, data):
+        super(BlogListPagination, self).get_paginated_response(data)
 
         return Response({
             'next': self.get_next_link(),

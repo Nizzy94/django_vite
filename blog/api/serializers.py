@@ -24,8 +24,8 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class BlogSerializer(serializers.ModelSerializer):
-    def get_authour(self):
-        return User.objects.get(self.author)
+    # def get_authour(self):
+    #     return User.objects.get(self.author)
 
     url = serializers.CharField(source='get_absolute_url', read_only=True)
     author = UserSerializer()
@@ -33,4 +33,13 @@ class BlogSerializer(serializers.ModelSerializer):
     class Meta:
         model = Blog
         fields = '__all__'
+        # fields = ['id',
+        #           'title',
+        #           'slug',
+        #           'tags',
+        #           'category',
+        #           'body',
+        #           'author',
+        #           'url'
+        #           ]
         lookup_field = 'slug'

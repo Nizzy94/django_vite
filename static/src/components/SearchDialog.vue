@@ -1,6 +1,6 @@
 <template>
     <q-dialog v-model="search_d" position="top">
-        <q-card style="max-width: 600px; max-hegiht: 700px" class="q-px-sm">
+        <q-card class="q-px-sm search_card">
             <!-- <q-card-section>
           <div class="text-h6">Search</div>
         </q-card-section> -->
@@ -24,23 +24,33 @@
             </q-card-actions>
 
             <q-card-section class="q-pt-md" style="">
-                {{ results.height }}
                 <q-scroll-area :style="results.style">
-                    <div
-                        class="q-mb-sm"
-                        v-for="res in results.data"
-                        :key="res.id"
+                    <transition
+                        appear
+                        enter-active-class="animated fadeIn"
+                        leave-active-class="animated fadeOut"
                     >
-                        <news-card
-                            :title="res.title"
-                            :body="res.body"
-                            :subtitle="'by John Doe'"
-                            horizontal
-                            :imageSrc="res.image"
-                            :url="res.url"
-                        />
-                    </div>
+                        <div v-show="results.data.length">
+                            <div
+                                class="q-mb-sm"
+                                v-for="res in results.data"
+                                :key="res.id"
+                            >
+                                <news-card
+                                    :title="res.title"
+                                    :body="res.body"
+                                    :subtitle="'by John Doe'"
+                                    horizontal
+                                    :imageSrc="res.image"
+                                    :url="res.url"
+                                />
+                            </div>
+                        </div>
+                    </transition>
                 </q-scroll-area>
+                <q-inner-loading :showing="results.loading">
+                    <q-spinner-pie size="50px" color="primary" />
+                </q-inner-loading>
             </q-card-section>
         </q-card>
     </q-dialog>
@@ -50,18 +60,24 @@
 import { inject, ref, watch } from "vue";
 import getAllPosts from "../composables/getAllPosts";
 import NewsCard from "../components/NewsCard.vue";
+import { useQuasar } from "quasar";
 
 const routes = inject("routes");
+const $q = useQuasar();
 
 const search_term = ref("");
 const search_d = ref(false);
 const query_string = ref();
+const searchCardStyle = ref({
+    minWidth: "300px",
+    maxHeight: "700px",
+});
 const results = ref({
     data: [],
     style: {
         height: "0px",
-        maxWidth: "600px",
     },
+    loading: false,
 });
 
 const query = ref(window.location.search);
@@ -87,22 +103,25 @@ const searchQuery = () => {
 };
 
 const onRequest = async () => {
-    // let query = ref(window.location.search); // get query string
-
-    // let queries = ref(new URLSearchParams(query.value)); //get all query params
-    // // console.log(queries.value.get("q"));
-    // let q_param = queries.value.has("q") ? queries.value.get("q") : "";
+    results.value.loading = true;
     if (search_term.value == "") {
+        results.value.loading = false;
+    } else {
+        await callAllPosts({ query: search_term.value });
+    }
+
+    if (!data.value.results?.length || search_term.value == "") {
         results.value.data = [];
         results.value.style.height = "0px";
         return;
     }
 
-    await callAllPosts({ query: search_term.value });
-
-    console.log(data.value);
-    results.value.data = data.value.results;
-    results.value.style.height = "500px";
+    if (data.value.results.length) {
+        // console.log(data.value);
+        results.value.style.height = "500px";
+        results.value.data = await data.value.results;
+        results.value.loading = false;
+    }
 };
 
 // watch(data, () => {
@@ -118,5 +137,11 @@ defineExpose({
 });
 </script>
 
-<style>
+<style lang="sass">
+.search_card
+    min-width: 300px
+    max-height: 600px
+
+    @media (min-width: $breakpoint-sm-min)
+        min-width: 500px
 </style>

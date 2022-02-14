@@ -7,7 +7,7 @@
         infinite
         :autoplay="10000"
         navigation
-        navigation-position="right"
+        :navigation-position="$q.screen.gt.sm ? 'right' : 'bottom'"
         transition-next="jump-up"
         transition-prev="jump-down"
         vertical

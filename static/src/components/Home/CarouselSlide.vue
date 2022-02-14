@@ -1,28 +1,28 @@
 <template>
-    <div class="custom-caption col-xs-12 col-sm-5" v-if="$q.screen.gt.xs">
+    <div class="custom-caption col-xs-12 col-md-5" v-if="$q.screen.gt.sm">
         <div class="column justify-center full-height">
             <div class="q-pa-xl">
-                <div class="text-h4 text-primary">{{ header }}</div>
+                <div class="text-h4 text-primary q-mb-md">{{ header }}</div>
                 <div class="text-subtitle1">{{ subtitle }}</div>
             </div>
         </div>
     </div>
     <q-intersection
-        :transition="$q.screen.gt.xs ? 'slide-down' : ''"
+        :transition="$q.screen.gt.sm ? 'slide-down' : ''"
         transition-duration="1500"
-        class="custom-caption col-xs-12 col-sm-7"
+        class="custom-caption col-xs-12 col-md-7"
     >
         <q-img height="95vh" :src="imageSrc">
             <div
-                v-if="$q.screen.lt.sm"
+                v-if="$q.screen.lt.md"
                 class="text-subtitle2 flex flex-center"
                 :class="{
-                    'absolute-full': $q.screen.lt.sm,
+                    'absolute-full': $q.screen.lt.md,
                     //'absolute-left': $q.screen.gt.xs,
                 }"
             >
-                <div v-if="$q.screen.lt.sm">
-                    <div class="text-h2">{{ header }}</div>
+                <div v-if="$q.screen.lt.md">
+                    <div class="text-h5 q-mb-md">{{ header }}</div>
                     <div class="text-subtitle1">{{ subtitle }}</div>
                 </div>
             </div>

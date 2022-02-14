@@ -31,11 +31,8 @@ const getAllPosts = () => {
                 if (query == "") {
                     try {
                         Loading.show({
-                                spinner: QSpinnerPie
-                            })
-                            // const res = ref([])
-
-                        // console.log('paging all')
+                            spinner: QSpinnerPie
+                        })
 
 
                         const res = tag.value == "" ?
@@ -54,8 +51,8 @@ const getAllPosts = () => {
 
                 } else {
                     try {
-                        // console.log('paging search')
                         const res = await fetchSearchAllowAny.get(`/${query}/${page > 1 ? `?page=${page}` : ``}`)
+                        // console.log(res.data)
                         
                         data.value = await res.data
                     } catch (e) {

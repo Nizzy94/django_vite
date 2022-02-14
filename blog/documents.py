@@ -14,6 +14,9 @@ class BlogDocument(Document):
         # 'id': fields.IntegerField(),
         'name': fields.TextField(),
     })
+    # author = fields.ObjectField(properties={
+    #     'username': fields.TextField(),
+    # })
     body = fields.TextField()
 
     class Index:
@@ -32,4 +35,5 @@ class BlogDocument(Document):
         fields = [
             'id',
             'title',
+            'slug'
         ]
