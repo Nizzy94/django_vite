@@ -1,17 +1,15 @@
-from base64 import decode
-from django.core.management.base import BaseCommand
-from faker import Faker
-from faker.providers import BaseProvider
-from importlib_metadata import email
-from blog.models import Blog, Category, Tag
-from django.utils.text import slugify
-from PIL import Image
-from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import User
-import os
-from django.core.files.images import ImageFile
-
 from core.settings import BASE_DIR, STATICFILES_DIRS
+from django.core.files.images import ImageFile
+import os
+from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
+from PIL import Image
+from django.utils.text import slugify
+from blog.models import Blog, Category, Tag
+from importlib_metadata import email
+from faker.providers import BaseProvider
+from faker import Faker
+from django.core.management.base import BaseCommand
 
 
 CATEGORIES = [
@@ -133,7 +131,25 @@ class Command(BaseCommand):
             cat = fake.random_category()
             title = fake.sentence(nb_words=10)
             author = fake.random_author()
-            body = fake.paragraphs(nb=10)
+            paragraphs = []
+            paragraph = ""
+            html = "<div>"
+
+            # print(fake.paragraphs(nb=10))
+
+            for _ in range(5):
+                paragraphs.append(fake.paragraph(nb_sentences=20))
+
+            for para in paragraphs:
+                html += f"<p>{para}</p><br>"
+
+                # print(paragraph)
+            # for par in paragraph:
+            #     html += f"<p>{par}</p><br><br>"
+
+            # print(html)
+
+            body = html+"</div>"
 
             blog = Blog.objects.create(
                 category=cat,
@@ -143,14 +159,10 @@ class Command(BaseCommand):
                 body=body
             )
 
-            # print(blog.image.path)
-
             blog_tags = fake.random_tags()
 
             for tag in blog_tags:
                 blog.tags.add(tag)
-
-            # blogs_num += 1
 
             # self.stdout.write('Adding blogs: %d' % ((blogs_num/50)*100,))
         self.stdout.write(self.style.SUCCESS("Blogs added."))

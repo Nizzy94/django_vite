@@ -14,7 +14,7 @@ const getPostDetail = () => {
 
             const res = await fetchBlogAllowAny.get(`/get-post-detail/${post_slug}/`)
 
-            console.log(res)
+            // console.log(res)
             post.value = await res.data.blog
             tags.value = await res.data.tags
         } catch (e) {

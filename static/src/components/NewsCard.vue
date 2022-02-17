@@ -25,7 +25,9 @@
         <q-img :src="imageSrc" fit="cover" height="250px" />
 
         <q-card-section>
-            <div class="text-h6 text-capitalize">{{ title }}</div>
+            <div class="text-h6 text-capitalize ellipsis-3-lines">
+                {{ title }}
+            </div>
             <div class="text-subtitle2">{{ subtitle }}</div>
         </q-card-section>
 

@@ -13,7 +13,7 @@ const getRelatedPosts = () => {
         try {
             const res = await fetchBlogAllowAny.get(`/get-releted-posts-by-tag/${blogSlug}/`)
 
-            console.log(res)
+            // console.log(res)
             related.value = await res.data
 
         } catch (e) {
