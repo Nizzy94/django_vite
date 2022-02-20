@@ -22,6 +22,7 @@
                 :header="news.title"
                 :subtitle="news.body"
                 :imageSrc="news.image"
+                :url="news.url"
             />
         </q-carousel-slide>
         <!-- <q-carousel-slide name="second" class="row">

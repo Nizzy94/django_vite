@@ -71,12 +71,16 @@
                         </div>
                     </section>
                     <q-separator spaced="16px" />
+                    <section>
+                        <comments />
+                    </section>
+                    <q-separator spaced="16px" />
 
-                    <div>
-                        <section>
-                            <related />
-                        </section>
-                    </div>
+                    <!-- <div> -->
+                    <section>
+                        <related />
+                    </section>
+                    <!-- </div> -->
                 </div>
                 <div class="col-xs-12 col-md-3">
                     <div class="side_bar">

@@ -1,10 +1,14 @@
 <template>
     <div class="custom-caption col-xs-12 col-md-5" v-if="$q.screen.gt.sm">
         <div class="column justify-center full-height">
-            <div class="q-pa-xl">
+            <a class="carousel_link q-pa-xl" :href="url">
                 <div class="text-h4 text-primary q-mb-md">{{ header }}</div>
-                <div class="text-subtitle1">{{ subtitle }}</div>
-            </div>
+                <!-- <div class="text-subtitle1">{{ subtitle }}</div> -->
+                <div
+                    class="text-body1"
+                    v-html="subtitle.substring(0, 500).concat('...')"
+                ></div>
+            </a>
         </div>
     </div>
     <q-intersection
@@ -23,7 +27,11 @@
             >
                 <div v-if="$q.screen.lt.md">
                     <div class="text-h5 q-mb-md">{{ header }}</div>
-                    <div class="text-subtitle1">{{ subtitle }}</div>
+                    <!-- <div class="text-subtitle1">{{ subtitle }}</div> -->
+                    <div
+                        class="text-subtitle1"
+                        v-html="subtitle.substring(0, 500).concat('...')"
+                    ></div>
                 </div>
             </div>
         </q-img>
@@ -44,12 +52,19 @@ const props = defineProps({
     imageSrc: {
         type: String,
     },
+    url: {
+        type: String,
+    },
 });
 
-const { header, subtitle, imageSrc } = toRefs(props);
+const { header, subtitle, imageSrc, url } = toRefs(props);
 </script>
 
 <style lang="sass">
+.carousel_link
+    display: block
+    text-decoration: none
+    color: $dark
 .custom-caption
     text-align: center
 </style>
