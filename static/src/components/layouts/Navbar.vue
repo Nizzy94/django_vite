@@ -96,7 +96,8 @@ export default {
         const routes = inject("routes");
         const currentRoute = ref(window.location.href);
 
-        // console.log(routes.value)
+        console.log(inject("user_is_authenticated"));
+        const user_is_authenticated = inject("user_is_authenticated");
 
         const $q = useQuasar();
 
@@ -150,6 +151,7 @@ export default {
             openSearch,
             currentRouteIsBlog,
             openAccountDia,
+            user_is_authenticated,
         };
     },
 };

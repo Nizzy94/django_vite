@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #
     # third party
+    "social_django",
     'django_vite',
     'rest_framework',
     'ckeditor',
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'main',
     'blog',
     'search',
+    'authentication',
 ]
 
 MIDDLEWARE = [
@@ -59,6 +61,17 @@ ELASTICSEARCH_DSL = {
     },
 }
 
+# SOCIAL_AUTH_TRAILING_SLASH = False  # Remove trailing slash from routes
+SOCIAL_AUTH_AUTH0_DOMAIN = 'dev-11mbi3c5.us.auth0.com'
+SOCIAL_AUTH_AUTH0_KEY = 'xUvCoBcvoo6ugQ2l7G20dfYQ8mAS7T0I'
+SOCIAL_AUTH_AUTH0_SECRET = 'VeJ2zt6ZmLqikGu2m-_eUxnoR2LhbjuZssDRgangrjaiYB7aZBi_UZruEyir8cB4'
+
+SOCIAL_AUTH_AUTH0_SCOPE = [
+    'openid',
+    'profile',
+    'email'
+]
+
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
@@ -69,6 +82,17 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
 }
+
+AUTHENTICATION_BACKENDS = {
+    # 'authentication.auth0backend.Auth0',
+    'social_core.backends.auth0.Auth0OAuth2',
+    'django.contrib.auth.backends.ModelBackend'
+}
+
+
+LOGIN_URL = '/login/auth0/'
+# LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/login/redirect/'
 
 TEMPLATES = [
     {
