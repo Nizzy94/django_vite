@@ -1,7 +1,8 @@
+
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
-from blog.models import Blog, Category, Tag
+from blog.models import Blog, Category, Tag, Comment
 from authentication.api.serializers import UserSerializer
 
 
@@ -33,13 +34,18 @@ class BlogSerializer(serializers.ModelSerializer):
     class Meta:
         model = Blog
         fields = '__all__'
-        # fields = ['id',
-        #           'title',
-        #           'slug',
-        #           'tags',
-        #           'category',
-        #           'body',
-        #           'author',
-        #           'url'
-        #           ]
+        lookup_field = 'slug'
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    # def get_authour(self):
+    #     return User.objects.get(self.author)
+
+    # url = serializers.CharField(source='get_absolute_url', read_only=True)
+    user = UserSerializer()
+    # parent = self
+
+    class Meta:
+        model = Comment
+        fields = '__all__'
         lookup_field = 'slug'

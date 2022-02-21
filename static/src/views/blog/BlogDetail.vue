@@ -97,6 +97,7 @@ import Base from "../../components/layouts/Base.vue";
 import Related from "../../components/blog/Related.vue";
 import Sidebar from "../../components/blog/Sidebar.vue";
 import getPostDetail from "../../composables/getPostDetail";
+import Comments from "../../components/blog/Comments.vue";
 import { onBeforeMount, ref, watch } from "@vue/runtime-core";
 import { date } from "quasar";
 

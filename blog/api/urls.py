@@ -22,4 +22,7 @@ urlpatterns = [
 
     path('get-post-detail/<slug:post_slug>/', views.get_post_detail,
          name="get_post_detail"),
+
+    path('get-comments/<int:post_id>/', views.get_comments,
+         name="get_comments"),
 ]

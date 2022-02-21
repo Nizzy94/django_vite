@@ -1,12 +1,11 @@
 
-from blog.api.serializers import BlogSerializer, CategorySerializer, TagSerializer
+from blog.api.serializers import BlogSerializer, CategorySerializer, CommentSerializer, TagSerializer
 from blog.models import Blog, Category
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from .paginations import BlogListPagination
 import math
-import json
 from django.db.models import Count
 
 
@@ -17,11 +16,6 @@ def get_all_categories(request):
     # categories = Category.objects.order_by('blogs__count')
     categories = Category.objects.annotate(
         Count('blogs')).order_by('-blogs__count')[:8]
-
-    # print(categories.order_by('-blogs__count'))
-
-    # for cat in categories:
-    #     print(cat.blogs.count())
 
     serializer = CategorySerializer(categories, many=True)
 
@@ -81,22 +75,8 @@ def get_home_posts(request):
             {'cat': cats.data[2], 'blogs': sel_cat3_blogs_serializer.data},
             {'cat': cats.data[3], 'blogs': sel_cat4_blogs_serializer.data},
         ],
-        # 'news_section': {
-        #     'cat1_blogs': {'cats': cats.data[0], 'blogs': sel_cat1_blogs_serializer.data},
-        #     'cat2_blogs': {'cats': cats.data[1], 'blogs': sel_cat2_blogs_serializer.data},
-        #     'cat3_blogs': {'cats': cats.data[2], 'blogs': sel_cat3_blogs_serializer.data},
-        #     'cat4_blogs': {'cats': cats.data[3], 'blogs': sel_cat4_blogs_serializer.data},
-        # },
         'cats': cats.data
     }
-    # data = json.dumps({
-    #     'latest': latest_serializer.data,
-    #     'cat1_blogs': sel_cat1_blogs_serializer.data,
-    #     'cat2_blogs': sel_cat2_blogs_serializer.data,
-    #     'cat3_blogs': sel_cat3_blogs_serializer.data,
-    #     'cat4_blogs': sel_cat4_blogs_serializer.data,
-    #     'cats': cats.data
-    # })
 
     # return Response(home_posts_serializer.data)
     return Response(data)
@@ -222,5 +202,16 @@ def get_tags(request, post_slug):
     tags = blog.tags.all()
 
     serializer = BlogSerializer(tags)
+
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_comments(request, post_id):
+    blog = Blog.objects.get(id=post_id)
+    comments = blog.comments.all()
+
+    serializer = CommentSerializer(comments, many=True)
 
     return Response(serializer.data)

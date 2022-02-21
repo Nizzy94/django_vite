@@ -8,8 +8,6 @@ from PIL import Image
 from django.urls import reverse
 from ckeditor.fields import RichTextField
 
-from core.settings import BASE_DIR
-
 
 class Category(models.Model):
     icon = models.CharField(max_length=255, default="nothing")
@@ -55,8 +53,6 @@ class Tag(models.Model):
 
 class Blog(models.Model):
 
-    # IMG_DIR = BASE_DIR / '../unicart_django/unicart_market/static/images/ecommerce-images/JPEG'
-
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
     image = models.ImageField(upload_to="blog_images/%Y/%m/%d")
@@ -93,3 +89,30 @@ class Blog(models.Model):
                 img.point(lambda i: i * 1.2)
                 img.save(self.image.path)
         # super().save(*args, **kwargs)
+
+
+class Comment(models.Model):
+
+    blog = models.ForeignKey(
+        Blog, related_name="comments", on_delete=CASCADE)
+
+    user = models.ForeignKey(User, related_name="comments", on_delete=CASCADE)
+    parent = models.ForeignKey(
+        "Comment", related_name="comments", on_delete=CASCADE, null=True)
+
+    body = models.TextField()
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(default=timezone.now)
+
+    # def body_to_str(self):
+    #     return self.body
+
+    def username(self):
+        return self.user.username
+
+    def get_absolute_url(self):
+        return reverse("blog:blog_detail", kwargs={"blog_slug": self.slug, "category": self.category.slug})
+
+    def __str__(self) -> str:
+        return 'Comment by: %s' % self.username()
