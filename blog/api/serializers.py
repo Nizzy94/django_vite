@@ -37,15 +37,30 @@ class BlogSerializer(serializers.ModelSerializer):
         lookup_field = 'slug'
 
 
-class CommentSerializer(serializers.ModelSerializer):
-    # def get_authour(self):
-    #     return User.objects.get(self.author)
-
-    # url = serializers.CharField(source='get_absolute_url', read_only=True)
-    user = UserSerializer()
-    # parent = self
+class Child2CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
         fields = '__all__'
-        lookup_field = 'slug'
+
+
+class ChildCommentSerializer(serializers.ModelSerializer):
+    children = serializers.ListSerializer(
+        child=Child2CommentSerializer()
+    )
+
+    class Meta:
+        model = Comment
+        fields = '__all__'
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    children = serializers.ListSerializer(
+        child=ChildCommentSerializer()
+    )
+
+    class Meta:
+        model = Comment
+        fields = '__all__'
+        # depth = 2

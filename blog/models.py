@@ -1,4 +1,4 @@
-from email.policy import default
+
 from django.db.models.deletion import CASCADE
 from django.utils import timezone
 from django.db import models
@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from PIL import Image
 from django.urls import reverse
 from ckeditor.fields import RichTextField
+
+from blog.managers import CommentManager
 
 
 class Category(models.Model):
@@ -92,24 +94,34 @@ class Blog(models.Model):
 
 
 class Comment(models.Model):
+    objects = CommentManager()
 
     blog = models.ForeignKey(
         Blog, related_name="comments", on_delete=CASCADE)
 
     user = models.ForeignKey(User, related_name="comments", on_delete=CASCADE)
     parent = models.ForeignKey(
-        "Comment", related_name="comments", on_delete=CASCADE, null=True)
+        "self", related_name="child_comments", on_delete=CASCADE, null=True)
+    # children = models.ForeignKey(
+    #     "Comment", related_name="child_comments", on_delete=CASCADE)
 
     body = models.TextField()
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(default=timezone.now)
 
-    # def body_to_str(self):
+    # def get_parent(self):
     #     return self.body
 
     def username(self):
         return self.user.username
+
+    @property
+    def children(self):
+        return self.child_comments.all()
+    # @property
+    # def children(self):
+    #     return self.child_comments.all()
 
     def get_absolute_url(self):
         return reverse("blog:blog_detail", kwargs={"blog_slug": self.slug, "category": self.category.slug})

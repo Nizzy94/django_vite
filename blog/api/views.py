@@ -7,6 +7,7 @@ from rest_framework.permissions import AllowAny
 from .paginations import BlogListPagination
 import math
 from django.db.models import Count
+from django.db.models import prefetch_related_objects
 
 
 @api_view(['GET'])
@@ -210,8 +211,9 @@ def get_tags(request, post_slug):
 @permission_classes([AllowAny])
 def get_comments(request, post_id):
     blog = Blog.objects.get(id=post_id)
-    comments = blog.comments.all()
 
-    serializer = CommentSerializer(comments, many=True)
+    parent_comments = blog.comments.parent()
+
+    serializer = CommentSerializer(parent_comments, many=True)
 
     return Response(serializer.data)
