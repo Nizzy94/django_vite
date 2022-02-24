@@ -72,7 +72,7 @@
                     </section>
                     <q-separator spaced="16px" />
                     <section>
-                        <comments />
+                        <comments :comments="comments" />
                     </section>
                     <q-separator spaced="16px" />
 
@@ -97,11 +97,13 @@ import Base from "../../components/layouts/Base.vue";
 import Related from "../../components/blog/Related.vue";
 import Sidebar from "../../components/blog/Sidebar.vue";
 import getPostDetail from "../../composables/getPostDetail";
+import getComments from "../../composables/getComments";
 import Comments from "../../components/blog/Comments.vue";
 import { onBeforeMount, ref, watch } from "@vue/runtime-core";
 import { date } from "quasar";
 
 const { callPostDetail, post, tags } = getPostDetail();
+const { callComments, comments } = getComments();
 onBeforeMount(() => {
     callPostDetail();
 });
@@ -111,13 +113,16 @@ const date_format = ref("");
 const backUrl = document.referrer;
 
 watch(post, () => {
-    if (post.value.created_at) {
-        date_format.value = new Date(post.value.created_at);
+    if (post.value) {
+        if (post.value.created_at) {
+            date_format.value = new Date(post.value.created_at);
 
-        date_created.value = date.formatDate(
-            date_format.value,
-            "MMMM Do, YYYY"
-        );
+            date_created.value = date.formatDate(
+                date_format.value,
+                "MMMM Do, YYYY"
+            );
+        }
+        callComments(post.value.id);
     }
 });
 </script>

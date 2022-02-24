@@ -37,17 +37,18 @@ class BlogSerializer(serializers.ModelSerializer):
         lookup_field = 'slug'
 
 
-class Child2CommentSerializer(serializers.ModelSerializer):
+# class Child2CommentSerializer(serializers.ModelSerializer):
 
-    class Meta:
-        model = Comment
-        fields = '__all__'
+#     class Meta:
+#         model = Comment
+#         fields = '__all__'
 
 
 class ChildCommentSerializer(serializers.ModelSerializer):
-    children = serializers.ListSerializer(
-        child=Child2CommentSerializer()
-    )
+    user = UserSerializer()
+    # children = serializers.ListSerializer(
+    #     child=Child2CommentSerializer()
+    # )
 
     class Meta:
         model = Comment
