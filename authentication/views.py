@@ -7,8 +7,8 @@ from django.contrib.auth.decorators import login_required
 
 
 def login_page(request):
-    # print(request.META.get('HTTP_REFERER'))
     next_url = request.GET.get("next", "/")
+    # print('next in login_page', next_url)
     request.session['redirect_url'] = next_url
 
     login_url = '/login/auth0/'
@@ -19,9 +19,10 @@ def login_page(request):
 
 
 def login_redirect(request):
-    print(request.session.get('redirect_url'))
-    redirect_to = request.build_absolute_uri(
-        f"{request.session.get( 'redirect_url')}")
+    next_url = request.session.get('redirect_url')
+    # print('next in login_redirect', next_url)
+
+    redirect_to = request.build_absolute_uri(f"{next_url}")
 
     return HttpResponseRedirect(redirect_to)
 

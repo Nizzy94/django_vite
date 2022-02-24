@@ -29,7 +29,12 @@
                         outline
                         label="Sign In"
                     />
-                    <q-btn color="primary" label="Sign Up" />
+                    <q-btn
+                        color="primary"
+                        label="Sign Up"
+                        type="a"
+                        :href="`/login/auth/?next=${redirect_url}`"
+                    />
                 </div>
             </q-card-section>
 

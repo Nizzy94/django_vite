@@ -2,73 +2,33 @@
     <div>
         <h6>Comments:</h6>
     </div>
+    <div class="q-ma-md">
+        <comment-form :post_id="post_id" />
+    </div>
     <q-list>
         <!-- <q-item > -->
-        <comment :comment="comment" v-for="comment in comments" />
+        <comment
+            :comment="comment"
+            :post_id="post_id"
+            v-for="comment in comments"
+        />
         <!-- </q-item> -->
     </q-list>
 </template>
 
 <script setup>
 import { computed, ref, toRefs } from "@vue/reactivity";
+import { inject } from "@vue/runtime-core";
 import Comment from "./Comment.vue";
+import CommentForm from "./CommentForm.vue";
 const props = defineProps({
     comments: Array,
+    post_id: Number,
 });
-// const comments = ref([
-//     {
-//         id: 1,
-//         parent: null,
-//         children: [
-//             {
-//                 id: 2,
-//                 parent: 1,
-//                 children: [
-//                     {
-//                         id: 3,
-//                         parent: 2,
-//                         children: [],
-//                         body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-//                     },
-//                 ],
-//                 body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-//             },
-//         ],
-//         body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-//     },
-//     {
-//         id: 4,
-//         parent: null,
-//         children: [
-//             {
-//                 id: 5,
-//                 parent: 4,
-//                 children: [],
-//                 body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-//             },
-//             {
-//                 id: 6,
-//                 parent: 4,
-//                 children: [
-//                     {
-//                         id: 7,
-//                         parent: 6,
-//                         children: [],
-//                         body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-//                     },
-//                 ],
-//                 body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-//             },
-//         ],
-//         body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-//     },
-//     {
-//         id: 8,
-//         parent: null,
-//         children: [],
-//         body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-//     },
-// ]);
+
+const { comments, post_id } = toRefs(props);
+
+// const post_id = inject("post_id");
 </script>
 
 <style>

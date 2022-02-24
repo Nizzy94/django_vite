@@ -124,7 +124,6 @@ def get_all_posts(request, category):
     paginator = BlogListPagination(page_size, math.ceil(len(blogs)/page_size))
 
     result = perform_pagination(request, blogs, page_size, paginator)
-    print(result)
 
     # serializer = BlogSerializer(blogs, many=True)
     serializer = BlogSerializer(result, many=True)
@@ -144,7 +143,6 @@ def get_posts_by_tag(request, tag):
     paginator = BlogListPagination(page_size, math.ceil(len(blogs)/page_size))
 
     result = perform_pagination(request, blogs, page_size, paginator)
-    print(result)
 
     serializer = BlogSerializer(result, many=True)
 
@@ -159,7 +157,7 @@ def get_releted_posts_by_tag(request, post_slug):
     blog = Blog.objects.filter(slug=post_slug).get()
 
     tags = blog.tags.all()
-    print(tags)
+
     blogs_set = {}
     tag_names = []
     blogs = []
@@ -168,15 +166,13 @@ def get_releted_posts_by_tag(request, post_slug):
         for tag in tags:
             tag_q = tag.blogs.all().exclude(id=blog.id)
             if len(blogs) == 0:
-                print('0')
+
                 blogs = tag_q
             elif len(blogs) > 0:
-                print('>0')
+
                 blogs = blogs.union(tag_q)
             # blogs.union(tag.blogs.all())
 
-    print('blogs count:', blogs.count())
-    print('blogs:', blogs.order_by('-created_at'))
     related = blogs.order_by('-created_at')[:8]
 
     serializer = BlogSerializer(related, many=True)

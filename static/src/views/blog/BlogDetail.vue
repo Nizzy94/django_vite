@@ -13,8 +13,8 @@
             <div
                 class="row q-col-gutter-md q-mb-xl"
                 :class="{
-                    ' q-px-xl': $q.screen.gt.xs,
-                    ' q-px-md': $q.screen.lt.sm,
+                    'q-px-xl': $q.screen.gt.xs,
+                    'q-px-md': $q.screen.lt.sm,
                 }"
             >
                 <div class="col-xs-12 col-md-9">
@@ -71,8 +71,8 @@
                         </div>
                     </section>
                     <q-separator spaced="16px" />
-                    <section>
-                        <comments :comments="comments" />
+                    <section v-if="post">
+                        <comments :comments="comments" :post_id="post_id" />
                     </section>
                     <q-separator spaced="16px" />
 
@@ -99,7 +99,7 @@ import Sidebar from "../../components/blog/Sidebar.vue";
 import getPostDetail from "../../composables/getPostDetail";
 import getComments from "../../composables/getComments";
 import Comments from "../../components/blog/Comments.vue";
-import { onBeforeMount, ref, watch } from "@vue/runtime-core";
+import { onBeforeMount, provide, ref, watch } from "@vue/runtime-core";
 import { date } from "quasar";
 
 const { callPostDetail, post, tags } = getPostDetail();
@@ -111,6 +111,7 @@ onBeforeMount(() => {
 const date_created = ref("");
 const date_format = ref("");
 const backUrl = document.referrer;
+const post_id = ref(0);
 
 watch(post, () => {
     if (post.value) {
@@ -123,8 +124,10 @@ watch(post, () => {
             );
         }
         callComments(post.value.id);
+        post_id.value = post.value.id;
     }
 });
+// provide("post_id", post.id);
 </script>
 
 <style lang="sass">

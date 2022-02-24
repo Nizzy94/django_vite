@@ -1,10 +1,36 @@
 <template>
-    <q-input v-model="comment" :label="parent ? : 'Add Comment':'Add Reply'" />
-    <q-btn :label="parent ? : 'Add Comment':'Reply'" @click="submitComment" />
+    <div class="q-my-md" v-if="user_is_authenticated">
+        <q-input
+            :dense="!parent"
+            v-model="comment"
+            :label="parent ? 'Add Comment' : 'Add Reply'"
+        />
+        <q-btn
+            :label="parent ? 'Add Comment' : 'Reply'"
+            @click="submitComment"
+            color="secondary"
+            text-color="dark"
+            class="q-mt-sm"
+            :size="!parent ? '10px' : '14px'"
+        />
+    </div>
+    <div v-else>
+        <p>You must have an account to give comments.</p>
+        <q-btn
+            label="Login/Register"
+            type="a"
+            :href="`/login/auth/?next=${redirect_url}`"
+            color="secondary"
+            text-color="dark"
+            class="q-mt-sm"
+        />
+    </div>
+    <!-- </div> -->
 </template>
 
 <script setup>
-import { toRefs } from "@vue/reactivity";
+import { ref, toRefs } from "@vue/reactivity";
+import { inject } from "@vue/runtime-core";
 
 const props = defineProps({
     parent: {
@@ -15,8 +41,15 @@ const props = defineProps({
         required: true,
         type: Number,
     },
-    parent_id: Number,
+    parent_id: {
+        type: Number,
+        default: null,
+    },
 });
+
+const redirect_url = window.location.pathname;
+
+const user_is_authenticated = inject("user_is_authenticated");
 
 const comment = ref("");
 

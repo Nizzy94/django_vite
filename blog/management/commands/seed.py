@@ -59,7 +59,8 @@ class Provider(BaseProvider):
 
     def random_comment(self, blog):
         # print('in rand com')
-        comments = blog.comments.all()
+        # comments = blog.comments.all()
+        comments = blog.comments.filter(parent=None)
         if comments.count() < 1:
             # print('com count less than one')
             return None

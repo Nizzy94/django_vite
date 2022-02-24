@@ -96,7 +96,7 @@ export default {
         const routes = inject("routes");
         const currentRoute = ref(window.location.href);
 
-        console.log(inject("user_is_authenticated"));
+        // console.log(inject("user_is_authenticated"));
         const user_is_authenticated = inject("user_is_authenticated");
 
         const $q = useQuasar();

@@ -32,7 +32,7 @@
     {% block head_scripts %}{% endblock head_scripts %}
 </head>
 <body>
-    {{ user.is_authenticated }}
+    {% comment %} {{ user.is_authenticated }} {% endcomment %}
     <div id="app" data-user-is-authenticated="{{user.is_authenticated}}"></div>
     {% block bottom_scripts %}{% endblock bottom_scripts %}
 </body>

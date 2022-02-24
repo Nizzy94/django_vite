@@ -1,21 +1,28 @@
 
 <script setup>
-import { computed, toRefs } from "@vue/reactivity";
+import { computed, ref, toRefs } from "@vue/reactivity";
+import { inject } from "@vue/runtime-core";
 import ChildComment from "./ChildComment.vue";
+import CommentForm from "./CommentForm.vue";
 
 // name: "comment";
 
 const props = defineProps({
-    comment: Object /** @type {Comment} */,
+    comment: Object,
+    post_id: Number,
 });
 
-const { comment } = toRefs(props);
+const { comment, post_id } = toRefs(props);
+
+const user_is_authenticated = inject("user_is_authenticated");
+
+const showReplyForm = ref(false);
 </script>
 
 <template>
     <!-- <component :is="tag"> -->
     <q-item>
-        <q-card flat class="comment-card" square>
+        <q-card flat class="comment-card full-width q-mb-lg" square>
             <q-card-section>
                 <div class="text-caption text-grey-7">
                     <strong>{{ comment.user.username }}</strong> &bull; 5 min
@@ -27,11 +34,24 @@ const { comment } = toRefs(props);
                 {{ comment.body }}
             </q-card-section>
 
-            <q-card-actions>
-                <q-btn label="Reply" flat size="sm" color="primary" />
+            <q-card-actions v-if="user_is_authenticated">
+                <q-btn
+                    :label="!showReplyForm ? 'Reply' : 'close'"
+                    flat
+                    size="sm"
+                    @click="showReplyForm = !showReplyForm"
+                    color="primary"
+                />
             </q-card-actions>
+            <q-card-section v-if="showReplyForm">
+                <comment-form
+                    :post_id="post_id"
+                    :parent="false"
+                    :parent_id="comment?.id"
+                />
+            </q-card-section>
             <q-card-section v-if="comment?.children?.length > 0">
-                <q-list separator bordered class="comment-child-list">
+                <q-list separator bordered class="comment-child-list q-pl-lg">
                     <!-- <q-item v-for="comment in comments"> -->
                     <child-comment
                         :childComment="child"
