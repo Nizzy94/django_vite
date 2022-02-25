@@ -5,7 +5,7 @@ import Aos from 'aos'
 import 'aos/dist/aos.css';
 import Home from '../views/Home.vue'
 
-import { Quasar } from 'quasar'
+import { Quasar, Meta } from 'quasar'
 import quasarUserOptions from './quasar-user-options'
 
 const app = document.getElementById('app')
@@ -22,4 +22,8 @@ Aos.init()
 
 
 createApp(Home).provide('user_is_authenticated', userIsAuthenticated.value)
-    .use(Quasar, quasarUserOptions).mount(app)
+    .use(Quasar, quasarUserOptions, {
+        plugins: {
+            Meta
+        }
+    }).mount(app)

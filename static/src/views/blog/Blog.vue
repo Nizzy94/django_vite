@@ -76,7 +76,7 @@ import Base from "../../components/layouts/Base.vue";
 import NewsCard from "../../components/NewsCard.vue";
 import getAllPosts from "../../composables/getAllPosts";
 import Sidebar from "../../components/blog/Sidebar.vue";
-import { useQuasar } from "quasar";
+import { useQuasar, useMeta } from "quasar";
 
 const $q = useQuasar();
 
@@ -128,6 +128,57 @@ const onRequest = async (props) => {
 
     await callAllPosts({ page: props, query: q_param });
 };
+const title = ref("");
+// const tag = ref("");
+const pathArray = window.location.pathname.slice(1, -1).split("/");
+if (pathArray.length >= 2) {
+    if (pathArray[1] == "tag") {
+        // console.log('tag')
+        title.value = pathArray[2];
+    } else {
+        title.value = pathArray[1];
+    }
+} else {
+    title.value = "Blog Articles";
+}
+
+const metaData = {
+    // sets document title
+    title: `${title.value.charAt(0).toUpperCase()}${title.value.slice(1)}`,
+    // optional; sets final title as "Index Page - My Website", useful for multiple level meta
+    titleTemplate: (title) => `${title} - My Website`,
+
+    // meta tags
+    meta: {
+        description: {
+            name: "description",
+            content: "Blog Website landing page. Latest news here",
+        },
+        keywords: {
+            name: "keywords",
+            content: "Quasar website blog django articles",
+        },
+        equiv: {
+            "http-equiv": "Content-Type",
+            content: "text/html; charset=UTF-8",
+        },
+        // note: for Open Graph type metadata you will need to use SSR, to ensure page is rendered by the server
+        ogTitle: {
+            property: "og:title",
+            // optional; similar to titleTemplate, but allows templating with other meta properties
+            template(ogTitle) {
+                return `${ogTitle} - My Website`;
+            },
+        },
+    },
+
+    // <noscript> tags
+    noscript: {
+        default: "This is content for browsers with no JS (or disabled JS)",
+    },
+};
+
+useMeta(metaData);
 </script>
 
 <style lang="sass">

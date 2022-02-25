@@ -5,15 +5,21 @@
     <div class="q-ma-md">
         <comment-form :blog="post_id" @addComment="addComment" />
     </div>
-    <q-list>
-        <!-- <q-item > -->
-        <comment
-            :comment="comment"
-            :post_id="post_id"
-            v-for="comment in comments"
-        />
-        <!-- </q-item> -->
-    </q-list>
+    <q-toggle v-model="showComments" label="View Comments" class="q-mb-md" />
+
+    <q-slide-transition>
+        <div v-show="showComments">
+            <q-list separator>
+                <!-- <q-item > -->
+                <comment
+                    :comment="comment"
+                    :post_id="post_id"
+                    v-for="comment in comments"
+                />
+                <!-- </q-item> -->
+            </q-list>
+        </div>
+    </q-slide-transition>
 </template>
 
 <script setup>
@@ -31,9 +37,12 @@ const props = defineProps({
 
 const { comments, post_id } = toRefs(props);
 
+const showComments = ref(false);
+
 const addComment = async (res) => {
     console.log(res);
     comments.value.unshift(res);
+    showComments.value = true;
 };
 </script>
 

@@ -19,6 +19,7 @@ comment system DONE(partially:
 )
 
 add SEO to pages
+  add .env file and add website name
 
 
 {% comment %}  {% endcomment %}

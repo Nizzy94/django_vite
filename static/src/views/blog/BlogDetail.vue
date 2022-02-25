@@ -105,7 +105,7 @@ import getPostDetail from "../../composables/getPostDetail";
 import getComments from "../../composables/getComments";
 import Comments from "../../components/blog/Comments.vue";
 import { onBeforeMount, provide, ref, watch } from "@vue/runtime-core";
-import { date } from "quasar";
+import { date, useMeta } from "quasar";
 
 const { callPostDetail, post, tags } = getPostDetail();
 const { callComments, comments } = getComments();
@@ -117,6 +117,7 @@ const date_created = ref("");
 const date_format = ref("");
 const backUrl = document.referrer;
 const post_id = ref(0);
+const title = ref("");
 
 watch(post, () => {
     if (post.value) {
@@ -130,9 +131,54 @@ watch(post, () => {
         }
         callComments(post.value.id);
         post_id.value = post.value.id;
+        console.log(
+            `${post.value.title
+                .charAt(0)
+                .toUpperCase()}${post.value.title.slice(1)}`
+        );
+        // title.value = post.value.title;
+        title.value = `${post.value.title
+            .charAt(0)
+            .toUpperCase()}${post.value.title.slice(1)}`;
     }
 });
-// provide("post_id", post.id);
+
+const metaData = () => ({
+    // sets document title
+    title: title.value,
+    // optional; sets final title as "Index Page - My Website", useful for multiple level meta
+    titleTemplate: (title) => `${title} - My Website`,
+
+    // meta tags
+    meta: {
+        description: {
+            name: "description",
+            content: "Blog Website landing page. Latest news here",
+        },
+        keywords: {
+            name: "keywords",
+            content: "Quasar website blog django articles",
+        },
+        equiv: {
+            "http-equiv": "Content-Type",
+            content: "text/html; charset=UTF-8",
+        },
+        // note: for Open Graph type metadata you will need to use SSR, to ensure page is rendered by the server
+        ogTitle: {
+            property: "og:title",
+            // optional; similar to titleTemplate, but allows templating with other meta properties
+            template(ogTitle) {
+                return `${ogTitle} - My Website`;
+            },
+        },
+    },
+    // <noscript> tags
+    noscript: {
+        default: "This is content for browsers with no JS (or disabled JS)",
+    },
+});
+
+useMeta(metaData);
 </script>
 
 <style lang="sass">
