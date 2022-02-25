@@ -77,9 +77,9 @@
                     <q-separator spaced="16px" />
 
                     <!-- <div> -->
-                    <section>
+                    <!-- <section>
                         <related />
-                    </section>
+                    </section> -->
                     <!-- </div> -->
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -87,6 +87,11 @@
                         <sidebar />
                     </div>
                 </div>
+                <!-- <div class=""> -->
+                <section>
+                    <related />
+                </section>
+                <!-- </div> -->
             </div>
         </template>
     </Base>
