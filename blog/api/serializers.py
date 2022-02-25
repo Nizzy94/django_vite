@@ -45,7 +45,7 @@ class BlogSerializer(serializers.ModelSerializer):
 
 
 class ChildCommentSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    # user = UserSerializer()
     # children = serializers.ListSerializer(
     #     child=Child2CommentSerializer()
     # )
@@ -53,15 +53,35 @@ class ChildCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = '__all__'
+        # exclude = ['updated_at']
+        depth = 1
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-    children = serializers.ListSerializer(
-        child=ChildCommentSerializer()
+    user = UserSerializer(read_only=True)
+    children = serializers.ListField(
+        child=ChildCommentSerializer(), allow_empty=True, read_only=True, required=False
     )
+
+    blog = serializers.PrimaryKeyRelatedField(
+        required=True, queryset=Blog.objects.all())
+
+    parent = serializers.PrimaryKeyRelatedField(
+        default=None, queryset=Comment.objects.all(), allow_null=True)
 
     class Meta:
         model = Comment
         fields = '__all__'
-        # depth = 2
+        # exclude = ['updated_at']
+        depth = 1
+        extra_kwargs = {
+            # 'user': {'required': False},
+            # 'blog': {'read_only': False},
+            'parent': {
+                'default': None
+            }
+        }
+
+    # def validate_blog(self, value):
+    #     print('value', value)
+    #     return value

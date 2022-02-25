@@ -3,7 +3,7 @@
         <h6>Comments:</h6>
     </div>
     <div class="q-ma-md">
-        <comment-form :post_id="post_id" />
+        <comment-form :blog="post_id" />
     </div>
     <q-list>
         <!-- <q-item > -->

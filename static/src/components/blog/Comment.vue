@@ -45,9 +45,9 @@ const showReplyForm = ref(false);
             </q-card-actions>
             <q-card-section v-if="showReplyForm">
                 <comment-form
-                    :post_id="post_id"
-                    :parent="false"
-                    :parent_id="comment?.id"
+                    :blog="post_id"
+                    :is_parent="false"
+                    :parent="comment?.id"
                 />
             </q-card-section>
             <q-card-section v-if="comment?.children?.length > 0">

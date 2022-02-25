@@ -25,4 +25,7 @@ urlpatterns = [
 
     path('get-comments/<int:post_id>/', views.get_comments,
          name="get_comments"),
+
+    path('post-comment/', views.post_comment,
+         name="post_comment"),
 ]

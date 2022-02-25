@@ -1,9 +1,10 @@
 
+from authentication.api.serializers import UserSerializer
 from blog.api.serializers import BlogSerializer, CategorySerializer, CommentSerializer, TagSerializer
-from blog.models import Blog, Category
+from blog.models import Blog, Category, Comment
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from .paginations import BlogListPagination
 import math
 from django.db.models import Count
@@ -213,3 +214,31 @@ def get_comments(request, post_id):
     serializer = CommentSerializer(parent_comments, many=True)
 
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticatedOrReadOnly])
+def post_comment(request):
+    print('data:', request.data)
+    data = request.data
+
+    # data['blog'] = Blog.objects.get(id=data['blog'])
+
+    # if data['parent'] != None:
+    #     data['parent'] = Comment.objects.get(id=data['parent'])
+
+    print('data2:', data)
+
+    serializer = CommentSerializer(
+        data=request.data, context={'request': request})
+
+    if serializer.is_valid(raise_exception=True):
+        print(serializer.validated_data)
+        # comment = serializer.save(user=request.user, blog=request.data['blog'], parent)
+        comment = serializer.save(user=request.user)
+
+        com_serializer = CommentSerializer(comment)
+
+        print('comment:', com_serializer.data)
+
+        return Response(com_serializer.data)

@@ -30,6 +30,15 @@ const fetchBlogAllowAny = axios.create({
         "Content-Type": "Application/json",
     },
 })
+const fetchBlogWithCredentials = axios.create({
+    baseURL: `${domain}/blog/api`,
+    timeout: 50000,
+    headers: {
+        'X-CSRFToken': Cookies.get('csrftoken'),
+        "Content-Type": "Application/json",
+    },
+    withCredentials: true
+})
 
 const fetchSearchAllowAny = axios.create({
     baseURL: `${domain}/search/api/query`,
@@ -41,4 +50,4 @@ const fetchSearchAllowAny = axios.create({
 })
 
 
-export { fetchWithCredentials, fetchAllowAny, fetchBlogAllowAny, fetchSearchAllowAny }
+export { fetchWithCredentials, fetchAllowAny, fetchBlogAllowAny, fetchSearchAllowAny, fetchBlogWithCredentials }

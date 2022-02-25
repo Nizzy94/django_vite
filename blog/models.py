@@ -102,26 +102,20 @@ class Comment(models.Model):
     user = models.ForeignKey(User, related_name="comments", on_delete=CASCADE)
     parent = models.ForeignKey(
         "self", related_name="child_comments", on_delete=CASCADE, null=True)
-    # children = models.ForeignKey(
-    #     "Comment", related_name="child_comments", on_delete=CASCADE)
 
     body = models.TextField()
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(default=timezone.now)
 
-    # def get_parent(self):
-    #     return self.body
+    class Meta:
+        ordering = ['-created_at']
 
     def username(self):
         return self.user.username
 
-    @property
     def children(self):
         return self.child_comments.all()
-    # @property
-    # def children(self):
-    #     return self.child_comments.all()
 
     def get_absolute_url(self):
         return reverse("blog:blog_detail", kwargs={"blog_slug": self.slug, "category": self.category.slug})
