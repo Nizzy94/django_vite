@@ -4,6 +4,7 @@ import { computed, ref, toRefs } from "@vue/reactivity";
 import { inject } from "@vue/runtime-core";
 import ChildComment from "./ChildComment.vue";
 import CommentForm from "./CommentForm.vue";
+import postComment from "../../composables/postComment";
 
 // name: "comment";
 
@@ -17,6 +18,15 @@ const { comment, post_id } = toRefs(props);
 const user_is_authenticated = inject("user_is_authenticated");
 
 const showReplyForm = ref(false);
+
+const { saveComment } = postComment();
+
+const addComment = async (res) => {
+    console.log(res);
+    showReplyForm.value = false;
+
+    comment.value.children.unshift(res);
+};
 </script>
 
 <template>
@@ -48,6 +58,7 @@ const showReplyForm = ref(false);
                     :blog="post_id"
                     :is_parent="false"
                     :parent="comment?.id"
+                    @addComment="addComment"
                 />
             </q-card-section>
             <q-card-section v-if="comment?.children?.length > 0">
@@ -55,7 +66,7 @@ const showReplyForm = ref(false);
                     <!-- <q-item v-for="comment in comments"> -->
                     <child-comment
                         :childComment="child"
-                        v-for="child in comment.children"
+                        v-for="child in comment?.children"
                     />
                     <!-- </q-item> -->
                 </q-list>

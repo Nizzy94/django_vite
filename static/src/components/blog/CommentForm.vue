@@ -12,6 +12,7 @@
             text-color="dark"
             class="q-mt-sm"
             :size="!is_parent ? '10px' : '14px'"
+            :loading="sendingComment"
         />
     </div>
     <div v-else>
@@ -48,7 +49,9 @@ const props = defineProps({
     },
 });
 
-const { saveComment } = postComment();
+const emit = defineEmits(["addComment"]);
+
+const sendingComment = ref(false);
 
 const redirect_url = window.location.pathname;
 
@@ -58,18 +61,24 @@ const comment = ref("");
 
 const { is_parent, blog, parent } = toRefs(props);
 
+const { saveComment } = postComment();
+
 const submitComment = async () => {
+    sendingComment.value = true;
     const formData = {
-        // is_parent: is_parent.value,
         blog: blog.value,
         parent: parent.value,
         body: comment.value,
     };
-
-    // console.log(formData);
-
     const res = await saveComment(formData);
     console.log(res);
+
+    emit("addComment", res);
+
+    comment.value = "";
+    sendingComment.value = false;
+
+    // console.log(formData);
 };
 </script>
 

@@ -220,25 +220,14 @@ def get_comments(request, post_id):
 @permission_classes([IsAuthenticatedOrReadOnly])
 def post_comment(request):
     print('data:', request.data)
-    data = request.data
-
-    # data['blog'] = Blog.objects.get(id=data['blog'])
-
-    # if data['parent'] != None:
-    #     data['parent'] = Comment.objects.get(id=data['parent'])
-
-    print('data2:', data)
 
     serializer = CommentSerializer(
         data=request.data, context={'request': request})
 
     if serializer.is_valid(raise_exception=True):
-        print(serializer.validated_data)
-        # comment = serializer.save(user=request.user, blog=request.data['blog'], parent)
+
         comment = serializer.save(user=request.user)
 
         com_serializer = CommentSerializer(comment)
-
-        print('comment:', com_serializer.data)
 
         return Response(com_serializer.data)
