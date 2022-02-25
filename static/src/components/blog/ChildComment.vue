@@ -14,10 +14,11 @@ const { childComment } = toRefs(props);
 <template>
     <q-item>
         <q-item-section class="">
-            {{ childComment.body }}
+            {{ childComment?.body }}
         </q-item-section>
         <q-item-section side class="">
-            <strong>{{ childComment.user.username }}</strong> &bull; 5 min ago
+            <strong>{{ childComment?.user.username }}</strong> &bull;
+            {{ childComment?.created_at }}
         </q-item-section>
     </q-item>
 </template>

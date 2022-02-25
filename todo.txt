@@ -11,7 +11,12 @@ work on pagination DONE
 sub(before continuing, check loop in newSection Home) DONE
 search functionality DONE
 
-reader accounts authentication
+reader accounts authentication DONE(partially)
+
+comment system DONE(partially:
+  add moment DONE
+  add CRUD functionality
+)
 
 add SEO to pages
 

@@ -1,12 +1,9 @@
 
 <script setup>
 import { computed, ref, toRefs } from "@vue/reactivity";
-import { inject } from "@vue/runtime-core";
+import { inject, watch } from "@vue/runtime-core";
 import ChildComment from "./ChildComment.vue";
 import CommentForm from "./CommentForm.vue";
-import postComment from "../../composables/postComment";
-
-// name: "comment";
 
 const props = defineProps({
     comment: Object,
@@ -18,8 +15,6 @@ const { comment, post_id } = toRefs(props);
 const user_is_authenticated = inject("user_is_authenticated");
 
 const showReplyForm = ref(false);
-
-const { saveComment } = postComment();
 
 const addComment = async (res) => {
     console.log(res);
@@ -35,8 +30,8 @@ const addComment = async (res) => {
         <q-card flat class="comment-card full-width q-mb-lg" square>
             <q-card-section>
                 <div class="text-caption text-grey-7">
-                    <strong>{{ comment.user.username }}</strong> &bull; 5 min
-                    ago
+                    <strong>{{ comment.user.username }}</strong> &bull;
+                    {{ comment.created_at }}
                 </div>
             </q-card-section>
 

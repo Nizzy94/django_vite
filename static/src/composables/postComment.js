@@ -1,4 +1,5 @@
 import { fetchBlogWithCredentials } from "./axios"
+import moment from "moment"
 
 const postComment = () => {
     const saveComment = async(formData) => {
@@ -6,11 +7,19 @@ const postComment = () => {
         try {
 
             const res = await fetchBlogWithCredentials.post(`/post-comment/`, formData)
-
-            // console.log(res.data)
             if (res.status == 200) {
 
-                return res.data
+                let data = res.data
+
+                console.log(moment(data.created_at).format("YYYYMMDD"))
+                let formated_date = moment(data.created_at).format("YYYYMMDD")
+                data.created_at = moment(data.created_at).fromNow()
+                data.children.forEach(child => {
+                    let child_formated_date = moment(child.created_at).format("YYYYMMDD")
+                    child.created_at = moment(child_formated_date, "YYYYMMDD").fromNow()
+                });
+
+                return data
             }
         } catch (e) {
             if (e.response) {

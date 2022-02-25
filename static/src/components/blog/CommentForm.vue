@@ -1,9 +1,16 @@
 <template>
     <div class="q-my-md" v-if="user_is_authenticated">
         <q-input
+            counter
+            :maxlength="is_parent ? 500 : 300"
+            :autofocus="!is_parent"
+            autogrow
+            type="textarea"
             :dense="!is_parent"
             v-model="comment"
             :label="is_parent ? 'Add Comment' : 'Add Reply'"
+            @keyup.enter="submitComment"
+            clearable
         />
         <q-btn
             :label="is_parent ? 'Add Comment' : 'Reply'"

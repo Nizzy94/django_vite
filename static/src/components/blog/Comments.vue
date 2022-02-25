@@ -21,6 +21,7 @@ import { computed, ref, toRefs } from "@vue/reactivity";
 import { inject } from "@vue/runtime-core";
 import Comment from "./Comment.vue";
 import CommentForm from "./CommentForm.vue";
+import moment from "moment";
 
 const props = defineProps({
     comments: Array,
