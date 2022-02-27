@@ -18,7 +18,7 @@ comment system DONE(partially:
   add CRUD functionality
 )
 
-add SEO to pages
+add SEO to pages DONE
   add .env file and add website name
 
 

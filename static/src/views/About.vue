@@ -28,13 +28,13 @@ const metaData = {
     // sets document title
     title: "About Us",
     // optional; sets final title as "Index Page - My Website", useful for multiple level meta
-    titleTemplate: (title) => `${title} - My Website`,
+    titleTemplate: (title) => `${title} - ${import.meta.env.VITE_WEBSITE_NAME}`,
 
     // meta tags
     meta: {
         description: {
             name: "description",
-            content: "About my website",
+            content: `About ${import.meta.env.VITE_WEBSITE_NAME}`,
         },
         keywords: {
             name: "keywords",
@@ -49,7 +49,7 @@ const metaData = {
             property: "og:title",
             // optional; similar to titleTemplate, but allows templating with other meta properties
             template(ogTitle) {
-                return `${ogTitle} - My Website`;
+                return `${ogTitle} - ${import.meta.env.VITE_WEBSITE_NAME}`;
             },
         },
     },

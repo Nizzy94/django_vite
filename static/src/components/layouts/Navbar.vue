@@ -18,7 +18,7 @@
                         src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg"
                     />
                 </q-avatar>
-                Title
+                {{ websiteName }}
             </a>
         </q-toolbar-title>
         <q-space />
@@ -91,6 +91,7 @@ export default {
 
     setup(props, { emit }) {
         // const { toggleLeftDrawer} = drawerFunctionality()
+        const websiteName = import.meta.env.VITE_WEBSITE_NAME;
 
         // const routes = computed(() => inject("routes").value);
         const routes = inject("routes");
@@ -152,6 +153,7 @@ export default {
             currentRouteIsBlog,
             openAccountDia,
             user_is_authenticated,
+            websiteName,
         };
     },
 };

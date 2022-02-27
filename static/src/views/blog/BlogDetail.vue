@@ -143,11 +143,14 @@ watch(post, () => {
     }
 });
 
+// console.log(import.meta.env);
+
 const metaData = () => ({
     // sets document title
+
     title: title.value,
-    // optional; sets final title as "Index Page - My Website", useful for multiple level meta
-    titleTemplate: (title) => `${title} - My Website`,
+    // optional; sets final title as "Index Page - ${import.meta.env.VITE_WEBSITE_NAME}", useful for multiple level meta
+    titleTemplate: (title) => `${title} - ${import.meta.env.VITE_WEBSITE_NAME}`,
 
     // meta tags
     meta: {
@@ -168,7 +171,7 @@ const metaData = () => ({
             property: "og:title",
             // optional; similar to titleTemplate, but allows templating with other meta properties
             template(ogTitle) {
-                return `${ogTitle} - My Website`;
+                return `${ogTitle} - ${import.meta.env.VITE_WEBSITE_NAME}`;
             },
         },
     },

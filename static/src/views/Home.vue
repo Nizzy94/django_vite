@@ -52,15 +52,17 @@ onBeforeMount(async () => {
 
 const metaData = {
     // sets document title
-    title: "Blog Website",
+    title: `${import.meta.env.VITE_WEBSITE_NAME}`,
     // optional; sets final title as "Index Page - My Website", useful for multiple level meta
-    titleTemplate: (title) => `${title} - My Website`,
+    titleTemplate: (title) => `${title} - ${import.meta.env.VITE_WEBSITE_NAME}`,
 
     // meta tags
     meta: {
         description: {
             name: "description",
-            content: "Blog Website landing page. Latest news here",
+            content: `${
+                import.meta.env.VITE_WEBSITE_NAME
+            } landing page. Latest news here`,
         },
         keywords: {
             name: "keywords",
@@ -75,7 +77,7 @@ const metaData = {
             property: "og:title",
             // optional; similar to titleTemplate, but allows templating with other meta properties
             template(ogTitle) {
-                return `${ogTitle} - My Website`;
+                return `${ogTitle} - ${import.meta.env.VITE_WEBSITE_NAME}`;
             },
         },
     },
