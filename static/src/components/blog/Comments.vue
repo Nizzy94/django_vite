@@ -37,7 +37,7 @@ const props = defineProps({
 
 const { comments, post_id } = toRefs(props);
 
-const showComments = ref(false);
+const showComments = ref(true);
 
 const addComment = async (res) => {
     console.log(res);

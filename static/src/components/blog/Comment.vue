@@ -40,13 +40,35 @@ const addComment = async (res) => {
             </q-card-section>
 
             <q-card-actions v-if="user_is_authenticated">
-                <q-btn
-                    :label="!showReplyForm ? 'Reply' : 'close'"
-                    flat
-                    size="sm"
-                    @click="showReplyForm = !showReplyForm"
-                    color="primary"
-                />
+                <div class="row">
+                    <div>
+                        <q-btn
+                            :label="!showReplyForm ? 'Reply' : 'close'"
+                            flat
+                            size="sm"
+                            @click="showReplyForm = !showReplyForm"
+                            color="primary"
+                        />
+                    </div>
+                    <div>
+                        <q-btn
+                            :label="'Edit'"
+                            flat
+                            icon="mdi-square-edit-outline"
+                            size="sm"
+                            @click="showReplyForm = !showReplyForm"
+                            color="grey-6"
+                        />
+                        <q-btn
+                            :label="'Delete'"
+                            flat
+                            icon="mdi-delete"
+                            size="sm"
+                            @click="showReplyForm = !showReplyForm"
+                            color="grey-6"
+                        />
+                    </div>
+                </div>
             </q-card-actions>
             <q-card-section v-if="showReplyForm">
                 <comment-form

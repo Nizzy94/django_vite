@@ -131,11 +131,7 @@ watch(post, () => {
         }
         callComments(post.value.id);
         post_id.value = post.value.id;
-        console.log(
-            `${post.value.title
-                .charAt(0)
-                .toUpperCase()}${post.value.title.slice(1)}`
-        );
+
         // title.value = post.value.title;
         title.value = `${post.value.title
             .charAt(0)
