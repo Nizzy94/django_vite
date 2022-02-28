@@ -11,7 +11,7 @@
             <!-- <q-card-section class="q-pa-none"> -->
             <q-card-section class="q-pt-none">
                 <div class="text-body2 ellipsis-3-lines">{{ title }}</div>
-                <small class="text-grey-6">{{ subtitle }}</small>
+                <small class="text-grey-6">{{ author }}</small>
             </q-card-section>
 
             <!-- <q-card-section class="ellipsis q-pt-none">
@@ -28,11 +28,11 @@
             <div class="text-h6 text-capitalize ellipsis-3-lines">
                 {{ title }}
             </div>
-            <div class="text-subtitle2">{{ subtitle }}</div>
+            <small class="text-grey-6">{{ author }}</small>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-            <div class="ellipsis-3-lines" v-html="body"></div>
+            <div class="ellipsis-3-lines" v-html="excerpt"></div>
             <!-- {{ body }} -->
         </q-card-section>
     </q-card>
@@ -46,11 +46,11 @@ const props = defineProps({
         type: String,
         required: true,
     },
-    body: {
+    excerpt: {
         type: String,
         required: true,
     },
-    subtitle: {
+    author: {
         type: String,
         required: false,
     },
@@ -67,7 +67,7 @@ const props = defineProps({
     },
 });
 
-const { title, body, subtitle, horizontal, imageSrc, url } = toRefs(props);
+const { title, excerpt, author, horizontal, imageSrc, url } = toRefs(props);
 </script>
 
 <style lang="sass" scope>

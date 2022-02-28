@@ -55,8 +55,9 @@ class Tag(models.Model):
 
 class Blog(models.Model):
 
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=50)
     slug = models.SlugField(max_length=255, unique=True)
+    excerpt = models.CharField(max_length=150)
     image = models.ImageField(upload_to="blog_images/%Y/%m/%d")
     tags = models.ManyToManyField(Tag, related_name='blogs')
     body = RichTextField(blank=True, null=True)

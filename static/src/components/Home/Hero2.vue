@@ -20,7 +20,7 @@
         >
             <carousel-slide
                 :header="news.title"
-                :subtitle="news.body"
+                :subtitle="news.excerpt"
                 :imageSrc="news.image"
                 :url="news.url"
             />

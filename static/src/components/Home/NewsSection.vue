@@ -13,11 +13,12 @@
             <div class="row q-col-gutter-sm">
                 <div id="big_side1" class="col-xs-12 col-sm-6">
                     <!-- <a :href="cat1_blogs[0]?.url" class="card_link"> -->
+                    <!-- ${sect.blogs[0]?.user.first_name} ${sect.blogs[0]?.user.last_name} -->
                     <news-card
                         v-if="sect.blogs.length"
                         :title="sect.blogs[0]?.title"
-                        :body="sect.blogs[0]?.body"
-                        :subtitle="'by John Doe'"
+                        :excerpt="sect.blogs[0]?.excerpt"
+                        :author="`by ${sect.blogs[0]?.author.first_name} ${sect.blogs[0]?.author.last_name}`"
                         :imageSrc="sect.blogs[0]?.image"
                         :url="sect.blogs[0]?.url"
                     />
@@ -32,8 +33,8 @@
                     >
                         <news-card
                             :title="blog.title"
-                            :body="blog.body"
-                            :subtitle="'by John Doe'"
+                            :excerpt="blog.excerpt"
+                            :author="`by ${blog?.author.first_name} ${blog?.author.last_name}`"
                             horizontal
                             :imageSrc="blog.image"
                             :url="blog.url"
@@ -99,7 +100,7 @@
 import NewsCard from "../NewsCard.vue";
 import getHomePosts from "../../composables/getHomePosts";
 import { computed, ref, toRefs } from "@vue/reactivity";
-import { inject } from "@vue/runtime-core";
+import { inject, watch } from "@vue/runtime-core";
 
 const props = defineProps({
     cats: {
@@ -113,6 +114,12 @@ const props = defineProps({
     // },
 });
 const { cats, news_section } = toRefs(props);
+
+watch(news_section, () => {
+    if (news_section.value.length) {
+        console.log(news_section.value);
+    }
+});
 
 const routes = computed(() => inject("routes").value);
 </script>

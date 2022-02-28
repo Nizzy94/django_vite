@@ -4,10 +4,11 @@
             <a class="carousel_link q-pa-xl" :href="url">
                 <div class="text-h4 text-primary q-mb-md">{{ header }}</div>
                 <!-- <div class="text-subtitle1">{{ subtitle }}</div> -->
-                <div
+                <div class="text-body1" v-html="subtitle"></div>
+                <!-- <div
                     class="text-body1"
                     v-html="subtitle.substring(0, 500).concat('...')"
-                ></div>
+                ></div> -->
             </a>
         </div>
     </div>
@@ -27,11 +28,12 @@
             >
                 <div v-if="$q.screen.lt.md">
                     <div class="text-h5 q-mb-md">{{ header }}</div>
-                    <!-- <div class="text-subtitle1">{{ subtitle }}</div> -->
-                    <div
+
+                    <div class="text-subtitle1" v-html="subtitle"></div>
+                    <!-- <div
                         class="text-subtitle1"
                         v-html="subtitle.substring(0, 500).concat('...')"
-                    ></div>
+                    ></div> -->
                 </div>
             </div>
         </q-img>

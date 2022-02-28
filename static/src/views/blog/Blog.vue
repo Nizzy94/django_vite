@@ -33,9 +33,9 @@
                             <!-- <a :href="blog.url" class="card_link"> -->
                             <news-card
                                 :title="blog.title"
-                                :body="blog.body"
+                                :excerpt="blog.excerpt"
                                 :imageSrc="blog.image"
-                                subtitle="By John Doe"
+                                :author="`by ${blog?.author.first_name} ${blog?.author.last_name}`"
                                 :url="blog.url"
                             />
                             <!-- </a> -->

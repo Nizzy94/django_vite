@@ -186,13 +186,15 @@ class Command(BaseCommand):
                 img = ImageFile(img_obj, name=image_name)
 
                 cat = fake.random_category()
-                title = fake.sentence(nb_words=10)
+                title = fake.text(max_nb_chars=50)
+                # excerpt = fake.sentence(nb_words=15)
                 author = fake.random_author()
                 paragraphs = []
-                paragraph = ""
+                excerpts = []
                 html = "<div>"
 
                 # print(fake.paragraphs(nb=10))
+                excerpt = html+f"<p>{fake.text(max_nb_chars=130)}</p></div>"
 
                 for _ in range(5):
                     paragraphs.append(fake.paragraph(nb_sentences=20))
@@ -205,6 +207,7 @@ class Command(BaseCommand):
                 blog = Blog.objects.create(
                     category=cat,
                     title=title,
+                    excerpt=excerpt,
                     image=img,
                     author=author,
                     body=body
