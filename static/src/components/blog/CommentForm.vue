@@ -3,22 +3,22 @@
         <q-input
             counter
             :maxlength="is_parent ? 500 : 300"
-            :autofocus="!is_parent"
+            :autofocus="!is_parent || isEditForm"
             autogrow
             type="textarea"
             :dense="!is_parent"
             v-model="comment"
-            :label="is_parent ? 'Add Comment' : 'Add Reply'"
+            :label="isEditForm ? '' : is_parent ? 'Add Comment' : 'Add Reply'"
             @keyup.enter="submitComment"
             clearable
         />
         <q-btn
-            :label="is_parent ? 'Add Comment' : 'Reply'"
+            :label="isEditForm ? 'Edit' : is_parent ? 'Add Comment' : 'Reply'"
             @click="submitComment"
             color="secondary"
             text-color="dark"
             class="q-mt-sm"
-            :size="!is_parent ? '10px' : '14px'"
+            :size="isEditForm ? '10px' : !is_parent ? '10px' : '14px'"
             :loading="sendingComment"
         />
     </div>
@@ -54,6 +54,18 @@ const props = defineProps({
         type: Number,
         default: null,
     },
+    value: {
+        type: String,
+        default: null,
+    },
+    isEditForm: {
+        type: Boolean,
+        default: false,
+    },
+    comment_id: {
+        type: Number,
+        default: null,
+    },
 });
 
 const emit = defineEmits(["addComment"]);
@@ -66,7 +78,10 @@ const user_is_authenticated = inject("user_is_authenticated");
 
 const comment = ref("");
 
-const { is_parent, blog, parent } = toRefs(props);
+const { is_parent, blog, parent, value, isEditForm, comment_id } =
+    toRefs(props);
+
+if (value.value) comment.value = value.value;
 
 const { saveComment } = postComment();
 
@@ -76,7 +91,10 @@ const submitComment = async () => {
         blog: blog.value,
         parent: parent.value,
         body: comment.value,
+        id: comment_id.value,
+        edited: isEditForm.value,
     };
+    console.log(formData);
     const res = await saveComment(formData);
     console.log(res);
 

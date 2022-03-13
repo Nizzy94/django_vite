@@ -14,7 +14,20 @@ const { comment, post_id } = toRefs(props);
 
 const user_is_authenticated = inject("user_is_authenticated");
 
+// const comment_value = ref(comment.value.body);
 const showReplyForm = ref(false);
+
+const showEditform = ref(false);
+
+const updateComment = async (res) => {
+    console.log(res);
+    showEditform.value = false;
+    comment.value.body = res.body;
+    comment.value.updated_at = res.updated_at;
+    comment.value.edited = res.edited;
+
+    // comment.value
+};
 
 const addComment = async (res) => {
     console.log(res);
@@ -32,10 +45,29 @@ const addComment = async (res) => {
                 <div class="text-caption text-grey-7">
                     <strong>{{ comment.user.username }}</strong> &bull;
                     {{ comment.created_at }}
+                    <span v-if="comment.edited">
+                        &bull; <strong> Edited:</strong>
+                        {{ comment.updated_at }}
+                    </span>
                 </div>
             </q-card-section>
 
-            <q-card-section class="q-pt-none">
+            <q-card-section class="q-pt-none" v-if="showEditform">
+                <!-- <q-input
+                    v-model="comment_value"
+                    autofocus
+                    @blur="(evnt) => (showEditform = false)"
+                    @keyup.enter="updateComment"
+                /> -->
+                <comment-form
+                    :blog="post_id"
+                    :value="comment.body"
+                    @addComment="updateComment"
+                    :isEditForm="true"
+                    :comment_id="comment.id"
+                />
+            </q-card-section>
+            <q-card-section class="q-pt-none" v-else>
                 {{ comment.body }}
             </q-card-section>
 
@@ -56,7 +88,7 @@ const addComment = async (res) => {
                             flat
                             icon="mdi-square-edit-outline"
                             size="sm"
-                            @click="showReplyForm = !showReplyForm"
+                            @click="showEditform = !showEditform"
                             color="grey-6"
                         />
                         <q-btn

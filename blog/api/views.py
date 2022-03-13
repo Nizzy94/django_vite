@@ -221,8 +221,16 @@ def get_comments(request, post_id):
 def post_comment(request):
     print('data:', request.data)
 
+    data = request.data
+
     serializer = CommentSerializer(
         data=request.data, context={'request': request})
+
+    if data['id']:
+        comment = Comment.objects.get(id=data['id'])
+
+        serializer = CommentSerializer(comment,
+                                       data=request.data, context={'request': request})
 
     if serializer.is_valid(raise_exception=True):
 

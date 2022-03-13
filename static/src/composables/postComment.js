@@ -11,9 +11,10 @@ const postComment = () => {
 
                 let data = res.data
 
-                console.log(moment(data.created_at).format("YYYYMMDD"))
-                let formated_date = moment(data.created_at).format("YYYYMMDD")
+                // console.log(moment(data.created_at).format("YYYYMMDD"))
+                // let formated_date = moment(data.created_at).format("YYYYMMDD")
                 data.created_at = moment(data.created_at).fromNow()
+                data.updated_at = moment(data.updated_at).fromNow()
                 data.children.forEach(child => {
                     let child_formated_date = moment(child.created_at).format("YYYYMMDD")
                     child.created_at = moment(child_formated_date, "YYYYMMDD").fromNow()

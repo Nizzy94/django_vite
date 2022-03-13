@@ -105,6 +105,7 @@ class Comment(models.Model):
         "self", related_name="child_comments", on_delete=CASCADE, null=True)
 
     body = models.TextField()
+    edited = models.BooleanField(default=False)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(default=timezone.now)
@@ -117,6 +118,10 @@ class Comment(models.Model):
 
     def children(self):
         return self.child_comments.all()
+
+    def save(self, *args, **kwargs):
+        self.updated_at = timezone.now()
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse("blog:blog_detail", kwargs={"blog_slug": self.slug, "category": self.category.slug})

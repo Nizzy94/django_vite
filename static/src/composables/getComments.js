@@ -13,6 +13,7 @@ const getComments = () => {
             let formated_date = moment(comment.created_at).format("YYYYMMDD")
 
             comment.created_at = moment(comment.created_at).fromNow()
+            comment.updated_at = moment(comment.updated_at).fromNow()
             comment.children.forEach(child => {
                 child.created_at = moment(child.created_at).fromNow()
             });
