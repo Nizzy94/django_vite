@@ -49,6 +49,7 @@ class APIRootView(APIView):
             'contact': reverse('main:contact', request=request),
             'search': reverse('search:search_view', request=request),
             'blog': blog_cats,
+            'login_redirect': reverse('authentication:login_redirect', request=request),
         }
 
         return Response(data)

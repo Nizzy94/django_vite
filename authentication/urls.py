@@ -12,4 +12,8 @@ urlpatterns = [
     path('logout/auth/', views.logout, name="logout"),
     path('logout/redirect/',
          views.logout_redirect, name="logout_redirect"),
+    path('complete-signup/',
+         views.complete_signup, name="complete_signup"),
+    path('auth/api/',
+         include('authentication.api.urls')),
 ]

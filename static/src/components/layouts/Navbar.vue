@@ -95,6 +95,7 @@ export default {
 
         // const routes = computed(() => inject("routes").value);
         const routes = inject("routes");
+
         const currentRoute = ref(window.location.href);
 
         // console.log(inject("user_is_authenticated"));

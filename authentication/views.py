@@ -4,6 +4,7 @@ from django.conf import settings
 from django.http import HttpResponseRedirect
 from urllib.parse import urlencode
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 
 
 def login_page(request):
@@ -18,8 +19,16 @@ def login_page(request):
     # return render(request, "authentication/login.html")
 
 
+def complete_signup(request):
+    return render(request, "authentication/complete-signup.html")
+
+
 def login_redirect(request):
     next_url = request.session.get('redirect_url')
+
+    if request.user.first_name == "" or request.user.last_name == "" or request.user.username == "":
+        next_url = reverse("authentication:complete_signup")
+
     # print('next in login_redirect', next_url)
 
     redirect_to = request.build_absolute_uri(f"{next_url}")

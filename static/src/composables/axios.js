@@ -12,6 +12,14 @@ const fetchWithCredentials = axios.create({
     },
     withCredentials: true
 })
+const fetchUserWithCredentials = axios.create({
+    baseURL: `${domain}/auth/api`,
+    timeout: 50000,
+    headers: {
+        'X-CSRFToken': Cookies.get('csrftoken')
+    },
+    withCredentials: true
+})
 
 const fetchAllowAny = axios.create({
     baseURL: `${domain}/api`,
@@ -50,4 +58,11 @@ const fetchSearchAllowAny = axios.create({
 })
 
 
-export { fetchWithCredentials, fetchAllowAny, fetchBlogAllowAny, fetchSearchAllowAny, fetchBlogWithCredentials }
+export {
+    fetchWithCredentials,
+    fetchAllowAny,
+    fetchBlogAllowAny,
+    fetchSearchAllowAny,
+    fetchBlogWithCredentials,
+    fetchUserWithCredentials
+}
