@@ -71,8 +71,8 @@
                         </div>
                     </section>
                     <q-separator spaced="16px" />
-                    <section v-if="post">
-                        <comments :comments="comments" :post_id="post_id" />
+                    <section v-if="post?.id">
+                        <comments :post_id="post_id" />
                     </section>
                     <q-separator spaced="16px" />
 
@@ -102,13 +102,13 @@ import Base from "../../components/layouts/Base.vue";
 import Related from "../../components/blog/Related.vue";
 import Sidebar from "../../components/blog/Sidebar.vue";
 import getPostDetail from "../../composables/getPostDetail";
-import getComments from "../../composables/getComments";
+// import getComments from "../../composables/getComments";
 import Comments from "../../components/blog/Comments.vue";
 import { onBeforeMount, provide, ref, watch } from "@vue/runtime-core";
 import { date, useMeta } from "quasar";
 
 const { callPostDetail, post, tags } = getPostDetail();
-const { callComments, comments } = getComments();
+// const { callComments, comments } = getComments();
 onBeforeMount(() => {
     callPostDetail();
 });
@@ -129,7 +129,7 @@ watch(post, () => {
                 "MMMM Do, YYYY"
             );
         }
-        callComments(post.value.id);
+        // callComments(post.value.id);
         post_id.value = post.value.id;
 
         // title.value = post.value.title;

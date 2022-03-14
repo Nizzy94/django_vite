@@ -28,4 +28,6 @@ urlpatterns = [
 
     path('post-comment/', views.post_comment,
          name="post_comment"),
+    path('delete-comment/', views.delete_comment,
+         name="delete_comment"),
 ]

@@ -1,25 +1,31 @@
 
 <script setup>
 import { computed, reactive, ref, toRefs } from "@vue/reactivity";
-import { inject, onBeforeMount, watch } from "@vue/runtime-core";
+import { inject, onBeforeMount, onMounted, watch } from "@vue/runtime-core";
 import ChildComment from "./ChildComment.vue";
-import getAuthUser from "../../composables/getAuthUser";
+// import getAuthUser from "../../composables/getAuthUser";
 import CommentForm from "./CommentForm.vue";
+import deleteComment from "../../composables/deleteComment";
+import deleteCommentDialog from "../DeleteCommentDialog.vue";
 
 const props = defineProps({
     comment: Object,
     post_id: Number,
+    authUser: Object,
 });
 
-const { comment, post_id } = toRefs(props);
+const emit = defineEmits(["deleteComm"]);
 
-const authUser = ref({});
+const { comment, post_id, authUser } = toRefs(props);
 
-const { callAuthUser } = getAuthUser();
+// const authUser = ref({});
 
-onBeforeMount(async () => {
-    authUser.value = await callAuthUser();
-});
+// const { callAuthUser } = getAuthUser();
+const { removeComment } = deleteComment();
+
+// onBeforeMount(async () => {
+//     authUser.value = await callAuthUser();
+// });
 
 const user_is_authenticated = inject("user_is_authenticated");
 
@@ -42,10 +48,29 @@ const addComment = async (res) => {
     showReplyForm.value = false;
     comment.value.children.unshift(res);
 };
+
+const delComDialog = ref(null);
+
+// onMounted(() => console.log(delComDialog.value));
+
+const showConfirmDialog = () => {
+    // console.log(delComDialog.value.confirmDialog);
+    delComDialog.value.confirmDialog = true;
+};
+
+const delComment = async (data) => {
+    const res = await removeComment(data);
+    if (res.status == 200) {
+        emit("deleteComm", data.id);
+    }
+};
 </script>
 
 <template>
-    <!-- <component :is="tag"> -->
+    <delete-comment-dialog
+        ref="delComDialog"
+        @delCom="delComment({ id: comment?.id })"
+    />
     <q-item>
         <q-card flat class="comment-card full-width q-mb-lg" square>
             <q-card-section>
@@ -108,7 +133,7 @@ const addComment = async (res) => {
                             flat
                             icon="mdi-delete"
                             size="sm"
-                            @click="showReplyForm = !showReplyForm"
+                            @click="showConfirmDialog"
                             color="grey-6"
                         />
                     </div>

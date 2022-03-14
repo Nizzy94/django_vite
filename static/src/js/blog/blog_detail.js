@@ -1,7 +1,7 @@
 import { createApp, ref } from 'vue'
 import BlogDetail from '../../views/blog/BlogDetail.vue'
 
-import { Quasar } from 'quasar'
+import { Quasar, Notify } from 'quasar'
 import quasarUserOptions from '../quasar-user-options'
 
 import 'animate.css';
@@ -19,4 +19,8 @@ if (app.dataset.userIsAuthenticated == 'True') {
 }
 
 createApp(BlogDetail).provide('user_is_authenticated', userIsAuthenticated.value)
-    .use(Quasar, quasarUserOptions).mount(app)
+    .use(Quasar, {
+        plugins: {
+            Notify
+        },
+    }, quasarUserOptions).mount(app)

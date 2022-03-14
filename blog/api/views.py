@@ -5,6 +5,7 @@ from blog.models import Blog, Category, Comment
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework import status
 from .paginations import BlogListPagination
 import math
 from django.db.models import Count
@@ -219,7 +220,6 @@ def get_comments(request, post_id):
 @api_view(['POST'])
 @permission_classes([IsAuthenticatedOrReadOnly])
 def post_comment(request):
-    print('data:', request.data)
 
     data = request.data
 
@@ -239,3 +239,22 @@ def post_comment(request):
         com_serializer = CommentSerializer(comment)
 
         return Response(com_serializer.data)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticatedOrReadOnly])
+def delete_comment(request):
+
+    data = request.data
+
+    if data['id']:
+        comment = Comment.objects.get(id=data['id'])
+
+        if comment:
+            comment.delete()
+            # comments = Comment.objects.order_by("-created_at")
+            # serializer = CommentSerializer(comments, many=True)
+            return Response({'message': 'Comment Deleted.'})
+            # return Response(serializer.data)
+
+    return Response({'message': 'Comment not found'}, status=status.HTTP_404_NOT_FOUND)
