@@ -4,6 +4,9 @@ import BlogDetail from '../../views/blog/BlogDetail.vue'
 import { Quasar } from 'quasar'
 import quasarUserOptions from '../quasar-user-options'
 
+import 'animate.css';
+
+
 
 
 const app = document.getElementById('app')

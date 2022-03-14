@@ -20,15 +20,16 @@ const postComment = () => {
                     child.created_at = moment(child_formated_date, "YYYYMMDD").fromNow()
                 });
 
-                return data
+                return res
             }
         } catch (e) {
             if (e.response) {
                 if (e.response.status == 400) {
-
                     console.log(e.response)
+                    return e.response
                 } else {
                     console.log(e.response)
+                    return e.response
 
                 }
 

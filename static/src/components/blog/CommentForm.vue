@@ -1,23 +1,32 @@
 <template>
-    <div class="q-my-md" v-if="user_is_authenticated">
+    <div class="q-mb-md" v-if="user_is_authenticated">
+        <!-- @blur="is_parent && !isEditForm ? '' : formBlured" -->
+        <!-- @blur="
+                is_parent && !isEditForm
+                    ? ''
+                    : submitComment({ withBlur: true })
+            " -->
         <q-input
             counter
             :maxlength="is_parent ? 500 : 300"
+            @blur="formBlured"
             :autofocus="!is_parent || isEditForm"
-            autogrow
-            type="textarea"
+            :autogrow="is_parent"
+            :type="is_parent ? 'textarea' : 'text'"
             :dense="!is_parent"
             v-model="comment"
+            :error="commentFormError != ''"
+            :error-message="commentFormError"
             :label="isEditForm ? '' : is_parent ? 'Add Comment' : 'Add Reply'"
-            @keyup.enter="submitComment"
+            @keyup.enter="submitComment({ withEnter: true })"
             clearable
         />
         <q-btn
             :label="isEditForm ? 'Edit' : is_parent ? 'Add Comment' : 'Reply'"
-            @click="submitComment"
+            @click="submitComment({})"
             color="secondary"
             text-color="dark"
-            class="q-mt-sm"
+            class="q-mt-sm commentFormSubmitBtn"
             :size="isEditForm ? '10px' : !is_parent ? '10px' : '14px'"
             :loading="sendingComment"
         />
@@ -38,7 +47,7 @@
 
 <script setup>
 import { ref, toRefs } from "@vue/reactivity";
-import { inject } from "@vue/runtime-core";
+import { inject, onMounted } from "@vue/runtime-core";
 import postComment from "../../composables/postComment";
 
 const props = defineProps({
@@ -68,7 +77,7 @@ const props = defineProps({
     },
 });
 
-const emit = defineEmits(["addComment"]);
+const emit = defineEmits(["addComment", "blurForm"]);
 
 const sendingComment = ref(false);
 
@@ -81,11 +90,19 @@ const comment = ref("");
 const { is_parent, blog, parent, value, isEditForm, comment_id } =
     toRefs(props);
 
+const commentFormError = ref("");
+
 if (value.value) comment.value = value.value;
 
 const { saveComment } = postComment();
 
-const submitComment = async () => {
+const submitComment = async ({ withEnter = false }) => {
+    // console.log(withEnter);
+    // console.log(is_parent.value);
+    // console.log(isEditForm.value);
+    if (withEnter && is_parent.value && !isEditForm.value) return;
+
+    console.log("not returned");
     sendingComment.value = true;
     const formData = {
         blog: blog.value,
@@ -94,16 +111,32 @@ const submitComment = async () => {
         id: comment_id.value,
         edited: isEditForm.value,
     };
-    console.log(formData);
+    // console.log(formData);
     const res = await saveComment(formData);
-    console.log(res);
+    // console.log(res);
 
-    emit("addComment", res);
+    if (res.status == 200) {
+        emit("addComment", res.data);
 
-    comment.value = "";
+        comment.value = "";
+    } else {
+        if (res.status == 400) {
+            // console.log(res.data);
+            commentFormError.value = res.data.body[0];
+        }
+    }
+
     sendingComment.value = false;
 
     // console.log(formData);
+};
+
+const formBlured = (e) => {
+    if (is_parent.value && !isEditForm.value) return;
+
+    if (e.relatedTarget?.classList.contains("commentFormSubmitBtn")) return;
+
+    emit("blurForm");
 };
 </script>
 

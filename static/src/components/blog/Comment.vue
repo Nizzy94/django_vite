@@ -1,6 +1,6 @@
 
 <script setup>
-import { computed, ref, toRefs } from "@vue/reactivity";
+import { computed, reactive, ref, toRefs } from "@vue/reactivity";
 import { inject, watch } from "@vue/runtime-core";
 import ChildComment from "./ChildComment.vue";
 import CommentForm from "./CommentForm.vue";
@@ -20,7 +20,7 @@ const showReplyForm = ref(false);
 const showEditform = ref(false);
 
 const updateComment = async (res) => {
-    console.log(res);
+    // console.log(res);
     showEditform.value = false;
     comment.value.body = res.body;
     comment.value.updated_at = res.updated_at;
@@ -30,10 +30,13 @@ const updateComment = async (res) => {
 };
 
 const addComment = async (res) => {
-    console.log(res);
+    // console.log(res);
     showReplyForm.value = false;
 
+    // console.log("before assigned");
+
     comment.value.children.unshift(res);
+    // console.log("after assigned");
 };
 </script>
 
@@ -43,33 +46,38 @@ const addComment = async (res) => {
         <q-card flat class="comment-card full-width q-mb-lg" square>
             <q-card-section>
                 <div class="text-caption text-grey-7">
-                    <strong>{{ comment.user.username }}</strong> &bull;
-                    {{ comment.created_at }}
-                    <span v-if="comment.edited">
+                    <strong>{{ comment?.user?.username }}</strong> &bull;
+                    {{ comment?.created_at }}
+                    <span v-if="comment?.edited">
                         &bull; <strong> Edited:</strong>
-                        {{ comment.updated_at }}
+                        {{ comment?.updated_at }}
                     </span>
                 </div>
             </q-card-section>
 
-            <q-card-section class="q-pt-none" v-if="showEditform">
-                <!-- <q-input
-                    v-model="comment_value"
-                    autofocus
-                    @blur="(evnt) => (showEditform = false)"
-                    @keyup.enter="updateComment"
-                /> -->
-                <comment-form
-                    :blog="post_id"
-                    :value="comment.body"
-                    @addComment="updateComment"
-                    :isEditForm="true"
-                    :comment_id="comment.id"
-                />
-            </q-card-section>
-            <q-card-section class="q-pt-none" v-else>
-                {{ comment.body }}
-            </q-card-section>
+            <!-- leave-active-class="animate__animated animate__fadeInUp" -->
+
+            <transition
+                name="slide_form"
+                enter-active-class="animate__animated animate__fadeIn"
+                leave-active-class="animate__animated animate__fadeOut"
+                :duration="200"
+                mode="out-in"
+            >
+                <q-card-section class="q-pt-none" v-if="showEditform">
+                    <comment-form
+                        :blog="post_id"
+                        :value="comment?.body"
+                        @addComment="updateComment"
+                        @blurForm="showEditform = false"
+                        :isEditForm="true"
+                        :comment_id="comment?.id"
+                    />
+                </q-card-section>
+                <q-card-section class="q-pt-none comment_body" v-else>
+                    {{ comment?.body }}
+                </q-card-section>
+            </transition>
 
             <q-card-actions v-if="user_is_authenticated">
                 <div class="row">
@@ -108,6 +116,7 @@ const addComment = async (res) => {
                     :is_parent="false"
                     :parent="comment?.id"
                     @addComment="addComment"
+                    @blurForm="showReplyForm = false"
                 />
             </q-card-section>
             <q-card-section v-if="comment?.children?.length > 0">

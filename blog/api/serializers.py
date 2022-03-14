@@ -66,6 +66,11 @@ class CommentSerializer(serializers.ModelSerializer):
     blog = serializers.PrimaryKeyRelatedField(
         required=True, queryset=Blog.objects.all())
 
+    body = serializers.CharField(required=True, error_messages={
+        'required': 'You cannot submit an empty comment.',
+        'blank': 'You cannot submit an empty comment.',
+    })
+
     parent = serializers.PrimaryKeyRelatedField(
         default=None, queryset=Comment.objects.all(), allow_null=True)
 
