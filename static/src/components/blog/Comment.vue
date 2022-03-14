@@ -1,8 +1,9 @@
 
 <script setup>
 import { computed, reactive, ref, toRefs } from "@vue/reactivity";
-import { inject, watch } from "@vue/runtime-core";
+import { inject, onBeforeMount, watch } from "@vue/runtime-core";
 import ChildComment from "./ChildComment.vue";
+import getAuthUser from "../../composables/getAuthUser";
 import CommentForm from "./CommentForm.vue";
 
 const props = defineProps({
@@ -11,6 +12,14 @@ const props = defineProps({
 });
 
 const { comment, post_id } = toRefs(props);
+
+const authUser = ref({});
+
+const { callAuthUser } = getAuthUser();
+
+onBeforeMount(async () => {
+    authUser.value = await callAuthUser();
+});
 
 const user_is_authenticated = inject("user_is_authenticated");
 
@@ -30,13 +39,8 @@ const updateComment = async (res) => {
 };
 
 const addComment = async (res) => {
-    // console.log(res);
     showReplyForm.value = false;
-
-    // console.log("before assigned");
-
     comment.value.children.unshift(res);
-    // console.log("after assigned");
 };
 </script>
 
@@ -90,7 +94,7 @@ const addComment = async (res) => {
                             color="primary"
                         />
                     </div>
-                    <div>
+                    <div v-if="authUser.username == comment?.user?.username">
                         <q-btn
                             :label="'Edit'"
                             flat

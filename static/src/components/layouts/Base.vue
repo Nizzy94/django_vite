@@ -14,7 +14,6 @@
 import { computed, ref } from "@vue/reactivity";
 import CustomHeader from "./Header.vue";
 import CustomFooter from "./Footer.vue";
-
 import getUrls from "../../composables/getUrls";
 import { onBeforeMount, onBeforeUnmount, provide } from "@vue/runtime-core";
 import { useQuasar } from "quasar";
