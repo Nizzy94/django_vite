@@ -10,12 +10,18 @@
             />
             <!-- <q-card-section class="q-pa-none"> -->
             <q-card-section class="q-pt-none">
-                <div class="text-body2 ellipsis-3-lines">{{ title }}</div>
+                <div
+                    class="text-body2 ellipsis-3-lines"
+                    :class="{ 'text-bold q-mb-xs': inSearchDialog }"
+                >
+                    {{ title }}
+                </div>
+                <small v-html="excerpt" v-if="inSearchDialog"></small>
                 <small class="text-grey-6">{{ author }}</small>
             </q-card-section>
 
-            <!-- <q-card-section class="ellipsis q-pt-none">
-            {{ body }}
+            <!-- <q-card-section v-if="inSearchDialog" class="ellipsis q-pt-none">
+                {{ excerpt }}
             </q-card-section> -->
             <!-- </q-card-section> -->
         </q-card-section>
@@ -65,9 +71,14 @@ const props = defineProps({
     url: {
         type: String,
     },
+    inSearchDialog: {
+        type: Boolean,
+        default: false,
+    },
 });
 
-const { title, excerpt, author, horizontal, imageSrc, url } = toRefs(props);
+const { title, excerpt, author, horizontal, imageSrc, url, inSearchDialog } =
+    toRefs(props);
 </script>
 
 <style lang="sass" scope>

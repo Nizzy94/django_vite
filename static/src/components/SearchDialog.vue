@@ -38,9 +38,10 @@
                             >
                                 <news-card
                                     :title="res.title"
-                                    :body="res.body"
+                                    :excerpt="res.excerpt"
                                     :subtitle="'by John Doe'"
                                     horizontal
+                                    :inSearchDialog="true"
                                     :imageSrc="res.image"
                                     :url="res.url"
                                 />
