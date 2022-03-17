@@ -17,7 +17,7 @@ comment system DONE(partially:
   add moment DONE
   add CRUD functionality(
     to parent comment DONE
-    to child comment
+    to child comment DONE
   )
 )
 
