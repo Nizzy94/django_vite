@@ -15,7 +15,10 @@ reader accounts authentication DONE(partially)
 
 comment system DONE(partially:
   add moment DONE
-  add CRUD functionality
+  add CRUD functionality(
+    to parent comment DONE
+    to child comment
+  )
 )
 
 add SEO to pages DONE

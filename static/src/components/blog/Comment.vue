@@ -64,6 +64,12 @@ const delComment = async (data) => {
         emit("deleteComm", data.id);
     }
 };
+const delChildComment = async ({ res, id }) => {
+    // const res = await removeComment(data);
+    // console.log("in delChildComment:", res, id);
+    if (res.status !== 200) return;
+    emit("deleteComm", id);
+};
 </script>
 
 <template>
@@ -152,7 +158,11 @@ const delComment = async (data) => {
                 <q-list separator bordered class="comment-child-list q-pl-lg">
                     <!-- <q-item v-for="comment in comments"> -->
                     <child-comment
+                        @deleteChildComm="delChildComment"
                         :childComment="child"
+                        :authUser="authUser"
+                        :post_id="post_id"
+                        :parent="comment?.id"
                         v-for="child in comment?.children"
                     />
                     <!-- </q-item> -->
@@ -165,7 +175,7 @@ const delComment = async (data) => {
 
 <style lang="sass">
 .comment-card
-    border-left: 2px solid $grey-4
+    border-left: 3px solid $grey-4
 
     .comment-child-list
         border-left: none

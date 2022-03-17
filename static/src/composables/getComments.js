@@ -16,6 +16,7 @@ const getComments = () => {
             comment.updated_at = moment(comment.updated_at).fromNow()
             comment.children.forEach(child => {
                 child.created_at = moment(child.created_at).fromNow()
+                child.updated_at = moment(child.updated_at).fromNow()
             });
         });
 
