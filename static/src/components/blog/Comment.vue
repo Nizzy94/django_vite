@@ -125,7 +125,7 @@ const delChildComment = async ({ res, id }) => {
                             color="primary"
                         />
                     </div>
-                    <div v-if="authUser.username == comment?.user?.username">
+                    <div v-if="authUser?.username == comment?.user?.username">
                         <q-btn
                             :label="'Edit'"
                             flat

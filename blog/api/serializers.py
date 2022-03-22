@@ -1,8 +1,8 @@
 
 from rest_framework import serializers
 from django.contrib.auth.models import User
-
-from blog.models import Blog, Category, Tag, Comment
+from rest_framework.validators import UniqueValidator
+from blog.models import Blog, Category, Tag, Comment, Subscription
 from authentication.api.serializers import UserSerializer
 
 
@@ -87,6 +87,24 @@ class CommentSerializer(serializers.ModelSerializer):
             }
         }
 
-    # def validate_blog(self, value):
-    #     print('value', value)
-    #     return value
+
+class SubscriptionSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(min_length=3, max_length=40, error_messages={
+        'required': 'Provided firstname.',
+        'blank': 'Provided firstname.',
+        'min_length': 'Firstname must have 3 to 40 characters.',
+        'max_length': 'Firstname must have 3 to 40 characters.'
+    })
+    email = serializers.EmailField(validators=[
+        UniqueValidator(
+            queryset=Subscription.objects.all(),
+            message='Email already signed up for subscriptions.'
+        )
+    ], error_messages={
+        'required': 'Provide email.',
+        'blank': 'Provide email.',
+    })
+
+    class Meta:
+        model = Subscription
+        fields = '__all__'

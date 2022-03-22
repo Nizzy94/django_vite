@@ -30,4 +30,7 @@ urlpatterns = [
          name="post_comment"),
     path('delete-comment/', views.delete_comment,
          name="delete_comment"),
+
+    path('subscribe/', views.subscribe,
+         name="subscribe"),
 ]

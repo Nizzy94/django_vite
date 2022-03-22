@@ -123,8 +123,26 @@ class Comment(models.Model):
         self.updated_at = timezone.now()
         super().save(*args, **kwargs)
 
-    def get_absolute_url(self):
-        return reverse("blog:blog_detail", kwargs={"blog_slug": self.slug, "category": self.category.slug})
+    # def get_absolute_url(self):
+    #     return reverse("blog:blog_detail", kwargs={"blog_slug": self.slug, "category": self.category.slug})
 
     def __str__(self) -> str:
         return 'Comment by: %s' % self.username()
+
+
+class Subscription(models.Model):
+    email = models.EmailField(unique=True)
+    first_name = models.CharField(max_length=200)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def save(self, *args, **kwargs):
+        self.updated_at = timezone.now()
+        super().save(*args, **kwargs)
+
+    def __str__(self) -> str:
+        return self.first_name()

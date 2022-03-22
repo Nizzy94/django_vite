@@ -25,10 +25,10 @@ const postComment = () => {
         } catch (e) {
             if (e.response) {
                 if (e.response.status == 400) {
-                    console.log(e.response)
+                    // console.log(e.response)
                     return e.response
                 } else {
-                    console.log(e.response)
+                    // console.log(e.response)
                     return e.response
 
                 }

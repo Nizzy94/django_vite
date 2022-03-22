@@ -1,6 +1,6 @@
 
 from authentication.api.serializers import UserSerializer
-from blog.api.serializers import BlogSerializer, CategorySerializer, CommentSerializer, TagSerializer
+from blog.api.serializers import BlogSerializer, CategorySerializer, CommentSerializer, SubscriptionSerializer, TagSerializer
 from blog.models import Blog, Category, Comment
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
@@ -44,6 +44,8 @@ def get_home_posts(request):
     sel_cat2_blogs = sel_cat_list[1].blogs.order_by("-created_at")
     sel_cat3_blogs = sel_cat_list[2].blogs.order_by("-created_at")
     sel_cat4_blogs = sel_cat_list[3].blogs.order_by("-created_at")
+    # sel_cat1_blogs, sel_cat2_blogs, sel_cat3_blogs, sel_cat4_blogs = sel_cat_list.blogs.order_by(
+    #     "-created_at")
 
     for lat in latest:
         for blog in sel_cat1_blogs:
@@ -258,3 +260,18 @@ def delete_comment(request):
             # return Response(serializer.data)
 
     return Response({'message': 'Comment not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def subscribe(request):
+    data = request.data
+    print(data)
+
+    serializer = SubscriptionSerializer(data=data)
+
+    if serializer.is_valid(raise_exception=True):
+        print(serializer.validated_data)
+        serializer.save()
+
+        return Response({'message': 'You have susbscribed for our news letter.'})

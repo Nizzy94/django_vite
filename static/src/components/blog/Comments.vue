@@ -31,37 +31,41 @@ import Comment from "./Comment.vue";
 import CommentForm from "./CommentForm.vue";
 import moment from "moment";
 import getComments from "../../composables/getComments";
-import getAuthUser from "../../composables/getAuthUser";
+// import getAuthUser from "../../composables/getAuthUser";
 import { useQuasar } from "quasar";
 
 const props = defineProps({
     // comments: Array,
     post_id: Number,
+    authUser: {
+        type: Object,
+        default: {},
+    },
 });
 
-const { post_id } = toRefs(props);
+const { post_id, authUser } = toRefs(props);
 
 const $q = useQuasar();
 
 const { callComments, comments } = getComments();
 
-const { callAuthUser } = getAuthUser();
+// const { callAuthUser } = getAuthUser();
 
-const user_is_authenticated = inject("user_is_authenticated");
-const authUser = ref({});
+// const user_is_authenticated = inject("user_is_authenticated");
+// const authUser = ref({});
 
-onBeforeMount(async () => {
-    if (user_is_authenticated) {
-        authUser.value = await callAuthUser();
-    }
-});
+// onBeforeMount(async () => {
+//     if (user_is_authenticated) {
+//         authUser.value = await callAuthUser();
+//     }
+// });
 
 callComments(post_id.value);
 
-const showComments = ref(true);
+const showComments = ref(false);
 
 const addComment = async (res) => {
-    console.log(res);
+    // console.log(res);
     comments.value.unshift(res);
     showComments.value = true;
 };

@@ -105,7 +105,9 @@ const delComment = async (data) => {
             <q-card-actions v-if="user_is_authenticated">
                 <div class="row">
                     <div
-                        v-if="authUser.username == childComment?.user?.username"
+                        v-if="
+                            authUser?.username == childComment?.user?.username
+                        "
                     >
                         <q-btn
                             :label="'Edit'"

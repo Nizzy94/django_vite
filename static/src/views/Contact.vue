@@ -77,6 +77,7 @@
 import { reactive } from "@vue/reactivity";
 import Base from "../components/layouts/Base.vue";
 import SubscriptionForm from "../components/blog/SubscriptionForm.vue";
+import { useMeta } from "quasar";
 
 const contactFormData = reactive({
     name: "",

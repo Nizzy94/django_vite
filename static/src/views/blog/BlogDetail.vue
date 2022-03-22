@@ -72,7 +72,7 @@
                     </section>
                     <q-separator spaced="16px" />
                     <section v-if="post?.id">
-                        <comments :post_id="post_id" />
+                        <comments :authUser="authUser" :post_id="post_id" />
                     </section>
                     <q-separator spaced="16px" />
 
@@ -84,7 +84,7 @@
                 </div>
                 <div class="col-xs-12 col-md-3">
                     <div class="side_bar">
-                        <sidebar />
+                        <sidebar :authUser="authUser" />
                     </div>
                 </div>
                 <!-- <div class=""> -->
@@ -104,13 +104,21 @@ import Sidebar from "../../components/blog/Sidebar.vue";
 import getPostDetail from "../../composables/getPostDetail";
 // import getComments from "../../composables/getComments";
 import Comments from "../../components/blog/Comments.vue";
-import { onBeforeMount, provide, ref, watch } from "@vue/runtime-core";
+import { inject, onBeforeMount, provide, ref, watch } from "@vue/runtime-core";
 import { date, useMeta } from "quasar";
+import getAuthUser from "../../composables/getAuthUser";
 
 const { callPostDetail, post, tags } = getPostDetail();
 // const { callComments, comments } = getComments();
-onBeforeMount(() => {
-    callPostDetail();
+const { callAuthUser } = getAuthUser();
+
+const user_is_authenticated = inject("user_is_authenticated");
+const authUser = ref({});
+onBeforeMount(async () => {
+    await callPostDetail();
+    if (user_is_authenticated) {
+        authUser.value = await callAuthUser();
+    }
 });
 
 const date_created = ref("");

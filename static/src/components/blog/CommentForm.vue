@@ -102,7 +102,7 @@ const submitComment = async ({ withEnter = false }) => {
     // console.log(isEditForm.value);
     if (withEnter && is_parent.value && !isEditForm.value) return;
 
-    console.log("not returned");
+    // console.log("not returned");
     sendingComment.value = true;
     const formData = {
         blog: blog.value,
@@ -119,6 +119,7 @@ const submitComment = async ({ withEnter = false }) => {
         emit("addComment", res.data);
 
         comment.value = "";
+        commentFormError.value = "";
     } else {
         if (res.status == 400) {
             // console.log(res.data);

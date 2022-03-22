@@ -44,7 +44,7 @@
                 </div>
                 <div class="col-xs-12 col-md-3 col-lg-2">
                     <div class="side_bar">
-                        <sidebar />
+                        <sidebar :authUser="authUser" />
                     </div>
                 </div>
             </section>
@@ -71,12 +71,23 @@
 
 <script setup>
 import { ref } from "@vue/reactivity";
-import { onBeforeMount, watch } from "@vue/runtime-core";
+import { inject, onBeforeMount, watch } from "@vue/runtime-core";
 import Base from "../../components/layouts/Base.vue";
 import NewsCard from "../../components/NewsCard.vue";
 import getAllPosts from "../../composables/getAllPosts";
 import Sidebar from "../../components/blog/Sidebar.vue";
 import { useQuasar, useMeta } from "quasar";
+import getAuthUser from "../../composables/getAuthUser";
+
+const { callAuthUser } = getAuthUser();
+const user_is_authenticated = inject("user_is_authenticated");
+
+const authUser = ref({});
+// onBeforeMount(async () => {
+//     if (user_is_authenticated) {
+//         authUser.value = await callAuthUser();
+//     }
+// });
 
 const $q = useQuasar();
 
@@ -101,6 +112,10 @@ watch(data, () => {
     }
 });
 onBeforeMount(async () => {
+    if (user_is_authenticated) {
+        authUser.value = await callAuthUser();
+    }
+
     let query = ref(window.location.search); // get query string
 
     let queries = ref(new URLSearchParams(query.value)); //get all query params

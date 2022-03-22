@@ -11,6 +11,11 @@ def get_auth_user(request):
     auth_user = request.user
     serializer = UserSerializer(auth_user)
 
+    nums = (5, 2, 'gt', 2, True)
+
+    for x in nums:
+        print(x)
+
     return Response(serializer.data)
 
 
