@@ -6,7 +6,3 @@ docker ps
 docker inspect
 docker run -d --name esearch -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:8.2.2
 
-
-elasticsearch_pwd=2-U61yX+u5jhNf6JBMRI
-HTTP CA certificate SHA-256 fingerprint=3f68071e4b4f5ce2df892213eee2f9a0a7c41230437e02f2fd8a86d5ff97f764
-enrollment_token=eyJ2ZXIiOiI4LjIuMiIsImFkciI6WyIxNzIuMTguMC4yOjkyMDAiXSwiZmdyIjoiMjQwYTIyODk0MGMzYTNhYjQ1MTY3NDFiMGIzOTU3NTY3YzczMmU4ZjE2MDM2ODkyNjhhNWY3MzM1YzdiOWVjYyIsImtleSI6Ik5IVWxjWUVCemU5VjdPLUw5WFJBOndmd3ZwQkFlVHNHZ09xVUxkME80ZXcifQ==

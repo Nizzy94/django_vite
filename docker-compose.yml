@@ -35,11 +35,7 @@ services:
       - 8000:8000
     image: web:django_vite
     command: sh -c "python manage.py search_index --rebuild -f && python manage.py runserver 0.0.0.0:8000"
-    # command: python3 manage.py runserver 0.0.0.0:8000
-    # command: python3 manage.py runserver 0.0.0.0:8000 && python3 manage.py search_index --rebuild -f
     depends_on:
-      # - db
-      # - esearch
       db:
         condition: service_healthy
       esearch:
@@ -72,39 +68,22 @@ services:
     image: elasticsearch:7.17.4
     environment:
       - discovery.type=single-node
-    # depends_on:
-    #   - web
-    # restart: always
+
     ports:
       - "9200:9200"
       - "9300:9300"
     links:
       - db:db
-    # command: python3 manage.py search_index --rebuild -f
-    # cap_add:
-    #   - IPC_LOCK
+
     healthcheck:
       test: "exit 0"
     volumes:
       # - elasticsearch-data-volume:/usr/share/elasticsearch/data
       - es-volume-7.17.4:/usr/share/elasticsearch/data
-    # ulimits:
-    #   memlock:
-    #     soft: -1
-    #     hard: -1
-    #   nofile:
-    #     soft: 65536
-    #     hard: 65536
+
     networks:
       app_net:
         ipv4_address: 192.168.0.4
-  # rebuild_index:
-  #   build: .
-  #   command: sh -c "python3 manage.py search_index --rebuild -f"
-  #   restart: on-failure
-  #   depends_on:
-  #     esearch:
-  #       condition: service_started
 
 networks:
   app_net:
@@ -115,7 +94,5 @@ networks:
           gateway: 192.168.0.1
 
 volumes:
-  # elasticsearch-data-volume:
-  #   driver: local
   es-volume-7.17.4:
     driver: local
