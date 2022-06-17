@@ -24,7 +24,8 @@ class BlogDocument(Document):
         name = 'blogs'
         # See Elasticsearch Indices API reference for available settings
         settings = {'number_of_shards': 1,
-                    'number_of_replicas': 0}
+                    'number_of_replicas': 0
+                    }
 
     # body = fields.TextField(attr="body_to_str")
 

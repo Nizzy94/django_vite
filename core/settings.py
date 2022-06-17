@@ -15,7 +15,7 @@ SECRET_KEY = 'django-insecure-rfjf)e6wgo&e-e&=+cj3x*3yj4rbai0-pwi9idn93t#k7#sl!m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -56,8 +56,11 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'core.urls'
 
 ELASTICSEARCH_DSL = {
+    # 'default': {
+    #     'hosts': 'localhost:9200'
+    # },
     'default': {
-        'hosts': 'localhost:9200'
+        'hosts': 'esearch'
     },
 }
 
@@ -122,8 +125,9 @@ DATABASES = {
         'NAME': 'django_vite',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        # 'HOST': '127.0.0.1',
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
 

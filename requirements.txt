@@ -13,7 +13,7 @@ django-js-asset==1.2.2
 django-vite==1.3.0
 djangorestframework==3.13.1
 ecdsa==0.17.0
-elasticsearch==7.17.0
+elasticsearch==7.17.4
 elasticsearch-dsl==7.4.0
 Faker==12.2.0
 idna==3.3
