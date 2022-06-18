@@ -15,13 +15,14 @@
                 <div class="row justify-around" v-if="user_is_authenticated">
                     <q-btn
                         type="a"
-                        :href="`/logout/auth/?next=${redirect_url}`"
+                        :href="`/accounts/logout/?next=${redirect_url}`"
                         color="primary"
                         outline
                         label="Sign Out"
                     />
                 </div>
                 <div v-else class="row justify-around">
+                    <!-- :href="`/login/auth/?next=${redirect_url}`" -->
                     <q-btn
                         type="a"
                         :href="`/login/auth/?next=${redirect_url}`"
@@ -33,7 +34,7 @@
                         color="primary"
                         label="Sign Up"
                         type="a"
-                        :href="`/login/auth/?next=${redirect_url}`"
+                        :href="`/signup/auth/?next=${redirect_url}`"
                     />
                 </div>
             </q-card-section>

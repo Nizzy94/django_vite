@@ -17,7 +17,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -29,14 +29,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     #
     # third party
-    "social_django",
+    # "social_django",
     'django_vite',
     'rest_framework',
     'ckeditor',
     'ckeditor_uploader',
     'django_elasticsearch_dsl',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # social
+    'allauth.socialaccount.providers.google',
     #
     # custom apps
     'main',
@@ -58,25 +64,37 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'core.urls'
 
 ELASTICSEARCH_DSL = {
-    # 'default': {
-    #     'hosts': 'localhost:9200'
-    # },
     'default': {
         'hosts': 'esearch'
     },
 }
 
 # SOCIAL_AUTH_TRAILING_SLASH = False  # Remove trailing slash from routes
-SOCIAL_AUTH_AUTH0_DOMAIN = 'dev-11mbi3c5.us.auth0.com'
-SOCIAL_AUTH_AUTH0_KEY = 'xUvCoBcvoo6ugQ2l7G20dfYQ8mAS7T0I'
-SOCIAL_AUTH_AUTH0_SECRET = 'VeJ2zt6ZmLqikGu2m-_eUxnoR2LhbjuZssDRgangrjaiYB7aZBi_UZruEyir8cB4'
+# SOCIAL_AUTH_AUTH0_DOMAIN = 'dev-11mbi3c5.us.auth0.com'
+# SOCIAL_AUTH_AUTH0_KEY = 'xUvCoBcvoo6ugQ2l7G20dfYQ8mAS7T0I'
+# SOCIAL_AUTH_AUTH0_SECRET = 'VeJ2zt6ZmLqikGu2m-_eUxnoR2LhbjuZssDRgangrjaiYB7aZBi_UZruEyir8cB4'
 
-SOCIAL_AUTH_AUTH0_SCOPE = [
-    'openid',
-    'profile',
-    'email'
-]
+# SOCIAL_AUTH_AUTH0_SCOPE = [
+#     'openid',
+#     'profile',
+#     'email'
+# ]
 
+SITE_ID = 1
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': env('GOOGLE_AUTH_KEY'),
+            'secret': env('GOOGLE_AUTH_SECRET'),
+            'key': ''
+        }
+    }
+}
+
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
@@ -90,14 +108,20 @@ REST_FRAMEWORK = {
 
 AUTHENTICATION_BACKENDS = {
     # 'authentication.auth0backend.Auth0',
-    'social_core.backends.auth0.Auth0OAuth2',
-    'django.contrib.auth.backends.ModelBackend'
+    # 'social_core.backends.auth0.Auth0OAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 }
 
 
-LOGIN_URL = '/login/auth0/'
+# LOGIN_URL = '/login/auth0/'
+# LOGIN_URL = 'account_login'
+LOGIN_URL = 'authentication:login_auth'
 # LOGIN_REDIRECT_URL = '/'
-LOGIN_REDIRECT_URL = '/login/redirect/'
+# LOGIN_REDIRECT_URL = '/login/redirect/'
+LOGIN_REDIRECT_URL = 'authentication:login_redirect'
+LOGOUT_REDIRECT_URL = 'authentication:logout_redirect'
+# ACCOUNT_LOGOUT_REDIRECT_URL
 
 TEMPLATES = [
     {
