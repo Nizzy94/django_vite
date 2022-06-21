@@ -8,29 +8,34 @@ from django.urls import reverse
 
 
 def login_page(request):
-    print('login_page')
     next_url = request.GET.get("next", "/")
-    # print('next in login_page', next_url)
+    print('email_ver_redi', request.session.get(
+        'email_confirmation_redirect_url'))
     request.session['redirect_url'] = next_url
 
-    # login_url = '/login/auth0/'
     login_url = reverse('account_login')
+    next_param = '?next=%s' % next_url if next_url else ''
 
-    return HttpResponseRedirect(login_url)
+    full_redirect_url = '%s%s' % (login_url, next_param)
+
+    return HttpResponseRedirect(full_redirect_url)
 
     # return render(request, "authentication/login.html")
 
 
 def signup_page(request):
-    print('signup_page')
     next_url = request.GET.get("next", "/")
-    # print('next in login_page', next_url)
+    print('next in signup_page', next_url)
+    # print('next in meta', request.META.get('HTTP_REFERER'))
     request.session['redirect_url'] = next_url
+    request.session['email_confirmation_redirect_url'] = next_url
 
-    # login_url = '/login/auth0/'
     signup_url = reverse('account_signup')
+    next_param = '?next=%s' % next_url if next_url else ''
 
-    return HttpResponseRedirect(signup_url)
+    full_redirect_url = '%s%s' % (signup_url, next_param)
+
+    return HttpResponseRedirect(full_redirect_url)
 
     # return render(request, "authentication/login.html")
 
@@ -41,7 +46,6 @@ def complete_signup(request):
 
 
 def login_redirect(request):
-    print('login_redirect')
     next_url = request.session.get('redirect_url')
 
     if request.user.first_name == "" or request.user.last_name == "" or request.user.username == "":
@@ -78,3 +82,35 @@ def logout_redirect(request):
             f"{request.session.get('logout_redirect_url')}")
 
     return HttpResponseRedirect(logout_redirect_url)
+
+
+# def email_confirmation_view(request):
+#     email_confirm_redirect_url = request.GET.get("next", "/")
+#     # logout_redirect_url = '/'
+#     print('in email-confirm view:', request.session.get('logout_redirect_url'))
+#     # request.session['email_confirmation_redirect_url'] = email_confirm_redirect_url
+
+#     return HttpResponseRedirect(email_confirm_redirect_url)
+
+
+def email_confirmation_redirect(request):
+
+    # confirmation_redirect_url = request.GET.get("next", settings.LOGIN_URL)
+    confirmation_redirect_url = request.session.get(
+        'email_confirmation_redirect_url'
+    ) if request.session.get(
+        'email_confirmation_redirect_url'
+    ) else ''
+    query_params = None
+
+    print('in logout red:', request.session.get(
+        'email_confirmation_redirect_url'))
+
+    if confirmation_redirect_url != None:
+        query_params = "?next=%s" % confirmation_redirect_url if confirmation_redirect_url else ''
+
+    full_redirect_url = '%s%s' % (reverse(settings.LOGIN_URL), query_params)
+
+    # full_redirect_url = request.build_absolute_uri(full_redirect_link)
+
+    return HttpResponseRedirect(full_redirect_url)
