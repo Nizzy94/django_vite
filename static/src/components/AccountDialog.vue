@@ -15,17 +15,17 @@
                 <div class="row justify-around" v-if="user_is_authenticated">
                     <q-btn
                         type="a"
-                        :href="`/accounts/logout/?next=${redirect_url}`"
+                        :href="`/accounts/logout/${redirect_query}`"
                         color="primary"
                         outline
                         label="Sign Out"
                     />
                 </div>
                 <div v-else class="row justify-around">
-                    <!-- :href="`/login/auth/?next=${redirect_url}`" -->
+                    <!-- :href="`/login/auth/${redirect_query}`" -->
                     <q-btn
                         type="a"
-                        :href="`/login/auth/?next=${redirect_url}`"
+                        :href="`/login/auth/${redirect_query}`"
                         color="primary"
                         outline
                         label="Sign In"
@@ -34,7 +34,7 @@
                         color="primary"
                         label="Sign Up"
                         type="a"
-                        :href="`/signup/auth/?next=${redirect_url}`"
+                        :href="`/signup/auth/${redirect_query}`"
                     />
                 </div>
             </q-card-section>
@@ -48,13 +48,25 @@
 </template>
 
 <script setup>
-import { inject, ref } from "vue";
+import { computed, inject, onBeforeMount, ref, watch, watchEffect } from "vue";
+import generateAuthUrls from "../composables/generateAuthUrls";
+
+const query = ref(window.location.search);
+const queries = ref(new URLSearchParams(query.value));
+const next_url = queries.value.get("next");
 
 const account_d = ref(false);
+const routes = ref(inject("routes"));
 
 const user_is_authenticated = inject("user_is_authenticated");
 
-const redirect_url = window.location.pathname;
+const { generateLink, redirect_query } = generateAuthUrls();
+
+watchEffect(async () => {
+    await generateLink(routes, next_url);
+    // console.log(redirect_query);
+});
+
 // console.log();
 // console.log(user_is_authenticated);
 

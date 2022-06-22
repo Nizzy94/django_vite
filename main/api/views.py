@@ -49,7 +49,15 @@ class APIRootView(APIView):
             'contact': reverse('main:contact', request=request),
             'search': reverse('search:search_view', request=request),
             'blog': blog_cats,
-            'login_redirect': reverse('authentication:login_redirect', request=request),
+            'auth_routes': {
+                'login_redirect': reverse('authentication:login_redirect', request=request),
+                'account_login': reverse('account_login', request=request),
+                'account_signup': reverse('account_signup', request=request),
+                'login_page': reverse('authentication:login_auth', request=request),
+                'signup_page': reverse('authentication:signup_auth', request=request),
+                # 'logout_page': reverse('authentication:logout_auth', request=request),
+                'logout_redirect': reverse('authentication:logout_redirect', request=request),
+            },
         }
 
         return Response(data)

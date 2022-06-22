@@ -42,6 +42,7 @@ module.exports = {
                 blog: resolve('./static/src/js/blog/blog.js'),
                 blog_degails: resolve('./static/src/js/blog/blog_degails.js'),
                 login: resolve('./static/src/js/authentication/login.js'),
+                register: resolve('./static/src/js/authentication/register.js'),
             },
             output: {
                 chunkFileNames: undefined,

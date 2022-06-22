@@ -1,6 +1,6 @@
 import { createApp, ref } from 'vue'
 // import Auth from '../../views/authentication/Auth.vue'
-import Login from '../../views/authentication/Login.vue'
+import Register from '../../views/authentication/Register.vue'
 
 import { Quasar } from 'quasar'
 import quasarUserOptions from '../quasar-user-options'
@@ -13,6 +13,6 @@ if (app.dataset.userIsAuthenticated == 'True') {
     userIsAuthenticated.value = true
 }
 
-createApp(Login)
+createApp(Register)
     .provide('user_is_authenticated', userIsAuthenticated.value)
     .use(Quasar, quasarUserOptions).mount('#app')

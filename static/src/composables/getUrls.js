@@ -18,8 +18,9 @@ const getUrls = () => {
         try {
             const res = await fetchAllowAny.get('/get-routes/')
             routes.value = res.data
-
             console.log(res)
+            return res.data
+
         } catch (e) {
             console.log(e.response)
         } finally {

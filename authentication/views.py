@@ -8,13 +8,14 @@ from django.urls import reverse
 
 
 def login_page(request):
-    next_url = request.GET.get("next", "/")
+    next_url = request.GET.get("next", '')
     print('email_ver_redi', request.session.get(
         'email_confirmation_redirect_url'))
     request.session['redirect_url'] = next_url
 
     login_url = reverse('account_login')
-    next_param = '?next=%s' % next_url if next_url else ''
+    next_param = '?next=%s' % next_url if next_url and (next_url != reverse(
+        'authentication:login_auth') or next_url != reverse('authentication:signup_auth')) else ''
 
     full_redirect_url = '%s%s' % (login_url, next_param)
 
@@ -24,14 +25,15 @@ def login_page(request):
 
 
 def signup_page(request):
-    next_url = request.GET.get("next", "/")
+    next_url = request.GET.get("next")
     print('next in signup_page', next_url)
     # print('next in meta', request.META.get('HTTP_REFERER'))
     request.session['redirect_url'] = next_url
     request.session['email_confirmation_redirect_url'] = next_url
 
     signup_url = reverse('account_signup')
-    next_param = '?next=%s' % next_url if next_url else ''
+    next_param = '?next=%s' % next_url if next_url and (next_url != reverse(
+        'authentication:login_auth') or next_url != reverse('authentication:signup_auth')) else ''
 
     full_redirect_url = '%s%s' % (signup_url, next_param)
 
@@ -58,18 +60,18 @@ def login_redirect(request):
     return HttpResponseRedirect(redirect_to)
 
 
-@login_required
-def logout(request):
+# @login_required
+# def logout(request):
 
-    log_out(request)
-    next_url = request.GET.get("next", "/")
-    request.session['logout_redirect_url'] = next_url
-    return_to = urlencode(
-        {'returnTo': request.build_absolute_uri('/logout/redirect/')})
-    logout_url = 'https://%s/v2/logout?client_id=%s&%s' % \
-                 (settings.SOCIAL_AUTH_AUTH0_DOMAIN,
-                  settings.SOCIAL_AUTH_AUTH0_KEY, return_to)
-    return HttpResponseRedirect(logout_url)
+#     log_out(request)
+#     next_url = request.GET.get("next", "/")
+#     request.session['logout_redirect_url'] = next_url
+#     return_to = urlencode(
+#         {'returnTo': request.build_absolute_uri('/logout/redirect/')})
+#     logout_url = 'https://%s/v2/logout?client_id=%s&%s' % \
+#                  (settings.SOCIAL_AUTH_AUTH0_DOMAIN,
+#                   settings.SOCIAL_AUTH_AUTH0_KEY, return_to)
+#     return HttpResponseRedirect(logout_url)
 
 
 def logout_redirect(request):
@@ -101,7 +103,7 @@ def email_confirmation_redirect(request):
     ) if request.session.get(
         'email_confirmation_redirect_url'
     ) else ''
-    query_params = None
+    query_params = ''
 
     print('in logout red:', request.session.get(
         'email_confirmation_redirect_url'))

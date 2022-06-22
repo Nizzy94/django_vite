@@ -109,8 +109,9 @@ const completeSignup = async () => {
 
     if (res.status == 200) {
         console.log("completed ready for redirect");
-        console.log(base.value.routes.login_redirect);
-        window.location.href = base.value.routes.login_redirect;
+        console.log(base.value.routes.auth_routes.login_redirect);
+        // window.location.href = base.value.routes.login_redirect;
+        window.location.href = base.value.routes.auth_routes.login_redirect;
         // window.location.replace(base.value.routes.login_redirect);
     } else {
         if (res.status == 400) {

@@ -31,12 +31,12 @@ export default {
 
         provide("domain", window.location.origin);
 
-        const { routes, callUrls } = getUrls();
-
+        const { callUrls } = getUrls();
+        const routes = ref({});
         // onMounted(async () => {
 
         onBeforeMount(async () => {
-            await callUrls();
+            routes.value = await callUrls();
         });
 
         // console.log(routes.value);

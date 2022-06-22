@@ -16,7 +16,7 @@ import CustomHeader from "./Header.vue";
 import CustomFooter from "./Footer.vue";
 
 import getUrls from "../../composables/getUrls";
-import { onBeforeUnmount, provide } from "@vue/runtime-core";
+import { onBeforeMount, onBeforeUnmount, provide } from "@vue/runtime-core";
 import { useQuasar } from "quasar";
 
 export default {
@@ -33,7 +33,10 @@ export default {
 
         // onMounted(async () => {
 
-        callUrls();
+        // callUrls();
+        onBeforeMount(async () => {
+            await callUrls();
+        });
 
         console.log(routes);
 
