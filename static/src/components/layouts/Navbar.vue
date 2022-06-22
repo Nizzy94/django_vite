@@ -56,12 +56,15 @@
             :class="{ 'nav-link-active': currentRoute == routes?.contact }"
             :href="routes?.contact"
         />
-        <q-separator dark vertical v-if="!isSmallScreen" />
+        <!-- <q-separator dark vertical v-if="!isSmallScreen" /> -->
         <q-btn
             color="secondary"
             unelevated
-            :label="$q.screen.gt.md ? 'Account' : ''"
-            stretch
+            :round="user_is_authenticated"
+            :stretch="!user_is_authenticated"
+            :label="
+                $q.screen.gt.md ? (!user_is_authenticated ? 'Account' : '') : ''
+            "
             icon="mdi-account"
             text-color="dark"
             @click="openAccountDia"

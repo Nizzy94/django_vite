@@ -1,6 +1,6 @@
 // import '../css/quasar.scss'
 import 'quasar/src/css/index.sass'
-import { Loading, QSpinnerPie } from 'quasar'
+import { Loading, QSpinnerPie, Cookies } from 'quasar'
 
 
 // Import icon libraries
@@ -14,7 +14,8 @@ import { Loading, QSpinnerPie } from 'quasar'
 
 export default {
     plugins: {
-        Loading
+        Loading,
+        Cookies
     }, // import Quasar plugins and add here
 
     config: {

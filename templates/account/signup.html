@@ -1,8 +1,10 @@
 {% extends "main/base.html" %}
 {% load django_vite %}
+{% load i18n %}
 
 
-{% block title %}Register{% endblock title %}
+
+{% block title %}{% trans "Signup" %}{% endblock title %}
 
 {% block head_scripts %}
     {% vite_asset 'js/authentication/register.js' %}

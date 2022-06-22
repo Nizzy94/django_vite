@@ -31,46 +31,61 @@
                         </div>
                     </div>
 
-                    <slot name="form_controls" />
-
-                    <q-card-section class="q-px-lg">
-                        <p v-if="formTitle.toLowerCase() == 'sign in'">
-                            Not having an account?
-                            <q-btn
-                                label="Sign Up"
-                                dense
-                                flat
-                                color="primary"
-                                no-caps
-                                type="a"
-                                :href="`/signup/auth/${redirect_query}`"
-                            />
-                            here.
-                        </p>
-                        <p v-else-if="formTitle.toLowerCase() == 'sign up'">
-                            Already having an account?
-                            <q-btn
-                                label="Sign In"
-                                dense
-                                flat
-                                color="primary"
-                                no-caps
-                                type="a"
-                                :href="`/login/auth/${redirect_query}`"
-                            />
-                            here
-                        </p>
-                    </q-card-section>
-                    <q-card-actions class="row justify-center">
-                        <q-btn
-                            color="secondary"
-                            text-color="dark"
-                            :label="formTitle"
-                            @click="submitAuth"
-                            no-caps
-                            size="md"
+                    <q-form
+                        :action="`${
+                            formTitle.toLowerCase() == 'sign up'
+                                ? routes?.auth_routes?.account_signup
+                                : routes?.auth_routes?.account_login
+                        }${redirect_query}`"
+                        method="post"
+                    >
+                        <input
+                            name="csrfmiddlewaretoken"
+                            :value="$q.cookies.get('csrftoken')"
                         />
-                    </q-card-actions>
+                        <slot name="form_controls" />
+
+                        <q-card-section class="q-px-lg">
+                            <p v-if="formTitle.toLowerCase() == 'sign in'">
+                                Not having an account?
+                                <q-btn
+                                    label="Sign Up"
+                                    dense
+                                    flat
+                                    color="primary"
+                                    no-caps
+                                    type="a"
+                                    :href="`/signup/auth/${redirect_query}`"
+                                />
+                                here.
+                            </p>
+                            <p v-else-if="formTitle.toLowerCase() == 'sign up'">
+                                Already having an account?
+                                <q-btn
+                                    label="Sign In"
+                                    dense
+                                    flat
+                                    color="primary"
+                                    no-caps
+                                    type="a"
+                                    :href="`/login/auth/${redirect_query}`"
+                                />
+                                here
+                            </p>
+                        </q-card-section>
+
+                        <q-card-actions class="row justify-center">
+                            <q-btn
+                                color="secondary"
+                                text-color="dark"
+                                :label="formTitle"
+                                @click="submitAuth"
+                                type="submit"
+                                no-caps
+                                size="md"
+                            />
+                        </q-card-actions>
+                    </q-form>
                 </q-card>
             </div>
         </template>

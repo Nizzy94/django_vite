@@ -48,7 +48,8 @@ def complete_signup(request):
 
 
 def login_redirect(request):
-    next_url = request.session.get('redirect_url')
+    next_url = request.session.get(
+        'redirect_url') if request.session.get('redirect_url') else '/'
 
     if request.user.first_name == "" or request.user.last_name == "" or request.user.username == "":
         next_url = reverse("authentication:complete_signup")

@@ -6,8 +6,15 @@ import { Quasar } from 'quasar'
 import quasarUserOptions from '../quasar-user-options'
 
 
+const app = document.getElementById('app')
+
 
 const userIsAuthenticated = ref(false)
+const formErrors = JSON.parse(app.dataset.formErrors)
+const oldFormData = JSON.parse(app.dataset.oldFormData)
+
+// console.log(oldFormData)
+// console.log(formErrors)
 
 if (app.dataset.userIsAuthenticated == 'True') {
     userIsAuthenticated.value = true
@@ -15,4 +22,6 @@ if (app.dataset.userIsAuthenticated == 'True') {
 
 createApp(Register)
     .provide('user_is_authenticated', userIsAuthenticated.value)
-    .use(Quasar, quasarUserOptions).mount('#app')
+    .provide('old_form_data', oldFormData)
+    .provide('form_errors', formErrors)
+    .use(Quasar, quasarUserOptions).mount(app)

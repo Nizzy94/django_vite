@@ -1,5 +1,5 @@
 {% load django_vite %}
-
+{% load convert_data %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,24 +16,18 @@
     <title>
         {% block title %}Django Vite{% endblock title %}
     </title>
-    {% comment %} <style>
-        body {
-            font-family: Avenir, Helvetica, Arial, sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-align: center;
-            color: #2c3e50;
-            margin-top: 60px;
-        }
-    </style> {% endcomment %}
-
+  
     {% vite_hmr_client %}
     {% block stylesheets %}{% endblock stylesheets %}
     {% block head_scripts %}{% endblock head_scripts %}
 </head>
 <body>
-    {% comment %} {{ user.is_authenticated }} {% endcomment %}
-    <div id="app" data-user-is-authenticated="{{user.is_authenticated}}"></div>
+    <div id="app" 
+        data-user-is-authenticated="{{user.is_authenticated}}" 
+        data-form-errors="{{ form.errors.as_json }}"
+        data-old-form-data="{{ request.POST|to_json}}"
+    ></div>
+    
     {% block bottom_scripts %}{% endblock bottom_scripts %}
 </body>
 </html>

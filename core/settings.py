@@ -93,10 +93,10 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = 'authentication:email_confirmation_redirect'
+ACCOUNT_FORMS = {'signup': 'authentication.forms.CustomSignupForm'}
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
@@ -130,6 +130,7 @@ LOGOUT_REDIRECT_URL = 'authentication:logout_redirect'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        # 'DIRS': [],
         'DIRS': [BASE_DIR/'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
