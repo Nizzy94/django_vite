@@ -1,15 +1,35 @@
 <template>
     <Base ref="base">
         <template #page_content>
-            <div class="row justify-center q-pa-md">
-                <q-card class="form-card__complete-signup">
+            <div class="row justify-center q-pa-lg">
+                <q-card class="form-card__complete-signup q-pb-lg">
                     <q-card-section class="text-center">
                         <span class="text-primary text-h5">
                             {{ formTitle }}
                         </span>
                     </q-card-section>
 
-                    <q-separator />
+                    <q-separator size="1.5px" />
+
+                    <q-card-section class="row justify-center q-mt-lg">
+                        <q-btn
+                            label="Continue with Google"
+                            icon="img:https://cdn.cdnlogo.com/logos/g/35/google-icon.svg"
+                            class="my-4 font-bold"
+                        />
+                    </q-card-section>
+
+                    <div class="row q-px-lg justify-around">
+                        <div class="col">
+                            <q-separator spaced />
+                        </div>
+                        <div class="col text-center">
+                            <span class="text-bold">OR</span>
+                        </div>
+                        <div class="col">
+                            <q-separator spaced />
+                        </div>
+                    </div>
 
                     <slot name="form_controls" />
 
@@ -41,13 +61,14 @@
                             here
                         </p>
                     </q-card-section>
-                    <q-card-actions class="q-px-lg row justify-center">
+                    <q-card-actions class="row justify-center">
                         <q-btn
                             color="secondary"
                             text-color="dark"
                             :label="formTitle"
                             @click="submitAuth"
                             no-caps
+                            size="md"
                         />
                     </q-card-actions>
                 </q-card>
@@ -97,6 +118,6 @@ const submitAuth = () => {
 
 <style lang="sass">
 .form-card__complete-signup
-    margin-top: 80px
+    margin-top: 70px
     width: 100%
 </style>
