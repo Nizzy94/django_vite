@@ -39,8 +39,17 @@
                         }${redirect_query}`"
                         method="post"
                     >
+                        <q-card-section
+                            v-if="formErrors?.non_field_errors"
+                            class="text-negative"
+                        >
+                            <p v-for="error in formErrors.non_field_errors">
+                                {{ error.message }}
+                            </p>
+                        </q-card-section>
                         <input
                             name="csrfmiddlewaretoken"
+                            type="hidden"
                             :value="$q.cookies.get('csrftoken')"
                         />
                         <slot name="form_controls" />
@@ -97,7 +106,7 @@ import { ref, toRefs } from "vue";
 import Base from "../../components/layouts/Base.vue";
 import getUrls from "../../composables/getUrls";
 import generateAuthUrls from "../../composables/generateAuthUrls";
-import { onBeforeMount } from "@vue/runtime-core";
+import { inject, onBeforeMount, reactive } from "@vue/runtime-core";
 
 const props = defineProps({
     formTitle: {
@@ -129,6 +138,13 @@ const submitAuth = () => {
         ? emit("signIn")
         : emit("signUp");
 };
+
+const form_errors = inject("form_errors");
+console.log(form_errors.__all__);
+
+const formErrors = reactive({
+    non_field_errors: form_errors.__all__ ?? "",
+});
 </script>
 
 <style lang="sass">

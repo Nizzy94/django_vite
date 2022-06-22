@@ -43,6 +43,7 @@ const old_form_data = inject("old_form_data");
 const form_errors = inject("form_errors");
 
 console.log(old_form_data);
+console.log(form_errors);
 
 const formData = reactive({
     login: old_form_data.login,

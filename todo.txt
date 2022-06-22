@@ -26,5 +26,9 @@ add SEO to pages DONE
 
 change authentication to allauth
   functionality(DONE)
-  redirect on email verification
+  redirect on email verification DONE
   customize UI
+    login(DONE)
+    signup(DONE)
+    verification
+    password change
