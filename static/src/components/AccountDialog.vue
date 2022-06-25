@@ -15,10 +15,20 @@
                 <div class="row justify-around" v-if="user_is_authenticated">
                     <q-btn
                         type="a"
-                        :href="`/accounts/logout/${redirect_query}`"
+                        :href="routes?.auth_routes?.profile_page"
                         color="primary"
+                        icon="mdi-account-cog"
+                        label="Manage Account"
+                        no-caps
+                    />
+                    <q-btn
+                        type="a"
+                        :href="`/accounts/logout/${redirect_query}`"
+                        color="negative"
+                        icon="mdi-logout-variant"
                         outline
                         label="Sign Out"
+                        no-caps
                     />
                 </div>
                 <div v-else class="row justify-around">
