@@ -39,7 +39,7 @@
         {% block extra_content %}{% endblock extra_content %}
     ></div>
         
-    {{ redirect_field_name }}
+    {% comment %} {{ redirect_field_name }} {% endcomment %}
     {% comment %} {% user_display confirmation %} {% endcomment %}
     
     {% block bottom_scripts %}{% endblock bottom_scripts %}
