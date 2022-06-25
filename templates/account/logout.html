@@ -1,0 +1,27 @@
+{% extends "main/base.html" %}
+{% load django_vite %}
+{% load convert_data %}
+
+{% load i18n %}
+
+
+{% block title %}Sign Out{% endblock title %}
+
+{% block head_scripts %}
+    {% vite_asset 'js/authentication/logout.js' %}
+{% endblock head_scripts %}
+
+{% block extra_content %}
+    
+      data-redirect-field='{
+        "name": "{{ redirect_field_name }}",
+        "value": "{{ redirect_field_value }}"
+      }',
+      
+{% endblock extra_content %}
+
+
+
+{% block bottom_scripts %}
+
+{% endblock bottom_scripts %}
