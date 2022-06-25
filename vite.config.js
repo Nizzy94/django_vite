@@ -12,7 +12,8 @@ module.exports = {
             sassVariables: './static/src/css/quasar.variables.scss'
         })
     ],
-    root: resolve(__dirname, './static/src'),
+    root: resolve(__dirname, './static/src/'),
+    // root: './static/src',
     base: '/static/',
     // server: {
     //     host: 'localhost',
@@ -38,11 +39,16 @@ module.exports = {
                 about: resolve('./static/src/js/about.js'),
                 contact: resolve('./static/src/js/contact.js'),
                 search: resolve('./static/src/js/search.js'),
+
                 // blog
                 blog: resolve('./static/src/js/blog/blog.js'),
                 blog_degails: resolve('./static/src/js/blog/blog_degails.js'),
+
+                // auth
                 login: resolve('./static/src/js/authentication/login.js'),
                 register: resolve('./static/src/js/authentication/register.js'),
+                profile: resolve('./static/src/js/authentication/profile.js'),
+                account_email: resolve('./static/src/js/authentication/account_email.js'),
             },
             output: {
                 chunkFileNames: undefined,

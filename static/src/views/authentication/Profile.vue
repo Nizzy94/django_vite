@@ -1,0 +1,94 @@
+<template>
+    <ProfileGeneral>
+        <template #form_content>
+            <form class="form_content" method="POST" action="#">
+                <div class="row justify-between q-col-gutter-md">
+                    <div class="col-12">
+                        <q-input
+                            name="first_name"
+                            label="First Name"
+                            v-model="formData.first_name"
+                            :error="formErrors.first_name !== ''"
+                            :error-message="formErrors.first_name"
+                        />
+                    </div>
+                    <div class="col-12">
+                        <q-input
+                            name="last_name"
+                            label="Last Name"
+                            v-model="formData.last_name"
+                            :error="formErrors.last_name !== ''"
+                            :error-message="formErrors.last_name"
+                        />
+                    </div>
+                </div>
+
+                <div class="row justify-between q-col-gutter-md">
+                    <div class="col-12">
+                        <q-input
+                            label="Email"
+                            name="email"
+                            disable
+                            v-model="formData.email"
+                            :error="formErrors.email !== ''"
+                            :error-message="formErrors.email"
+                            type="email"
+                        />
+                    </div>
+                    <div class="col-12">
+                        <q-input
+                            name="username"
+                            label="Username"
+                            v-model="formData.username"
+                            :error="formErrors.username !== ''"
+                            :error-message="formErrors.username"
+                        />
+                    </div>
+                </div>
+                <div class="row justify-center">
+                    <q-btn
+                        label="Update Profile"
+                        type="submit"
+                        color="secondary"
+                        text-color="dark"
+                    />
+                </div>
+            </form>
+        </template>
+    </ProfileGeneral>
+</template>
+
+<script setup>
+import { reactive } from "@vue/reactivity";
+import { inject } from "@vue/runtime-core";
+import ProfileGeneral from "../../components/auth/ProfileGeneral.vue";
+
+const old_form_data = inject("old_form_data");
+const form_errors = inject("form_errors");
+
+const formData = reactive({
+    first_name: old_form_data.first_name,
+    last_name: old_form_data.last_name,
+    username: old_form_data.username,
+    email: old_form_data.email,
+    password1: old_form_data.password1,
+    password2: old_form_data.password2,
+});
+const formErrors = reactive({
+    first_name: form_errors.first_name ? form_errors.first_name[0].message : "",
+    last_name: form_errors.last_name ? form_errors.last_name[0].message : "",
+    username: form_errors.username ? form_errors.username[0].message : "",
+    email: form_errors.email ? form_errors.email[0].message : "",
+    password1: form_errors.password1 ? form_errors.password1[0].message : "",
+    password2: form_errors.password2 ? form_errors.password2[0].message : "",
+});
+</script>
+
+<style lang="sass">
+.form_content
+    width: 100%
+    @media (min-width: $breakpoint-md-min)
+        width: 70%
+    @media (min-width: $breakpoint-lg-min)
+        width: 50%
+</style>

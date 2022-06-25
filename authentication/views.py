@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.contrib.auth import logout as log_out
 from django.conf import settings
 from django.http import HttpResponseRedirect
@@ -117,3 +117,10 @@ def email_confirmation_redirect(request):
     # full_redirect_url = request.build_absolute_uri(full_redirect_link)
 
     return HttpResponseRedirect(full_redirect_url)
+
+
+def profile_page(request):
+    context = {
+        'user': request.user if request.user.is_authenticated else {}
+    }
+    return render(request, 'authentication/profile.html', context)

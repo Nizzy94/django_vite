@@ -1,0 +1,11 @@
+{% extends "main/base.html" %}
+{% load django_vite %}
+
+
+{% block title %}Profile{% endblock title %}
+
+{% block head_scripts %}
+    {% vite_asset 'js/authentication/profile.js' %}
+{% endblock head_scripts %}
+
+{% block bottom_scripts %}{% endblock bottom_scripts %}

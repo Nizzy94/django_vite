@@ -3,7 +3,7 @@
         <CustomHeader />
         <q-page-container>
             <q-page style="max-width: 1440px" class="q-mx-auto">
-                <slot name="page_content" />
+                <slot name="page_content" :routes="routes" />
             </q-page>
         </q-page-container>
         <CustomFooter />

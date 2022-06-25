@@ -19,6 +19,8 @@ urlpatterns = [
          views.email_confirmation_redirect, name="email_confirmation_redirect"),
     path('complete-signup/',
          views.complete_signup, name="complete_signup"),
+    path('accounts/profile/',
+         views.profile_page, name="profile_page"),
     path('auth/api/',
          include('authentication.api.urls')),
 ]

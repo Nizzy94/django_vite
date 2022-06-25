@@ -55,8 +55,13 @@ class APIRootView(APIView):
                 'account_signup': reverse('account_signup', request=request),
                 'login_page': reverse('authentication:login_auth', request=request),
                 'signup_page': reverse('authentication:signup_auth', request=request),
-                # 'logout_page': reverse('authentication:logout_auth', request=request),
                 'logout_redirect': reverse('authentication:logout_redirect', request=request),
+                'profile_page': reverse('authentication:profile_page', request=request),
+                # 'account_set_password': reverse('account_set_password', request=request),
+                # 'account_change_password': reverse('account_change_password', request=request),
+                # 'account_reset_password': reverse('account_reset_password', request=request),
+                'account_email': reverse('account_email', request=request),
+                # 'socialaccount_connections': reverse('socialaccount_connections', request=request),
             },
         }
 

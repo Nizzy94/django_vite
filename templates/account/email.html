@@ -1,0 +1,27 @@
+{% extends "main/base.html" %}
+{% load django_vite %}
+{% load convert_data %}
+
+{% load i18n %}
+
+
+{% block title %}Email Addresses{% endblock title %}
+
+{% block head_scripts %}
+    {% vite_asset 'js/authentication/account_email.js' %}
+{% endblock head_scripts %}
+
+{% block extra_content %}
+{% comment %} {{  {% endcomment %}
+    
+      data-emails='{{  user.emailaddress_set.all | qset_to_json }}',
+      {% comment %} data-messages='{{  user.emailaddress_set.all | qset_to_json }}', {% endcomment %}
+    
+ {% comment %} }} {% endcomment %}
+{% endblock extra_content %}
+
+
+
+{% block bottom_scripts %}
+
+{% endblock bottom_scripts %}
