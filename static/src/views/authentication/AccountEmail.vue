@@ -73,7 +73,7 @@
                                     label="Make primary"
                                     color="secondary"
                                     text-color="dark"
-                                    class="q-mr-sm"
+                                    class="q-mr-sm q-mb-sm"
                                     type="submit"
                                     name="action_primary"
                                     no-caps
@@ -83,7 +83,7 @@
                                     label="Re-send verification"
                                     color="secondary"
                                     text-color="dark"
-                                    class="q-mr-sm"
+                                    class="q-mr-sm q-mb-sm"
                                     type="submit"
                                     name="action_send"
                                     no-caps
@@ -92,7 +92,7 @@
                                 <q-btn
                                     label="Remove"
                                     color="negative"
-                                    class="q-mr-sm"
+                                    class="q-mr-sm q-mb-sm"
                                     @click="openEmailDialog"
                                     no-caps
                                     :disable="
