@@ -1,5 +1,7 @@
 {% load django_vite %}
 {% load convert_data %}
+{% load account %}
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,19 +29,18 @@
         data-form-errors="{{ form.errors.as_json }}"
         data-old-form-data="{{ request.POST|to_json}}"
         data-messages='[
-                        {% if messages %}{% for message in messages %}
-                            {   
-                                "tag": "{{  message.tags }}", 
-                                "message": "{{ message }}" 
-                            }
-                        {% endfor %}{% endif %}]'
+                            {% if messages %}{% for message in messages %}
+                                {   
+                                    "tag": "{{  message.tags }}", 
+                                    "message": "{{ message }}" 
+                                }
+                            {% endfor %}{% endif %}
+                        ]'
         {% block extra_content %}{% endblock extra_content %}
-        ></div>
-        {% comment %} data-extra-content="{% block extra_content %}{% endblock extra_content %}" {% endcomment %}
-    {% comment %} {% for message in messages %}
-    {{  message }}
-    {% endfor %} {% endcomment %}
-    {{ messages.tags }}
+    ></div>
+        
+    {{ confirmation }}
+    {% comment %} {% user_display confirmation %} {% endcomment %}
     
     {% block bottom_scripts %}{% endblock bottom_scripts %}
 </body>

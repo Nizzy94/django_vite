@@ -47,11 +47,12 @@
                                 {{ error.message }}
                             </p>
                         </q-card-section>
-                        <input
+                        <CSRFToken />
+                        <!-- <input
                             name="csrfmiddlewaretoken"
                             type="hidden"
                             :value="$q.cookies.get('csrftoken')"
-                        />
+                        /> -->
                         <slot name="form_controls" />
 
                         <q-card-section class="q-px-lg">
@@ -104,6 +105,7 @@
 <script async setup>
 import { ref, toRefs } from "vue";
 import Base from "../../components/layouts/Base.vue";
+import CSRFToken from "../../components/CSRFToken.vue";
 import getUrls from "../../composables/getUrls";
 import generateAuthUrls from "../../composables/generateAuthUrls";
 import { inject, onBeforeMount, reactive } from "@vue/runtime-core";

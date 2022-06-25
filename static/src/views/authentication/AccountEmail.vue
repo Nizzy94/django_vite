@@ -48,11 +48,7 @@
                             </div>
                         </template>
                         <template v-slot:header="props">
-                            <input
-                                name="csrfmiddlewaretoken"
-                                type="hidden"
-                                :value="$q.cookies.get('csrftoken')"
-                            />
+                            <CSRFToken />
                         </template>
                         <template v-slot:body-selection="scope">
                             <q-checkbox v-model="scope.selected" size="sm" />
@@ -81,7 +77,7 @@
                                     type="submit"
                                     name="action_primary"
                                     no-caps
-                                    :disable="selected[0].verification_status"
+                                    :disable="selected[0].primary_status"
                                 />
                                 <q-btn
                                     label="Re-send verification"
@@ -91,6 +87,7 @@
                                     type="submit"
                                     name="action_send"
                                     no-caps
+                                    :disable="selected[0].verification_status"
                                 />
                                 <q-btn
                                     label="Remove"
@@ -114,11 +111,7 @@
                 method="POST"
                 :action="routes?.auth_routes?.account_email"
             >
-                <input
-                    name="csrfmiddlewaretoken"
-                    type="hidden"
-                    :value="$q.cookies.get('csrftoken')"
-                />
+                <CSRFToken />
                 <div class="q-mb-md">
                     <q-input
                         name="email"
@@ -154,6 +147,7 @@ import { reactive, ref } from "@vue/reactivity";
 import { inject, watch } from "@vue/runtime-core";
 import ProfileGeneral from "../../components/auth/ProfileGeneral.vue";
 import RemoveEmailDialog from "../../components/auth/RemoveEmailDialog.vue";
+import CSRFToken from "../../components/CSRFToken.vue";
 
 const emails = inject("emails");
 const old_form_data = inject("old_form_data");
@@ -172,13 +166,13 @@ const removeEmailDialogRef = ref(null);
 const selected = ref([]);
 
 const openEmailDialog = () => {
-    console.log(removeEmailDialogRef.value);
+    // console.log(removeEmailDialogRef.value);
     removeEmailDialogRef.value.openConfirmDialog = true;
 };
 const selected_email = ref("");
 
 const updateSelectedEmail = (selection) => {
-    console.log(selection[0].email);
+    // console.log(selection[0].email);
     selected_email.value = selection[0].email;
 };
 

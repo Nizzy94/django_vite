@@ -1,0 +1,22 @@
+{% extends "main/base.html" %}
+{% load django_vite %}
+{% load convert_data %}
+
+{% load i18n %}
+
+
+{% block title %}Confirm Email Address{% endblock title %}
+
+{% block head_scripts %}
+    {% vite_asset 'js/authentication/email_confirm.js' %}
+{% endblock head_scripts %}
+
+{% block extra_content %}
+ data-confirmation='{% if confirmation %}
+ {
+    "user": "{{ confirmation.email_address.user }}",
+    "key": "{{ confirmation.key }}",
+    "email": "{{ confirmation.email_address.email }}"
+ }
+ {% endif %}'
+{% endblock extra_content %}

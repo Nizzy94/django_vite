@@ -12,12 +12,9 @@
 {% endblock head_scripts %}
 
 {% block extra_content %}
-{% comment %} {{  {% endcomment %}
     
       data-emails='{{  user.emailaddress_set.all | qset_to_json }}',
-      {% comment %} data-messages='{{  user.emailaddress_set.all | qset_to_json }}', {% endcomment %}
-    
- {% comment %} }} {% endcomment %}
+      
 {% endblock extra_content %}
 
 

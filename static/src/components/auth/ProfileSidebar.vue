@@ -74,7 +74,7 @@
 <script setup>
 import { inject, ref } from "@vue/runtime-core";
 
-console.log(inject("routes"));
+// console.log(inject("routes"));
 const routes = inject("routes");
 const currentRoute = ref(window.location.href);
 </script>
