@@ -21,11 +21,20 @@ if (app.dataset.userIsAuthenticated == 'True') {
     userIsAuthenticated.value = true
 }
 
+const vue3GoogleLoginOptions = {
+    clientId: import.meta.env.VITE_GOOGLE_AUTH_KEY,
+    // prompt: "concent",
+    buttonConfig: {
+        theme: "filled_blue",
+        text: "continue_with",
+    },
+    popupType: "token",
+    // ux_mode: "redirect",
+}
+
 createApp(Register)
     .provide('user_is_authenticated', userIsAuthenticated.value)
     .provide('old_form_data', oldFormData)
     .provide('form_errors', formErrors)
-    .use(vue3GoogleLogin, {
-        clientId: import.meta.env.VITE_GOOGLE_AUTH_KEY
-    })
+    .use(vue3GoogleLogin, vue3GoogleLoginOptions)
     .use(Quasar, quasarUserOptions).mount(app)
