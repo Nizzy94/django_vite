@@ -89,7 +89,7 @@ class Blog(models.Model):
             if img.height > 600 or img.width > 600:
                 output_size = (600, 600)
                 img.thumbnail(output_size)
-                img.point(lambda i: i * 1.2)
+                img.point(lambda i: i * 2)
                 img.save(self.image.path)
         # super().save(*args, **kwargs)
 

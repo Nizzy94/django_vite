@@ -35,6 +35,7 @@ services:
       - 8000:8000
     image: web:django_vite
     command: sh -c "python manage.py search_index --rebuild -f && python manage.py runserver 0.0.0.0:8000"
+    # command: sh -c "python manage.py runserver 0.0.0.0:8000"
     depends_on:
       db:
         condition: service_healthy

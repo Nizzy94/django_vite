@@ -17,7 +17,8 @@
         "axios": "^0.24.0",
         "moment": "^2.29.1",
         "quasar": "^2.4.8",
-        "vue": "^3.2.25"
+        "vue": "^3.2.25",
+        "vue3-google-login": "^2.0.10"
     },
     "devDependencies": {
         "@quasar/vite-plugin": "^1.0.4",

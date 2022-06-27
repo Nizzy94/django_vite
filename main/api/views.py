@@ -61,6 +61,8 @@ class APIRootView(APIView):
                 'account_email': reverse('account_email', request=request),
                 # 'account_confirm_email': reverse('account_confirm_email', args=[''], request=request),
                 # 'socialaccount_connections': reverse('socialaccount_connections', request=request),
+                'google_login': reverse('authentication:google_login', request=request),
+                'google_login_validate': reverse('authentication:google_login_validate', request=request),
             },
         }
 

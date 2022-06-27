@@ -2,6 +2,8 @@
 import os
 from pathlib import Path
 from decouple import config as env
+from corsheaders.defaults import default_headers
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -17,9 +19,44 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    # 'localhost',
+    # "https://accounts.google.com",
+    # "https://www.googleapis.com"
+]
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://oauth2.googleapis.com",
+    # "https://www.googleapis.com",
+    "https://accounts.google.com",
+]
+# CORS_ALLOW_CREDENTIALS = True
 
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://oauth2.googleapis.com",
+    "https://accounts.google.com",
+    #     # "https://www.googleapis.com"
+]
+
+# CORS_ALLOW_HEADERS = [
+#     "accept",
+#     "accept-encoding",
+#     "authorization",
+#     "content-type",
+#     "dnt",
+#     "origin",
+#     "user-agent",
+#     "x-csrftoken",
+#     "x-requested-with",
+# ]
 # Application definition
 
 INSTALLED_APPS = [
@@ -33,8 +70,13 @@ INSTALLED_APPS = [
     #
     # third party
     # "social_django",
+    "corsheaders",
     'django_vite',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
     'ckeditor',
     'ckeditor_uploader',
     'django_elasticsearch_dsl',
@@ -54,6 +96,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -79,14 +122,22 @@ ELASTICSEARCH_DSL = {
 #     'profile',
 #     'email'
 # ]
+SECURE_REFERRER_POLICY = "no-referrer-when-downgrade"
+SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
+
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+    "https://www.googleapis.com/auth/userinfo.email",
+    "https://www.googleapis.com/auth/userinfo.profile",
+]
 
 SITE_ID = 1
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
-            'client_id': env('GOOGLE_AUTH_KEY'),
-            'secret': env('GOOGLE_AUTH_SECRET'),
+            'client_id': env('VITE_GOOGLE_AUTH_KEY'),
+            'secret': env('VITE_GOOGLE_AUTH_SECRETE'),
             'key': ''
         }
     }
@@ -104,11 +155,17 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
 }
+
+REST_USE_JWT = True
+
+JWT_AUTH_COOKIE = env('VITE_JWT_AUTH_COOKIE')
+JWT_AUTH_REFRESH_COOKIE = env('VITE_JWT_AUTH_REFRESH_COOKIE')
 
 AUTHENTICATION_BACKENDS = {
     # 'authentication.auth0backend.Auth0',
@@ -156,7 +213,6 @@ DATABASES = {
         'NAME': 'django_vite',
         'USER': 'root',
         'PASSWORD': 'root',
-        # 'HOST': '127.0.0.1',
         'HOST': 'db',
         'PORT': 5432,
     }
@@ -239,3 +295,6 @@ CKEDITOR_UPLOAD_PATH = "ck-uploads/"
 # }
 
 CKEDITOR_ALLOW_NONIMAGE_FILES = False
+
+
+GOOGLE_OAUTH2_CALLBACK_URL = 'http://localhost:8000/accounts/google/login/callback/'

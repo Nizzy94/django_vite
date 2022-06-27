@@ -1,8 +1,9 @@
 from elasticsearch import serializer
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from authentication.api.serializers import UserSerializer
+from rest_framework.views import APIView
 
 
 @api_view(['GET'])
@@ -30,3 +31,20 @@ def complete_signup(request):
     if serializer.is_valid(raise_exception=True):
         serializer.save()
         return Response(serializer.data)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def googleLoginValidate(request):
+    print('in verification view', request.data)
+
+    return Response('came back from there')
+
+
+class GoogleLoginValidate(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        print('in verification view', request.data)
+
+        return Response('came back from there')

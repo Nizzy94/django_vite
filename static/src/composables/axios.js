@@ -4,6 +4,13 @@ import { Cookies } from 'quasar'
 
 const domain = 'http://localhost:8000'
 
+const axiosExternal = axios.create({
+    timeout: 50000,
+    headers: {
+        'X-CSRFToken': Cookies.get('csrftoken')
+    },
+    withCredentials: true
+})
 const fetchWithCredentials = axios.create({
     baseURL: `${domain}/api`,
     timeout: 50000,
@@ -59,6 +66,7 @@ const fetchSearchAllowAny = axios.create({
 
 
 export {
+    axiosExternal,
     fetchWithCredentials,
     fetchAllowAny,
     fetchBlogAllowAny,

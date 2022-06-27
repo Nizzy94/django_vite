@@ -7,6 +7,7 @@ app_name = 'authentication'
 
 
 urlpatterns = [
+
     path('login/auth/', views.login_page, name="login_auth"),
     path('signup/auth/', views.signup_page, name="signup_auth"),
     path('login/redirect/', views.login_redirect, name="login_redirect"),
@@ -21,6 +22,8 @@ urlpatterns = [
          views.complete_signup, name="complete_signup"),
     path('accounts/profile/',
          views.profile_page, name="profile_page"),
+    path('user/google/', views.GoogleLogin.as_view(), name='google_login'),
+
     path('auth/api/',
          include('authentication.api.urls')),
 ]
