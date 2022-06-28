@@ -115,7 +115,9 @@ const formErrors = reactive({
 });
 
 const submitRegister = () => {
+    const form = document.getElementById("auth_form");
     console.log(formData);
+    form.submit();
 };
 </script>
 

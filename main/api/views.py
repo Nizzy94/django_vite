@@ -49,17 +49,26 @@ class APIRootView(APIView):
             'auth_routes': {
                 'login_redirect': reverse('authentication:login_redirect', request=request),
                 'account_login': reverse('account_login', request=request),
-                'account_signup': reverse('account_signup', request=request),
                 'login_page': reverse('authentication:login_auth', request=request),
+                'rest_login': reverse('rest_login', request=request),
+
+                'account_signup': reverse('account_signup', request=request),
                 'signup_page': reverse('authentication:signup_auth', request=request),
+
                 'logout_redirect': reverse('authentication:logout_redirect', request=request),
+                'rest_logout': reverse('rest_logout', request=request),
                 'account_logout': reverse('account_logout', request=request),
+
                 'profile_page': reverse('authentication:profile_page', request=request),
+                'rest_user_details': reverse('rest_user_details', request=request),
+
                 # 'account_set_password': reverse('account_set_password', request=request),
                 # 'account_change_password': reverse('account_change_password', request=request),
                 # 'account_reset_password': reverse('account_reset_password', request=request),
+
                 'account_email': reverse('account_email', request=request),
                 # 'account_confirm_email': reverse('account_confirm_email', args=[''], request=request),
+
                 # 'socialaccount_connections': reverse('socialaccount_connections', request=request),
                 'google_login': reverse('authentication:google_login', request=request),
                 'google_login_validate': reverse('authentication:google_login_validate', request=request),
