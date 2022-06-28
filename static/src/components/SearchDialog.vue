@@ -68,7 +68,7 @@ const $q = useQuasar();
 
 const search_term = ref("");
 const search_d = ref(false);
-const query_string = ref();
+const query_string = ref("");
 const searchCardStyle = ref({
     minWidth: "300px",
     maxHeight: "700px",
@@ -98,9 +98,13 @@ const searchQuery = () => {
         return;
     }
 
-    query_string.value = search_term.value.replace(/ /g, "+");
+    // query_string.value = search_term.value.replace(/ /g, "+");
+    query_string.value = search_term.value;
+    console.log(encodeURIComponent(query_string.value));
 
-    window.location.href = `${routes.value.search}?q=${query_string.value}`;
+    window.location.href = `${routes.value.search}?q=${encodeURIComponent(
+        query_string.value
+    )}`;
 };
 
 const onRequest = async () => {
