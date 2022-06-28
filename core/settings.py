@@ -19,6 +19,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
 ALLOWED_HOSTS = [
     # 'localhost',
     # "https://accounts.google.com",
@@ -148,8 +149,15 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = 'authentication:email_confirmation_redirect'
 ACCOUNT_FORMS = {'signup': 'authentication.forms.CustomSignupForm'}
+# ACCOUNT_ADAPTER = 'authentication.adapter.CustomAccountAdapter'
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = '58afcdccb9fb20'
+EMAIL_HOST_PASSWORD = '9ebd918b54b2bf'
+EMAIL_PORT = '2525'
+
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,

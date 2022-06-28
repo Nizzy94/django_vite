@@ -4,6 +4,8 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from authentication.api.serializers import UserSerializer
 from rest_framework.views import APIView
+# from django.views.generic import TemplateView
+from allauth.account.views import EmailVerificationSentView
 
 
 @api_view(['GET'])
@@ -39,6 +41,10 @@ def googleLoginValidate(request):
     print('in verification view', request.data)
 
     return Response('came back from there')
+
+
+class AccountRegistrationView(EmailVerificationSentView):
+    pass
 
 
 class GoogleLoginValidate(APIView):

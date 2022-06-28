@@ -47,10 +47,11 @@ module.exports = {
                 // auth
                 login: resolve('./static/src/js/authentication/login.js'),
                 register: resolve('./static/src/js/authentication/register.js'),
+                logout: resolve('./static/src/js/authentication/logout.js'),
                 profile: resolve('./static/src/js/authentication/profile.js'),
                 account_email: resolve('./static/src/js/authentication/account_email.js'),
                 email_confirm: resolve('./static/src/js/authentication/email_confirm.js'),
-                logout: resolve('./static/src/js/authentication/logout.js'),
+                verification_sent: resolve('./static/src/js/authentication/verification_sent.js'),
             },
             output: {
                 chunkFileNames: undefined,
