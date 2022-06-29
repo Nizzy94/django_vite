@@ -125,6 +125,7 @@ def email_confirmation_redirect(request):
     return HttpResponseRedirect(full_redirect_url)
 
 
+@login_required
 def profile_page(request):
     context = {
         'user': request.user if request.user.is_authenticated else {}

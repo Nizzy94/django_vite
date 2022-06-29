@@ -8,4 +8,8 @@
     {% vite_asset 'js/authentication/profile.js' %}
 {% endblock head_scripts %}
 
+{% block extra_content %}
+    data-user="{{ user }}"
+{% endblock extra_content %}
+
 {% block bottom_scripts %}{% endblock bottom_scripts %}

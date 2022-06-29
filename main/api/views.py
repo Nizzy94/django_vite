@@ -1,10 +1,16 @@
 
+from django.conf import settings
+from blog.api.serializers import SubscriptionSerializer
 from blog.models import Category
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.views import APIView
+from django.core.mail import EmailMultiAlternatives, send_mail
+from django.template.loader import get_template
+
+from main.api.serializers import ContactMessageSerializer
 
 # @api_view(["GET"])
 # @permission_classes([AllowAny])
@@ -45,6 +51,7 @@ class APIRootView(APIView):
             'home': reverse('main:home', request=request),
             'about': reverse('main:about', request=request),
             'contact': reverse('main:contact', request=request),
+            'contact_api': reverse('main:contact_api', request=request),
             'search': reverse('search:search_view', request=request),
             'blog': blog_routes,
             'auth_routes': {
@@ -77,3 +84,29 @@ class APIRootView(APIView):
         }
 
         return Response(data)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def contact(request):
+    data = request.data
+    print(data)
+
+    serializer = ContactMessageSerializer(data=data)
+
+    # plaintext_template = get_template('blog/emails/subscription.txt')
+    # html_template = get_template('blog/emails/subscription.html')
+    subject, from_email, to = data['subject'],  data['email'], 'to@example.com',
+
+    if serializer.is_valid(raise_exception=True):
+        # print(serializer.validated_data)
+        serializer.save()
+
+        send_mail(
+            '%s (from: %s)' % (subject, data['name']),
+            data['message'],
+            from_email,
+            [to]
+        )
+
+        return Response({'message': 'contact message sent'})

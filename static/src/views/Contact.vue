@@ -1,71 +1,83 @@
 <template>
     <Base>
-        <template #page_content>
+        <template #page_content="{ routes }">
             <div
-                class="row q-mx-auto q-px-md q-mt-lg"
-                :class="{ 'q-col-gutter-lg': $q.screen.gt.xs }"
+                class="q-mx-auto q-px-md q-mt-lg"
+                :class="{
+                    'row q-col-gutter-lg': $q.screen.gt.xs,
+                    column: $q.screen.lt.sm,
+                }"
             >
                 <div class="col-sm-6 col-xs-12 q-mb-lg">
-                    <div class="text-h4 text-primary">
+                    <div class="text-h4 text-primary q-mb-md">
                         Have anything to tell us?
                     </div>
                     <div class="text-body1">Send us a message below.</div>
-                    <div
-                        class="row q-mt-md"
-                        :class="{ 'q-col-gutter-md': $q.screen.gt.sm }"
-                    >
-                        <div class="col-md-6 col-xs-12">
+                    <div id="contact_form__container">
+                        <div
+                            class="row q-mt-md"
+                            :class="{ 'q-col-gutter-md': $q.screen.gt.sm }"
+                        >
+                            <div class="col-md-6 col-xs-12">
+                                <q-input
+                                    v-model="contactFormData.name"
+                                    hint="Enter full name"
+                                    hide-hint
+                                    label="Name"
+                                />
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <q-input
+                                    v-model="contactFormData.email"
+                                    type="email"
+                                    hint="Enter email address"
+                                    hide-hint
+                                    label="Email"
+                                />
+                            </div>
+                        </div>
+                        <div class="q-mb-lg">
                             <q-input
-                                v-model="contactFormData.name"
-                                hint="Enter full name"
+                                v-model="contactFormData.subject"
+                                label="Subject"
+                                hint="Give subject to your message"
                                 hide-hint
-                                label="Name"
                             />
                         </div>
-                        <div class="col-md-6 col-xs-12">
+                        <div class="">
                             <q-input
-                                v-model="contactFormData.email"
-                                type="email"
-                                hint="Enter email address"
+                                v-model="contactFormData.message"
+                                counter
+                                maxlength="500"
+                                outlined
+                                autogrow
+                                label="Message"
+                                hint="Give message in details"
                                 hide-hint
-                                label="Email"
                             />
                         </div>
-                    </div>
-                    <div class="">
-                        <q-input
-                            v-model="contactFormData.subject"
-                            label="Subject"
-                            hint="Give subject to your message"
-                            hide-hint
-                        />
-                    </div>
-                    <div class="">
-                        <q-input
-                            v-model="contactFormData.message"
-                            counter
-                            maxlength="500"
-                            outlined
-                            autogrow
-                            label="Message"
-                            hint="Give message in details"
-                            hide-hint
-                        />
-                    </div>
-                    <div class="flex justify-center">
-                        <q-btn
-                            label="Send"
-                            color="secondary"
-                            text-color="dark"
-                        />
+                        <div class="flex justify-center">
+                            <q-btn
+                                label="Send"
+                                color="secondary"
+                                :loading="sending"
+                                text-color="dark"
+                                @click="submitContactForm(routes)"
+                            />
+                        </div>
                     </div>
                 </div>
+                <div class="col" v-if="$q.screen.lt.sm">
+                    <q-separator spaced="26px" />
+                </div>
                 <div class="col-sm-6 col-xs-12 q-mb-lg">
-                    <div class="text-h4 text-primary">
-                        Subscribe to our newsletter
-                    </div>
-                    <div style="margin-top: 57px">
-                        <subscription-form />
+                    <div id="subscription_form__container">
+                        <div class="text-h4 text-primary">
+                            Subscribe to our newsletter
+                        </div>
+                        <div style="margin-top: 57px">
+                            <subscription-form />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -74,10 +86,13 @@
 </template>
 
 <script setup>
-import { reactive } from "@vue/reactivity";
+import { reactive, ref } from "@vue/reactivity";
 import Base from "../components/layouts/Base.vue";
 import SubscriptionForm from "../components/blog/SubscriptionForm.vue";
 import { useMeta } from "quasar";
+import axios from "axios";
+import { inject } from "@vue/runtime-core";
+import { Cookies } from "quasar";
 
 const contactFormData = reactive({
     name: "",
@@ -85,6 +100,28 @@ const contactFormData = reactive({
     subject: "",
     message: "",
 });
+
+const sending = ref(false);
+
+const submitContactForm = async (routes) => {
+    sending.value = true;
+    axios
+        .post(routes.contact_api, contactFormData, {
+            headers: {
+                "X-CSRFToken": Cookies.get("csrftoken"),
+            },
+            withCredentials: true,
+        })
+        .then((res) => {
+            console.log(res);
+        })
+        .catch((e) => {
+            console.log(e);
+        })
+        .finally(() => {
+            sending.value = false;
+        });
+};
 
 const metaData = {
     // sets document title
@@ -125,5 +162,8 @@ const metaData = {
 useMeta(metaData);
 </script>
 
-<style>
+<style lang="sass">
+#contact_form__container, #subscription_form__container
+    @media (min-width: $breakpoint-md-min)
+        padding-right: 50px
 </style>
