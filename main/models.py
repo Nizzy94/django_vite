@@ -2,7 +2,7 @@ from django.db import models
 
 
 class ContactMessage(models.Model):
-    name = models.CharField(blank=False, null=False, max_length=200)
+    name = models.CharField(blank=False, null=False, max_length=40)
     email = models.EmailField(blank=False, null=False)
     subject = models.CharField(blank=False, null=False, max_length=200)
     message = models.TextField(

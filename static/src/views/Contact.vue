@@ -24,6 +24,8 @@
                                     hint="Enter full name"
                                     hide-hint
                                     label="Name"
+                                    :error="contactFormErrors.name != ''"
+                                    :error-message="contactFormErrors.name"
                                 />
                             </div>
                             <div class="col-md-6 col-xs-12">
@@ -33,6 +35,8 @@
                                     hint="Enter email address"
                                     hide-hint
                                     label="Email"
+                                    :error="contactFormErrors.email != ''"
+                                    :error-message="contactFormErrors.email"
                                 />
                             </div>
                         </div>
@@ -42,6 +46,8 @@
                                 label="Subject"
                                 hint="Give subject to your message"
                                 hide-hint
+                                :error="contactFormErrors.subject != ''"
+                                :error-message="contactFormErrors.subject"
                             />
                         </div>
                         <div class="">
@@ -54,6 +60,8 @@
                                 label="Message"
                                 hint="Give message in details"
                                 hide-hint
+                                :error="contactFormErrors.message != ''"
+                                :error-message="contactFormErrors.message"
                             />
                         </div>
                         <div class="flex justify-center">
@@ -100,6 +108,12 @@ const contactFormData = reactive({
     subject: "",
     message: "",
 });
+const contactFormErrors = reactive({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+});
 
 const sending = ref(false);
 
@@ -116,7 +130,23 @@ const submitContactForm = async (routes) => {
             console.log(res);
         })
         .catch((e) => {
-            console.log(e);
+            if (e.response) {
+                console.log(e.response.data.email);
+                let errors = e.response.data;
+                contactFormErrors.name = errors.name ? errors.name[0] : "";
+                contactFormErrors.email = errors.email ? errors.email[0] : "";
+                contactFormErrors.subject = errors.subject
+                    ? errors.subject[0]
+                    : "";
+                contactFormErrors.message = errors.message
+                    ? errors.message[0]
+                    : "";
+            } else if (e.request) {
+                console.log(e.request);
+            } else {
+                console.log(e);
+            }
+            // console.log(e);
         })
         .finally(() => {
             sending.value = false;
