@@ -33,12 +33,12 @@ change authentication to allauth
     logout(DONE)
     verification(DONE)
 
-    password change
     make profile functional
+    password change
     social accounts
   
-  handle errors in contact form
-  add user details to contact and sub forms(pass it throught html)
+  handle errors in contact form (DONE)
+  add user details to contact and sub forms (DONE)
 
 https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=<CALLBACK_URL_YOU_SET_ON_GOOGLE>&prompt=consent&response_type=code&client_id=<YOUR CLIENT ID>&scope=openid%20email%20profile&access_type=offline
 

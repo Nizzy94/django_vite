@@ -50,6 +50,7 @@ const props = defineProps({
 });
 
 const { authUser } = toRefs(props);
+console.log(authUser);
 
 const routes = inject("routes");
 

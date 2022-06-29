@@ -84,7 +84,7 @@
                             Subscribe to our newsletter
                         </div>
                         <div style="margin-top: 57px">
-                            <subscription-form />
+                            <subscription-form :authUser="authUser" />
                         </div>
                     </div>
                 </div>
@@ -99,8 +99,9 @@ import Base from "../components/layouts/Base.vue";
 import SubscriptionForm from "../components/blog/SubscriptionForm.vue";
 import { useMeta } from "quasar";
 import axios from "axios";
-import { inject } from "@vue/runtime-core";
+import { inject, onBeforeMount } from "@vue/runtime-core";
 import { Cookies } from "quasar";
+import getAuthUser from "../composables/getAuthUser";
 
 const contactFormData = reactive({
     name: "",
@@ -116,6 +117,16 @@ const contactFormErrors = reactive({
 });
 
 const sending = ref(false);
+const userIsAuthenticated = inject("user_is_authenticated");
+const authUser = ref({});
+
+const { callAuthUser } = getAuthUser();
+
+onBeforeMount(async () => {
+    if (userIsAuthenticated) {
+        authUser.value = await callAuthUser();
+    }
+});
 
 const submitContactForm = async (routes) => {
     sending.value = true;

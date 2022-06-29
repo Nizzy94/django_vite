@@ -18,7 +18,7 @@
                             @click="googleCallback"
                             text-color="grey-10"
                             icon="img:https://cdn.cdnlogo.com/logos/g/35/google-icon.svg"
-                            class="q-my-md q-py-md font-bold"
+                            class="q-my-md q-py-sm font-bold"
                         />
                     </q-card-section>
 
