@@ -68,6 +68,7 @@ class APIRootView(APIView):
                 'account_logout': reverse('account_logout', request=request),
 
                 'profile_page': reverse('authentication:profile_page', request=request),
+                'profile_api': reverse('authentication:profile_api', request=request),
                 'rest_user_details': reverse('rest_user_details', request=request),
 
                 # 'account_set_password': reverse('account_set_password', request=request),
@@ -79,7 +80,7 @@ class APIRootView(APIView):
 
                 # 'socialaccount_connections': reverse('socialaccount_connections', request=request),
                 'google_login': reverse('authentication:google_login', request=request),
-                'google_login_validate': reverse('authentication:google_login_validate', request=request),
+                # 'google_login_validate': reverse('authentication:google_login_validate', request=request),
             },
         }
 

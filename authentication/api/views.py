@@ -1,4 +1,4 @@
-from elasticsearch import serializer
+
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
@@ -6,6 +6,8 @@ from authentication.api.serializers import UserSerializer
 from rest_framework.views import APIView
 # from django.views.generic import TemplateView
 from allauth.account.views import EmailVerificationSentView
+from authentication.views import profile_page
+import urllib
 
 
 @api_view(['GET'])
@@ -35,22 +37,18 @@ def complete_signup(request):
         return Response(serializer.data)
 
 
+# class AccountRegistrationView(EmailVerificationSentView):
+#     pass
+
+
 @api_view(['POST'])
-@permission_classes([AllowAny])
-def googleLoginValidate(request):
-    print('in verification view', request.data)
+@permission_classes([IsAuthenticated])
+def profile_page(request):
+    data = request.data
 
-    return Response('came back from there')
+    serializer = UserSerializer(instance=request.user, data=data)
 
+    if serializer.is_valid(raise_exception=True):
+        serializer.save()
 
-class AccountRegistrationView(EmailVerificationSentView):
-    pass
-
-
-class GoogleLoginValidate(APIView):
-    permission_classes = [AllowAny]
-
-    def post(self, request):
-        print('in verification view', request.data)
-
-        return Response('came back from there')
+        return Response(serializer.data)

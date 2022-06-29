@@ -33,7 +33,7 @@ change authentication to allauth
     logout(DONE)
     verification(DONE)
 
-    make profile functional
+    make profile functional(DONE)
     password change
     social accounts
   
