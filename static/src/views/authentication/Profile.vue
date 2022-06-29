@@ -123,6 +123,12 @@ const updateProfile = (routes) => {
         })
         .then((res) => {
             console.log(res);
+
+            formErrors.first_name = "";
+            formErrors.last_name = "";
+            formErrors.username = "";
+            formErrors.email = "";
+
             sending({
                 type: "positive",
                 message: "Profile updated successfully.",
