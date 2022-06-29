@@ -1,0 +1,14 @@
+{% extends "blog/emails/base.html" %}
+
+{% block email_title %}{{ title }}{% endblock email_title %}
+
+{% comment %} {% block first_name %}{{ first_name | title }}{% endblock first_name %} {% endcomment %}
+{% block message_body %}
+    <p>There is a new post on {{site_name}}</p>
+    {{ excerpt }}
+{% endblock message_body %}
+
+{% block site_link %}{{post_link}}{% endblock site_link %}
+{% block button_text %}  Read More {% endblock button_text %}
+
+   

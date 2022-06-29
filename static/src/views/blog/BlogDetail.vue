@@ -53,7 +53,10 @@
                             <q-separator spaced="16px" />
                         </section>
 
-                        <section v-html="post.body"></section>
+                        <section
+                            v-html="post.body"
+                            style="font-size: 16px"
+                        ></section>
                     </div>
                     <q-separator spaced="16px" />
                     <section>

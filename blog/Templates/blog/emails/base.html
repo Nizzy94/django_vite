@@ -1,0 +1,31 @@
+
+<body style="font-family: Geneva, 'Segoe UI', Tahoma,  Verdana, sans-serif; background: #e1e1e1; padding: 20px">
+    <div style="background-color: #fff; padding:50px">
+
+        <h1 style="margin-bottom: 40px;">{% block email_title %}{% endblock email_title %}</h1>
+        
+        <p style="margin-bottom: 30px">Hello <strong style="color: hsl(174, 63%, 40%);">
+            {% block first_name %}
+                {{ first_name }}
+            {% endblock first_name %}</strong>,
+        </p>
+        
+        <div style="margin-bottom:20px">
+
+            {% block message_body %}{% endblock message_body %}
+        </div>
+       
+        <div style="width: 100%;">
+            <a href="{% block site_link %}{% endblock site_link %}" style="
+                    padding:10px 10px; display:block; 
+                    width: fit-content; background-color: hsl(174, 63%, 40%); 
+                    color:white; text-decoration: none; border-radius: 5px; transition: all 200ms ease"
+                    onMouseOver="this.style.backgroundColor='hsl(174, 63%, 37%)'"
+                    onMouseOut="this.style.backgroundColor='hsl(174, 63%, 40%)'"
+                >
+                {% block button_text %}{% endblock button_text %}
+            </a>
+        </div>
+       
+    </div>
+</body>

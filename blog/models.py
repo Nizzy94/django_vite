@@ -144,5 +144,5 @@ class Subscription(models.Model):
         self.updated_at = timezone.now()
         super().save(*args, **kwargs)
 
-    def __str__(self) -> str:
-        return self.first_name()
+    def __str__(self):
+        return self.first_name

@@ -36,7 +36,7 @@
 
 <script setup>
 import { reactive, ref, toRefs } from "@vue/reactivity";
-import { watch } from "@vue/runtime-core";
+import { inject, watch } from "@vue/runtime-core";
 import { fetchBlogAllowAny } from "../../composables/axios";
 import { useQuasar } from "quasar";
 
@@ -51,9 +51,12 @@ const props = defineProps({
 
 const { authUser } = toRefs(props);
 
+const routes = inject("routes");
+
 const subscriptionFormData = reactive({
     first_name: "",
     email: "",
+    url: window.location.href,
 });
 const subscriptionFormErrors = reactive({
     first_name: "",
@@ -69,12 +72,13 @@ watch(authUser, () => {
 const subscribing = ref(false);
 
 const subscribe = async () => {
+    console.log(routes.value.blog.subscribe);
     subscribing.value = true;
     console.log("running");
     try {
         console.log("trying");
         const res = await fetchBlogAllowAny.post(
-            "/subscribe/",
+            routes.value.blog.subscribe,
             subscriptionFormData
         );
 

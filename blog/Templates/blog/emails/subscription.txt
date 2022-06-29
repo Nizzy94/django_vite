@@ -1,0 +1,9 @@
+{{ title }}
+
+Hello {{ first_name }},
+
+You have subscribed to receive updates from {{ site_name }}. An email will be sent to you
+anytime there is a new post.
+
+
+Then you for staying with us.
