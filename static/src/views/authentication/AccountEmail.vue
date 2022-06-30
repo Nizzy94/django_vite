@@ -30,6 +30,7 @@
                                     class=""
                                     v-if="messages.length"
                                     v-for="(message, i) in messages"
+                                    :key="i"
                                 >
                                     <span
                                         :class="{
@@ -232,10 +233,10 @@ const columns = [
 </script>
 
 <style lang="sass">
-.form_content
-    width: 100%
-    @media (min-width: $breakpoint-md-min)
-        width: 70%
-    @media (min-width: $breakpoint-lg-min)
-        width: 50%
+// .form_content
+//     width: 100%
+//     @media (min-width: $breakpoint-md-min)
+//         width: 70%
+//     @media (min-width: $breakpoint-lg-min)
+//         width: 50%
 </style>

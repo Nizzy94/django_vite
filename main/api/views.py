@@ -71,9 +71,9 @@ class APIRootView(APIView):
                 'profile_api': reverse('authentication:profile_api', request=request),
                 'rest_user_details': reverse('rest_user_details', request=request),
 
-                # 'account_set_password': reverse('account_set_password', request=request),
-                # 'account_change_password': reverse('account_change_password', request=request),
-                # 'account_reset_password': reverse('account_reset_password', request=request),
+                'account_change_password': reverse('account_change_password', request=request),
+                'account_set_password': reverse('account_set_password', request=request),
+                'account_reset_password': reverse('account_reset_password', request=request),
 
                 'account_email': reverse('account_email', request=request),
                 # 'account_confirm_email': reverse('account_confirm_email', args=[''], request=request),

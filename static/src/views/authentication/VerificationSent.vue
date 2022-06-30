@@ -28,10 +28,10 @@ const messages = inject("messages");
 </script>
 
 <style lang="sass">
-.form_content
-    width: 100%
-    @media (min-width: $breakpoint-md-min)
-        width: 70%
-    @media (min-width: $breakpoint-lg-min)
-        width: 50%
+// .form_content
+//     width: 100%
+//     @media (min-width: $breakpoint-md-min)
+//         width: 70%
+//     @media (min-width: $breakpoint-lg-min)
+//         width: 50%
 </style>
