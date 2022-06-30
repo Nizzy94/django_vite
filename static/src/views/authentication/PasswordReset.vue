@@ -1,13 +1,14 @@
 <template>
     <ProfileGeneral>
         <template #form_content="{ routes }">
-            <div id="snippet" v-if="user_is_authenticated">
+            <!-- <div id="snippet" v-if="user_is_authenticated">
                 <p v-if="user?.username">
                     <strong>Note:</strong> you are already logged in as
                     {{ user.username[0].toUpperCase()
                     }}{{ user.username.slice(1) }}.
                 </p>
-            </div>
+            </div> -->
+            <UserAuthSnippet v-if="user_is_authenticated" />
             <div class="form_content q-mb-md">
                 <form
                     method="POST"
@@ -46,20 +47,21 @@
 import { inject, onBeforeMount, reactive, ref } from "@vue/runtime-core";
 import ProfileGeneral from "../../components/auth/ProfileGeneral.vue";
 import CSRFToken from "../../components/CSRFToken.vue";
-import getAuthUser from "../../composables/getAuthUser";
+import UserAuthSnippet from "../../components/auth/UserAuthSnippet.vue";
+// import getAuthUser from "../../composables/getAuthUser";
 
 // const auth_snippet = inject("authSnippet");
-const user_is_authenticated = inject("user_is_authenticated");
 const form_errors = inject("form_errors");
 const old_form_data = inject("old_form_data");
-const { callAuthUser } = getAuthUser();
-const user = ref({});
 
-onBeforeMount(async () => {
-    if (user_is_authenticated) {
-        user.value = await callAuthUser();
-    }
-});
+const user_is_authenticated = inject("user_is_authenticated");
+// const { callAuthUser } = getAuthUser();
+// const user = ref({});
+// onBeforeMount(async () => {
+//     if (user_is_authenticated) {
+//         user.value = await callAuthUser();
+//     }
+// });
 
 const formData = reactive({
     email: old_form_data.email ? old_form_data.email[0].message : "",

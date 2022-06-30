@@ -64,6 +64,7 @@ const submitLogout = async (routes) => {
         .then((res) => {
             // console.log(redirect_field);
             const red_q = getRedirectUrl();
+            // console.log(red_q);
             window.location.replace(red_q);
         })
         .catch((e) => {

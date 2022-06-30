@@ -15,6 +15,8 @@ const userIsAuthenticated = ref(false)
 const formErrors = app.dataset.formErrors ? JSON.parse(app.dataset.formErrors) : ''
 const oldFormData = app.dataset.oldFormData ? JSON.parse(app.dataset.oldFormData) : ''
 const messages = app.dataset.messages ? JSON.parse(app.dataset.messages) : ''
+const tokenFail = app.dataset.tokenFail || false
+const actionUrl = app.dataset.actionUrl || ''
 
 
 // console.log(oldFormData)
@@ -32,4 +34,6 @@ createApp(PasswordResetFromKey)
     .provide('old_form_data', oldFormData)
     .provide('form_errors', formErrors)
     .provide('messages', messages)
+    .provide('token_fail', tokenFail)
+    .provide('action_url', actionUrl)
     .use(Quasar, quasarUserOptions).mount(app)

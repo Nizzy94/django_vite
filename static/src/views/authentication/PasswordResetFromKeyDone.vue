@@ -1,7 +1,8 @@
 <template>
     <ProfileGeneral>
         <template #form_content="{ routes }">
-            <div>password reset from key done</div>
+            <div class="text-h5 q-mb-md">Change Password</div>
+            <div class="text-body">Your password is now changed.</div>
         </template>
     </ProfileGeneral>
 </template>

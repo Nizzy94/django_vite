@@ -47,6 +47,8 @@ class APIRootView(APIView):
                     'category': cat.slug}, request=request)
             })
 
+        # print(reverse('account_reset_password_from_key'))
+
         data = {
             'home': reverse('main:home', request=request),
             'about': reverse('main:about', request=request),
@@ -74,6 +76,7 @@ class APIRootView(APIView):
                 'account_change_password': reverse('account_change_password', request=request),
                 'account_set_password': reverse('account_set_password', request=request),
                 'account_reset_password': reverse('account_reset_password', request=request),
+
 
                 'account_email': reverse('account_email', request=request),
                 # 'account_confirm_email': reverse('account_confirm_email', args=[''], request=request),
