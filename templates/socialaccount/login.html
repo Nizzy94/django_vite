@@ -1,0 +1,24 @@
+{% extends "main/base.html" %}
+{% load django_vite %}
+{% comment %} {% load convert_data %} {% endcomment %}
+
+{% load i18n %}
+
+
+{% block title %}Email Addresses{% endblock title %}
+
+{% block head_scripts %}
+    {% vite_asset 'js/authentication/connect_social_account.js' %}
+{% endblock head_scripts %}
+
+{% block extra_content %}
+    
+      data-provider='{{ provider.name }}'
+      
+{% endblock extra_content %}
+
+
+
+{% block bottom_scripts %}
+
+{% endblock bottom_scripts %}

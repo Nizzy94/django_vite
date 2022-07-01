@@ -11,6 +11,9 @@ def to_json(value):
 
 @register.filter
 def qset_to_json(value):
-    val_arr = [data for data in value.values()]
-    # print(json.dumps(val_arr))
+    val_arr = [data for data in value]
+    # print(val_arr)
+    # print(value)
+    # print(list(value))
+    # val_arr = list(value.values())
     return json.dumps(val_arr)

@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
+from allauth.socialaccount.models import SocialApp
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -25,3 +26,10 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'password': {'write_only': True}
         }
+
+
+class SocialAccountProviderSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = SocialApp
+        exclude = ['client_id', 'secret']

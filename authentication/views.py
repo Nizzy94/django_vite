@@ -11,6 +11,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from google.oauth2 import id_token
 from google.auth.transport import requests
+from dj_rest_auth.registration.views import SocialConnectView
 
 
 def login_page(request):
@@ -137,7 +138,12 @@ def profile_page(request):
 
 # if you want to use Authorization Code Grant, use this
 class GoogleLogin(SocialLoginView):
-    # authentication_classes = ()
+    adapter_class = GoogleOAuth2Adapter
+    callback_url = settings.GOOGLE_OAUTH2_CALLBACK_URL
+    client_class = OAuth2Client
+
+
+class GoogleConnect(SocialConnectView):
     adapter_class = GoogleOAuth2Adapter
     callback_url = settings.GOOGLE_OAUTH2_CALLBACK_URL
     client_class = OAuth2Client

@@ -34,7 +34,7 @@ change authentication to allauth
     verification(DONE)
 
     make profile functional(DONE)
-    password change
+    password change (DONE)
     social accounts
   
   handle errors in contact form (DONE)

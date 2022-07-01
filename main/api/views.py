@@ -3,14 +3,15 @@ from django.conf import settings
 from blog.api.serializers import SubscriptionSerializer
 from blog.models import Category
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.views import APIView
 from django.core.mail import EmailMultiAlternatives, send_mail
 from django.template.loader import get_template
 
-from main.api.serializers import ContactMessageSerializer
+from main.api.serializers import ContactMessageSerializer, SocialIconsSerializer
+from main.models import SocialIcon
 
 # @api_view(["GET"])
 # @permission_classes([AllowAny])
@@ -81,9 +82,13 @@ class APIRootView(APIView):
                 'account_email': reverse('account_email', request=request),
                 # 'account_confirm_email': reverse('account_confirm_email', args=[''], request=request),
 
-                # 'socialaccount_connections': reverse('socialaccount_connections', request=request),
+                'socialaccount_connections': reverse('socialaccount_connections', request=request),
+                'social_account_list': reverse('social_account_list', request=request),
+                # 'social_account_disconnect': reverse('social_account_disconnect', request=request),
+                'social_icon_api': reverse('main:social_icon_api', request=request),
+                'social_providers_api': reverse('authentication:social_providers_api', request=request),
                 'google_login': reverse('authentication:google_login', request=request),
-                # 'google_login_validate': reverse('authentication:google_login_validate', request=request),
+                'google_connect': reverse('authentication:google_connect', request=request),
             },
         }
 
@@ -114,3 +119,14 @@ def contact(request):
         )
 
         return Response({'message': 'contact message sent'})
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def social_icons(request):
+    icons = SocialIcon.objects.all()
+
+    serializer = SocialIconsSerializer(icons, many=True)
+
+    return Response(serializer.data)
+    # if serializer.is_valid(raise_exception=True):

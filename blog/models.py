@@ -26,6 +26,7 @@ class Category(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name, allow_unicode=True)
+        self.updated_at = timezone.now()
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -47,6 +48,7 @@ class Tag(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name, allow_unicode=True)
+        self.updated_at = timezone.now()
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -78,6 +80,7 @@ class Blog(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title, allow_unicode=True)
+        self.updated_at = timezone.now()
         super().save(*args, **kwargs)
 
         if self.image:

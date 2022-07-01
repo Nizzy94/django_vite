@@ -60,13 +60,6 @@
                                 :checked="scope.selected"
                                 hidden
                             />
-                            <!-- {{ scope.rowIndex }} -->
-                            <!-- <RemoveEmailDialog
-                                :ref="`removeEmailDialogRef`"
-                                :selected_email="scope.row.email"
-                                :openDialog="openEmailDialog"
-                                :routes="routes"
-                            /> -->
                         </template>
                         <template v-slot:bottom>
                             <div class="row">
@@ -135,8 +128,8 @@
             </form>
             <RemoveEmailDialog
                 :ref="`removeEmailDialogRef`"
-                :selected_email="selected_email"
                 :openDialog="openEmailDialog"
+                :selected_email="selected_email"
                 :routes="routes"
             />
         </template>

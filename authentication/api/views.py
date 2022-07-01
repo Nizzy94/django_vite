@@ -2,12 +2,12 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
-from authentication.api.serializers import UserSerializer
+from authentication.api.serializers import SocialAccountProviderSerializer, UserSerializer
 from rest_framework.views import APIView
 # from django.views.generic import TemplateView
 from allauth.account.views import EmailVerificationSentView
 from authentication.views import profile_page
-import urllib
+from allauth.socialaccount.models import SocialApp
 
 
 @api_view(['GET'])
@@ -52,3 +52,13 @@ def profile_page(request):
         serializer.save()
 
         return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def social_providers(request):
+
+    social_apps = SocialApp.objects.all()
+    serializer = SocialAccountProviderSerializer(social_apps, many=True)
+
+    return Response(serializer.data)

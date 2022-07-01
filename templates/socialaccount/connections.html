@@ -1,0 +1,37 @@
+{% extends "main/base.html" %}
+{% load django_vite %}
+{% load convert_data %}
+
+{% load i18n %}
+{% load socialaccount %}
+
+{% get_providers as socialaccount_providers %}
+
+
+{% block title %}Email Addresses{% endblock title %}
+
+
+
+{% block head_scripts %}
+    {% vite_asset 'js/authentication/connections.js' %}
+{% endblock head_scripts %}
+
+{% block extra_content %}
+    
+    data-form-account='{% if form.account %}
+    true
+    {% else %}
+    false
+    {% endif %}'
+
+    data-providers='{% include "socialaccount/snippets/provider_list.html" with process="connect" %}'
+
+      
+{% endblock extra_content %}
+
+
+
+{% block bottom_scripts %}
+       {% providers_media_js %}
+
+{% endblock bottom_scripts %}
