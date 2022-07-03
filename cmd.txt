@@ -8,3 +8,14 @@ docker run -d --name esearch -p 9200:9200 -p 9300:9300 -e "discovery.type=single
 
 SECURE_REFERRER_POLICY = "no-referrer-when-downgrade"
 SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
+
+
+
+
+ElasticsearchWarning: Elasticsearch built-in security features are not enabled. 
+Without authentication, your cluster could be accessible to anyone. 
+See https://www.elastic.co/guide/en/elasticsearch/reference/7.17/security-minimal-setup.html to enable security.
+
+
+aws_key=AKIA2QQF2QPNW5EMPYNY
+aws_secret=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

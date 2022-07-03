@@ -51,7 +51,7 @@ def signup_page(request):
 
 @login_required
 def complete_signup(request):
-    return render(request, "authentication/complete-signup.html")
+    return render(request, "authentication/complete_signup.html")
 
 
 def login_redirect(request):
