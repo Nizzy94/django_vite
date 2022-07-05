@@ -35,5 +35,11 @@ import Base from "../../components/layouts/Base.vue";
 import ProfileSidebar from "../../components/auth/ProfileSidebar.vue";
 </script>
 
-<style>
+<style lang="sass">
+.form_content
+    width: 100%
+    @media (min-width: $breakpoint-md-min)
+        width: 70%
+    @media (min-width: $breakpoint-lg-min)
+        width: 50%
 </style>

@@ -18,11 +18,12 @@
                             @click="googleCallback"
                             text-color="grey-10"
                             icon="img:https://cdn.cdnlogo.com/logos/g/35/google-icon.svg"
-                            class="q-my-md q-py-md font-bold"
+                            class="q-my-md q-py-sm font-bold"
                         />
                     </q-card-section>
 
-                    <div class="row q-px-lg justify-around">
+                    <q-card-section class="row justify-around">
+                        <!-- <div class="row q-px-lg justify-around"> -->
                         <div class="col">
                             <q-separator spaced />
                         </div>
@@ -32,14 +33,24 @@
                         <div class="col">
                             <q-separator spaced />
                         </div>
-                    </div>
+                        <!-- </div> -->
+                    </q-card-section>
+                    <q-card-section>
+                        <div>
+                            <span class="text-negative">{{
+                                non_field_errors
+                            }}</span>
+                        </div>
+                    </q-card-section>
 
                     <q-form
+                        id="auth_form"
                         :action="`${
                             formTitle.toLowerCase() == 'sign up'
                                 ? routes?.auth_routes?.account_signup
                                 : routes?.auth_routes?.account_login
                         }${redirect_query}`"
+                        @submit.prevent="submitAuth"
                         method="post"
                     >
                         <q-card-section
@@ -92,7 +103,7 @@
                                 color="secondary"
                                 text-color="dark"
                                 :label="formTitle"
-                                @click="submitAuth"
+                                :loading="submiting"
                                 type="submit"
                                 no-caps
                                 size="md"
@@ -129,6 +140,15 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    non_field_errors: {
+        type: String,
+        required: true,
+    },
+    submiting: {
+        type: Boolean,
+        required: false,
+        default: false,
+    },
 });
 
 const { formTitle } = toRefs(props);
@@ -149,10 +169,10 @@ onBeforeMount(async () => {
 
 const emit = defineEmits(["signIn", "signUp"]);
 
-const submitAuth = () => {
+const submitAuth = async () => {
     formTitle.value.toLowerCase() == "sign in"
-        ? emit("signIn")
-        : emit("signUp");
+        ? emit("signIn", routes.value)
+        : emit("signUp", routes.value);
 };
 
 const form_errors = inject("form_errors");

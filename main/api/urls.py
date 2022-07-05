@@ -6,4 +6,6 @@ from django.urls.conf import include
 
 urlpatterns = [
     path('get-routes/', views.APIRootView.as_view(), name="get_routes"),
+    path('contact/', views.contact, name="contact_api"),
+    path('social-icons/', views.social_icons, name="social_icon_api"),
 ]

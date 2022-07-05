@@ -1,6 +1,6 @@
 // import '../css/quasar.scss'
 import 'quasar/src/css/index.sass'
-import { Loading, QSpinnerPie, Cookies } from 'quasar'
+import { Loading, QSpinnerPie, Cookies, Notify } from 'quasar'
 
 
 // Import icon libraries
@@ -15,7 +15,8 @@ import { Loading, QSpinnerPie, Cookies } from 'quasar'
 export default {
     plugins: {
         Loading,
-        Cookies
+        Cookies,
+        Notify
     }, // import Quasar plugins and add here
 
     config: {
@@ -23,7 +24,7 @@ export default {
         //   // primary: '#e46262',
         //   // ... or all other brand colors
         // },
-        // notify: {...}, // default set of options for Notify Quasar plugin
+        notify: {}, // default set of options for Notify Quasar plugin
         loading: {
             spinnerSize: 60,
             spinnerColor: 'primary',

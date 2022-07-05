@@ -59,7 +59,17 @@
                 </q-item-section>
             </q-item>
 
-            <q-item clickable v-ripple>
+            <q-item
+                clickable
+                v-ripple
+                v-if="routes?.auth_routes?.socialaccount_connections"
+                :class="{
+                    'sidebar-list-item-active':
+                        currentRoute ==
+                        routes?.auth_routes?.socialaccount_connections,
+                }"
+                :href="routes?.auth_routes?.socialaccount_connections"
+            >
                 <q-item-section avatar>
                     <q-icon name="mdi-google" />
                 </q-item-section>

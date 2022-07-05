@@ -1,0 +1,11 @@
+
+{{ title }}
+
+Hello {{ first_name }},
+
+{{ excerpt }}
+
+
+{{post_link}}
+
+   

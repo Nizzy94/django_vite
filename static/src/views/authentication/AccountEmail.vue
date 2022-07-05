@@ -30,6 +30,7 @@
                                     class=""
                                     v-if="messages.length"
                                     v-for="(message, i) in messages"
+                                    :key="i"
                                 >
                                     <span
                                         :class="{
@@ -59,13 +60,6 @@
                                 :checked="scope.selected"
                                 hidden
                             />
-                            <!-- {{ scope.rowIndex }} -->
-                            <!-- <RemoveEmailDialog
-                                :ref="`removeEmailDialogRef`"
-                                :selected_email="scope.row.email"
-                                :openDialog="openEmailDialog"
-                                :routes="routes"
-                            /> -->
                         </template>
                         <template v-slot:bottom>
                             <div class="row">
@@ -134,8 +128,8 @@
             </form>
             <RemoveEmailDialog
                 :ref="`removeEmailDialogRef`"
-                :selected_email="selected_email"
                 :openDialog="openEmailDialog"
+                :selected_email="selected_email"
                 :routes="routes"
             />
         </template>
@@ -232,10 +226,10 @@ const columns = [
 </script>
 
 <style lang="sass">
-.form_content
-    width: 100%
-    @media (min-width: $breakpoint-md-min)
-        width: 70%
-    @media (min-width: $breakpoint-lg-min)
-        width: 50%
+// .form_content
+//     width: 100%
+//     @media (min-width: $breakpoint-md-min)
+//         width: 70%
+//     @media (min-width: $breakpoint-lg-min)
+//         width: 50%
 </style>

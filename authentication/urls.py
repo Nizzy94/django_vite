@@ -23,6 +23,8 @@ urlpatterns = [
     path('accounts/profile/',
          views.profile_page, name="profile_page"),
     path('user/google/', views.GoogleLogin.as_view(), name='google_login'),
+    path('user/google/connect/',
+         views.GoogleConnect.as_view(), name='google_connect'),
 
     path('auth/api/',
          include('authentication.api.urls')),

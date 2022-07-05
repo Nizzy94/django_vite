@@ -3,6 +3,8 @@ import os
 from pathlib import Path
 from decouple import config as env
 from corsheaders.defaults import default_headers
+# from core.settings import AWS_S3_CUSTOM_DOMAIN
+from urllib.parse import quote_plus as urlquote
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -19,9 +21,13 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+SITE_NAME = env('VITE_WEBSITE_NAME')
+SITE_DOMAIN = env('VITE_WEBSITE_DOMAIN')
 
 ALLOWED_HOSTS = [
     # 'localhost',
+    # 'https://djangovite.s3.amazonaws.com'
+
     # "https://accounts.google.com",
     # "https://www.googleapis.com"
 ]
@@ -34,6 +40,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://oauth2.googleapis.com",
     # "https://www.googleapis.com",
     "https://accounts.google.com",
+    'https://djangovite.s3.amazonaws.com'
 ]
 # CORS_ALLOW_CREDENTIALS = True
 
@@ -44,6 +51,8 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:3000",
     "https://oauth2.googleapis.com",
     "https://accounts.google.com",
+    'https://djangovite.s3.amazonaws.com'
+
     #     # "https://www.googleapis.com"
 ]
 
@@ -70,7 +79,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     #
     # third party
-    # "social_django",
+    "storages",
     "corsheaders",
     'django_vite',
     'rest_framework',
@@ -109,7 +118,13 @@ ROOT_URLCONF = 'core.urls'
 
 ELASTICSEARCH_DSL = {
     'default': {
-        'hosts': 'esearch'
+        # 'hosts': 'https://elastic:LLXzvDmb7KD1gfmJNyxI2IXn@search-es-opensearch-dv-duuqsbe2iasq3lghq7y4ixlrum.us-east-1.es.amazonaws.com'
+        'hosts': f'https://dv-blog-admin1:{urlquote("mandelatOtal_11")}@search-dv-es-domain-edbqiwgdai4m6nchjyv5f67ztu.us-east-1.es.amazonaws.com'
+        # 'hosts': 'https://search-dv-es-domain-edbqiwgdai4m6nchjyv5f67ztu.us-east-1.es.amazonaws.com'
+        # 'hosts': f'https://{urlquote("ec2-user")}@{urlquote("ec2-52-55-88-161")}.compute-1.amazonaws.com'
+        # 'hosts': 'https://ec2-user@ec2-52-55-88-161.compute-1.amazonaws.com'
+        # 'hosts': 'ec2-52-55-88-161.compute-1.amazonaws.com'
+        # 'hosts': 'esearch'
     },
 }
 
@@ -152,11 +167,11 @@ ACCOUNT_FORMS = {'signup': 'authentication.forms.CustomSignupForm'}
 # ACCOUNT_ADAPTER = 'authentication.adapter.CustomAccountAdapter'
 
 # EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.mailtrap.io'
-EMAIL_HOST_USER = '58afcdccb9fb20'
-EMAIL_HOST_PASSWORD = '9ebd918b54b2bf'
-EMAIL_PORT = '2525'
+EMAIL_BACKEND = env('EMAIL_BACKEND')
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = env('EMAIL_PORT')
 
 
 REST_FRAMEWORK = {
@@ -215,23 +230,33 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django_vite',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'db',
-        'PORT': 5432,
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'django_vite',
+#         'USER': 'postgres',
+#         'PASSWORD': 'mandeladela',
+#         'HOST': 'localhost',
+#         'PORT': 5433,
 #     }
 # }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'django_vite',
+#         'USER': 'root',
+#         'PASSWORD': 'root',
+#         'HOST': 'db',
+#         'PORT': 5432,
+#     }
+# }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # Password validation
@@ -268,24 +293,45 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = '/static/'
-
 DJANGO_VITE_ASSETS_PATH = BASE_DIR / "static" / "dist"
 
 STATIC_ROOT = 'collectedstaticfiles'
 
 
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+
+AWS_S3_ACCESS_KEY_ID = env('AWS_S3_ACCESS_KEY_ID')
+AWS_S3_SECRET_ACCESS_KEY = env('AWS_S3_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+AWS_DEFAULT_ACL = 'public-read'
+
+
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400'
+}
+
+# AWS_LOCATION = STATIC_ROOT
+AWS_LOCATION = 'collectedstaticfiles'
+# AWS_LOCATION = DJANGO_VITE_ASSETS_PATH
+
+# STATIC_URL = '/static/'
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
+
 STATICFILES_DIRS = [
     DJANGO_VITE_ASSETS_PATH,
-    # os.path.join(DJANGO_VITE_ASSETS_PATH, "dist"),
-    os.path.join(BASE_DIR, "static/src"),
-    os.path.join(BASE_DIR, "media/")
 ]
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+DEFAULT_FILE_STORAGE = 'core.storages.MediaStorage'
+# MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/media/'
+# MEDIA_URL = "/media/"
+# MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+# MEDIA_ROOT = os.path.join(BASE_DIR, "collectedstaticfiles/")
 
-DJANGO_VITE_DEV_MODE = DEBUG
+DJANGO_VITE_DEV_MODE = False
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

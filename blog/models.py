@@ -7,8 +7,11 @@ from django.contrib.auth.models import User
 from PIL import Image
 from django.urls import reverse
 from ckeditor.fields import RichTextField
-
+from django.conf import settings
 from blog.managers import CommentManager
+from django.core.files.storage import default_storage as storage
+
+import io
 
 
 class Category(models.Model):
@@ -26,6 +29,7 @@ class Category(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name, allow_unicode=True)
+        self.updated_at = timezone.now()
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -47,10 +51,20 @@ class Tag(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name, allow_unicode=True)
+        self.updated_at = timezone.now()
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse("blog:blogs_by_tag", kwargs={"tag": self.slug})
+
+
+# def process_image(instance, filename):
+#     print('instance: ', instance)
+#     print('filename: ', filename)
+
+#     img = Image.open(filename)
+
+#     print(img.size)
 
 
 class Blog(models.Model):
@@ -59,6 +73,7 @@ class Blog(models.Model):
     slug = models.SlugField(max_length=255, unique=True)
     excerpt = models.CharField(max_length=150)
     image = models.ImageField(upload_to="blog_images/%Y/%m/%d")
+    # image = models.ImageField(upload_to=process_image)
     tags = models.ManyToManyField(Tag, related_name='blogs')
     body = RichTextField(blank=True, null=True)
     category = models.ForeignKey(
@@ -66,9 +81,6 @@ class Blog(models.Model):
     author = models.ForeignKey(User, related_name="blogs", on_delete=CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(default=timezone.now)
-
-    # def body_to_str(self):
-    #     return self.body
 
     def get_absolute_url(self):
         return reverse("blog:blog_detail", kwargs={"blog_slug": self.slug, "category": self.category.slug})
@@ -78,19 +90,24 @@ class Blog(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title, allow_unicode=True)
+        self.updated_at = timezone.now()
         super().save(*args, **kwargs)
 
         if self.image:
-            img = Image.open(self.image.path)
+            m = storage.open(self.image.name, 'rb')
 
-            # print(self.image.path)
-            # print(self.image.name)
+            # img = Image.open(self.image)
+            img = Image.open(m)
 
             if img.height > 600 or img.width > 600:
                 output_size = (600, 600)
                 img.thumbnail(output_size)
                 img.point(lambda i: i * 2)
-                img.save(self.image.path)
+                # img.save(self.image.path)
+                sfile = io.BytesIO()
+                img.save(sfile, format='JPEG')
+                m.close()
+                # img.save(self.image.name)
         # super().save(*args, **kwargs)
 
 
@@ -144,5 +161,5 @@ class Subscription(models.Model):
         self.updated_at = timezone.now()
         super().save(*args, **kwargs)
 
-    def __str__(self) -> str:
-        return self.first_name()
+    def __str__(self):
+        return self.first_name

@@ -1,0 +1,36 @@
+{% load socialaccount %}
+
+{% get_providers as socialaccount_providers %}
+
+
+[
+        {% for provider in socialaccount_providers %}
+            {
+                    {% comment %} {{ provider.name }}
+                    {% provider_login_url provider.id process="connect" scope=scope auth_params=auth_params %} {% endcomment %}
+                    {% comment %} {{ provider | qset_to_json }} {% endcomment %}
+                        {% if provider.id == "openid" %}
+                            {% for brand in provider.get_brands %}
+                            "brand_id": "{{ brand.id }}",
+                            "brand_name": "{{ brand.name }}",
+                            "brand_url": "{% provider_login_url provider.id openid=brand.openid_url process=process %}",
+                            {% comment %} {% provider_login_url provider.id openid=brand.openid_url process=connect %} {% endcomment %}
+                                {% comment %} <li>
+                                    <a title="{{brand.name}}" 
+                                        class="socialaccount_provider {{provider.id}} {{brand.id}}" 
+                                        href="{% provider_login_url provider.id openid=brand.openid_url process=connect %}"
+                                        >{{brand.name}}</a>
+                                </li> {% endcomment %}
+                            {% endfor %}
+                        {% endif %}
+                        "provider_id": "{{ provider.id }}",
+                        "provider_name": "{{ provider.name }}",
+                        "provider_url": "{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"
+                    {% comment %} <li>
+                        <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}}" 
+                            href="{% provider_login_url provider.id process=connect scope=scope auth_params=auth_params %}">{{provider.name}}</a>
+                    </li> {% endcomment %}
+                }
+        {% endfor %}
+
+    ]

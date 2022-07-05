@@ -1,0 +1,19 @@
+{% extends "blog/emails/base.html" %}
+
+{% block email_title %}{{ title }}{% endblock email_title %}
+
+{% comment %} {% block first_name %}{{ first_name }}{% endblock first_name %} {% endcomment %}
+{% block message_body %}
+    <p>
+        You have subscribed to receive updates from <strong>{{ site_name }}</strong>. An email will be sent to you
+        anytime there is a new post.
+    </p>
+    <p>
+        Then you for staying with us.
+    </p>
+    {% endblock message_body %}
+
+{% block site_link %}{{site_domain}}{% endblock site_link %}
+{% block button_text %}  Return to site {% endblock button_text %}
+
+   

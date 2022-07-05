@@ -1,15 +1,24 @@
 
+import math
+
+from django.conf import settings
+
 from authentication.api.serializers import UserSerializer
-from blog.api.serializers import BlogSerializer, CategorySerializer, CommentSerializer, SubscriptionSerializer, TagSerializer
+from blog.api.serializers import (BlogSerializer, CategorySerializer,
+                                  CommentSerializer, SubscriptionSerializer,
+                                  TagSerializer)
 from blog.models import Blog, Category, Comment
-from rest_framework.response import Response
+from django.core.mail import EmailMultiAlternatives
+from django.db.models import Count, prefetch_related_objects
+
+from django.template.loader import get_template
+from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
-from rest_framework import status
+from rest_framework.response import Response
+
+from core.settings import SITE_DOMAIN
 from .paginations import BlogListPagination
-import math
-from django.db.models import Count
-from django.db.models import prefetch_related_objects
 
 
 @api_view(['GET'])
@@ -270,8 +279,27 @@ def subscribe(request):
 
     serializer = SubscriptionSerializer(data=data)
 
+    plaintext_template = get_template('blog/emails/subscription.txt')
+    html_template = get_template('blog/emails/subscription.html')
+    subject, from_email, to = 'Subscription to newsletter', 'from@example.com', data['email']
+
+    d = {
+        'first_name': data['first_name'],
+        'title': subject,
+        'from': from_email,
+        'to': to,
+        'site_name': settings.SITE_NAME,
+        'site_domain': data['url'],
+    }
+
     if serializer.is_valid(raise_exception=True):
-        print(serializer.validated_data)
+        # print(serializer.validated_data)
         serializer.save()
+
+        text_content = plaintext_template.render(d)
+        html_content = html_template.render(d)
+        msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
 
         return Response({'message': 'You have susbscribed for our news letter.'})

@@ -35,6 +35,10 @@ module.exports = {
         target: 'es2015',
         rollupOptions: {
             input: {
+                // third party
+                // home: resolve('./static/src/js/main.js'),
+
+                // main
                 home: resolve('./static/src/js/main.js'),
                 about: resolve('./static/src/js/about.js'),
                 contact: resolve('./static/src/js/contact.js'),
@@ -42,15 +46,24 @@ module.exports = {
 
                 // blog
                 blog: resolve('./static/src/js/blog/blog.js'),
-                blog_degails: resolve('./static/src/js/blog/blog_degails.js'),
+                blog_detail: resolve('./static/src/js/blog/blog_detail.js'),
 
                 // auth
-                login: resolve('./static/src/js/authentication/login.js'),
-                register: resolve('./static/src/js/authentication/register.js'),
-                logout: resolve('./static/src/js/authentication/logout.js'),
-                profile: resolve('./static/src/js/authentication/profile.js'),
                 account_email: resolve('./static/src/js/authentication/account_email.js'),
+                complete_signup: resolve('./static/src/js/authentication/complete_signup.js'),
+                connect_social_account: resolve('./static/src/js/authentication/connect_social_account.js'),
+                connections: resolve('./static/src/js/authentication/connections.js'),
                 email_confirm: resolve('./static/src/js/authentication/email_confirm.js'),
+                login: resolve('./static/src/js/authentication/login.js'),
+                logout: resolve('./static/src/js/authentication/logout.js'),
+                password_change: resolve('./static/src/js/authentication/password_change.js'),
+                password_reset_done: resolve('./static/src/js/authentication/password_reset_done.js'),
+                password_reset_from_key_done: resolve('./static/src/js/authentication/password_reset_from_key_done.js'),
+                password_reset_from_key: resolve('./static/src/js/authentication/password_reset_from_key.js'),
+                password_reset: resolve('./static/src/js/authentication/password_reset.js'),
+                password_set: resolve('./static/src/js/authentication/password_set.js'),
+                profile: resolve('./static/src/js/authentication/profile.js'),
+                register: resolve('./static/src/js/authentication/register.js'),
                 verification_sent: resolve('./static/src/js/authentication/verification_sent.js'),
             },
             output: {

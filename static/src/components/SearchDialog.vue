@@ -62,7 +62,7 @@ import { inject, ref, watch } from "vue";
 import getAllPosts from "../composables/getAllPosts";
 import NewsCard from "../components/NewsCard.vue";
 import { useQuasar } from "quasar";
-
+import removeDuplicates from "../composables/removeDuplicate";
 const routes = inject("routes");
 const $q = useQuasar();
 
@@ -84,6 +84,8 @@ const results = ref({
 const query = ref(window.location.search);
 const queries = ref(new URLSearchParams(query.value));
 
+// console.log(queries.value.get("q"));
+
 if (queries.value.has("q")) {
     search_term.value = queries.value.get("q");
 }
@@ -98,16 +100,18 @@ const searchQuery = () => {
         return;
     }
 
-    // query_string.value = search_term.value.replace(/ /g, "+");
-    query_string.value = search_term.value;
-    console.log(encodeURIComponent(query_string.value));
+    // query_string.value = search_term.value.replace(/[ \/:?]/g, "+");
+    query_string.value = search_term.value.replace(/[ \/:?;,@\&=\+\$]/g, "+");
+    query_string.value = removeDuplicates(query_string.value);
+    console.log(query_string.value);
 
-    window.location.href = `${routes.value.search}?q=${encodeURIComponent(
-        query_string.value
-    )}`;
+    window.location.href = `${routes.value.search}?q=${query_string.value}`;
+    // window.location.replace(`${routes.value.search}?q=${query_string.value}`);
 };
 
 const onRequest = async () => {
+    query_string.value = encodeURIComponent(search_term.value);
+
     results.value.loading = true;
     if (search_term.value == "") {
         results.value.loading = false;

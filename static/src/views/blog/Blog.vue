@@ -109,6 +109,8 @@ watch(data, () => {
     if (Object.keys(data.value).length) {
         blogs.value = data.value.results;
         pagination.value.totalNumberOfPages = parseInt(data.value.num_pages);
+
+        console.log(blogs.value);
     }
 });
 onBeforeMount(async () => {
