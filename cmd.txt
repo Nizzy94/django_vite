@@ -5,6 +5,7 @@ docker exec -it django_vite_container /bin/bash
 docker ps
 docker inspect
 docker run -d --name esearch -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:8.2.2
+docker build -t django-vite-blog:1.0.0 .
 
 SECURE_REFERRER_POLICY = "no-referrer-when-downgrade"
 SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
@@ -19,3 +20,12 @@ See https://www.elastic.co/guide/en/elasticsearch/reference/7.17/security-minima
 
 aws_key=AKIA2QQF2QPNW5EMPYNY
 aws_secret=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
+
+ec-2@72264041003
+
+dv-es-admin
+dv-es-admin1
+
+elastic
+
+LLXzvDmb7KD1gfmJNyxI2IXn
