@@ -13,13 +13,15 @@ RUN set -ex \
 
 COPY . .
 
-RUN python3 manage.py migrate &&\
-    python3 manage.py seed -a &&\
-    python3 manage.py add-icons &&\
+RUN python3 manage.py migrate &&\ 
+    # python3 manage.py seed -a &&\
+    # python3 manage.py add-icons &&\
     python3 manage.py search_index --rebuild -f
 
+VOLUME [ "/data" ]
 
 EXPOSE 8000
 
 
+# CMD ["python3", "manage.py", "runserver"]
 CMD ["gunicorn", "--bind", ":8000", "--workers", "3", "core.wsgi:application"]
