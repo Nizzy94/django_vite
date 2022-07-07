@@ -29,3 +29,6 @@ dv-es-admin1
 elastic
 
 LLXzvDmb7KD1gfmJNyxI2IXn
+
+
+python3 manage.py seed -a && python3 manage.py add-icons && python3 manage.py search_index --rebuild -f

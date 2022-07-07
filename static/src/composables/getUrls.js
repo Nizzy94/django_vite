@@ -16,6 +16,7 @@ const getUrls = () => {
             spinner: QSpinnerPie
         })
         try {
+            // const res = await axios.get(`/get-routes/`)
             const res = await fetchAllowAny.get('/get-routes/')
             routes.value = res.data
             console.log(res)

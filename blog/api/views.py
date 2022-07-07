@@ -17,7 +17,6 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
-from core.settings import SITE_DOMAIN
 from .paginations import BlogListPagination
 
 
@@ -289,7 +288,7 @@ def subscribe(request):
         'from': from_email,
         'to': to,
         'site_name': settings.SITE_NAME,
-        'site_domain': data['url'],
+        'site_origin': data['url'],
     }
 
     if serializer.is_valid(raise_exception=True):

@@ -8,35 +8,25 @@ from urllib.parse import quote_plus as urlquote
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-rfjf)e6wgo&e-e&=+cj3x*3yj4rbai0-pwi9idn93t#k7#sl!m'
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = env('DEBUG', default=False, cast=bool)
+DEBUG = env('DEBUG', cast=bool)
 
 SITE_NAME = env('VITE_WEBSITE_NAME')
-SITE_DOMAIN = env('VITE_WEBSITE_DOMAIN')
+SITE_ORIGIN = env('VITE_WEBSITE_ORIGIN')
 
-ALLOWED_HOSTS = [
-    # 'localhost',
-    # 'https://djangovite.s3.amazonaws.com'
-
-    # "https://accounts.google.com",
-    # "https://www.googleapis.com"
-]
+ALLOWED_HOSTS = ["*"]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
     "https://oauth2.googleapis.com",
     # "https://www.googleapis.com",
     "https://accounts.google.com",
@@ -45,10 +35,6 @@ CORS_ALLOWED_ORIGINS = [
 # CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
     "https://oauth2.googleapis.com",
     "https://accounts.google.com",
     'https://djangovite.s3.amazonaws.com'
@@ -118,13 +104,7 @@ ROOT_URLCONF = 'core.urls'
 
 ELASTICSEARCH_DSL = {
     'default': {
-        # 'hosts': 'https://elastic:LLXzvDmb7KD1gfmJNyxI2IXn@search-es-opensearch-dv-duuqsbe2iasq3lghq7y4ixlrum.us-east-1.es.amazonaws.com'
-        'hosts': f'https://dv-blog-admin1:{urlquote("mandelatOtal_11")}@search-dv-es-domain-edbqiwgdai4m6nchjyv5f67ztu.us-east-1.es.amazonaws.com'
-        # 'hosts': 'https://search-dv-es-domain-edbqiwgdai4m6nchjyv5f67ztu.us-east-1.es.amazonaws.com'
-        # 'hosts': f'https://{urlquote("ec2-user")}@{urlquote("ec2-52-55-88-161")}.compute-1.amazonaws.com'
-        # 'hosts': 'https://ec2-user@ec2-52-55-88-161.compute-1.amazonaws.com'
-        # 'hosts': 'ec2-52-55-88-161.compute-1.amazonaws.com'
-        # 'hosts': 'esearch'
+        'hosts': f'https://{env("AWS_ELASTICSEARCH_USER")}:{env("AWS_ELASTICSEARCH_PASSWORD")}@search-dv-es-domain-edbqiwgdai4m6nchjyv5f67ztu.us-east-1.es.amazonaws.com'
     },
 }
 
@@ -140,6 +120,9 @@ ELASTICSEARCH_DSL = {
 # ]
 SECURE_REFERRER_POLICY = "no-referrer-when-downgrade"
 SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
+
+SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
@@ -230,31 +213,15 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'django_vite',
-#         'USER': 'postgres',
-#         'PASSWORD': 'mandeladela',
-#         'HOST': 'localhost',
-#         'PORT': 5433,
-#     }
-# }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'django_vite',
-#         'USER': 'root',
-#         'PASSWORD': 'root',
-#         'HOST': 'db',
-#         'PORT': 5432,
-#     }
-# }
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT', cast=int),
     }
 }
 
@@ -293,7 +260,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-DJANGO_VITE_ASSETS_PATH = BASE_DIR / "static" / "dist"
+# DJANGO_VITE_ASSETS_PATH = BASE_DIR / "static" / "dist"
 
 STATIC_ROOT = 'collectedstaticfiles'
 
@@ -320,6 +287,10 @@ AWS_LOCATION = 'collectedstaticfiles'
 
 # STATIC_URL = '/static/'
 STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
+
+# DJANGO_VITE_ASSETS_PATH = STATIC_URL
+DJANGO_VITE_ASSETS_PATH = BASE_DIR / "static" / "dist"
+
 
 STATICFILES_DIRS = [
     DJANGO_VITE_ASSETS_PATH,
@@ -351,4 +322,4 @@ CKEDITOR_UPLOAD_PATH = "ck-uploads/"
 CKEDITOR_ALLOW_NONIMAGE_FILES = False
 
 
-GOOGLE_OAUTH2_CALLBACK_URL = 'http://localhost:8000/accounts/google/login/callback/'
+GOOGLE_OAUTH2_CALLBACK_URL = f'{env("VITE_WEBSITE_PROTOCOL")}{env("VITE_WEBSITE_PROTOCOL_HEAD")}{env("VITE_WEBSITE_DOMAIN")}'

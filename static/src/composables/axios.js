@@ -2,9 +2,17 @@ import axios from 'axios'
 import { Cookies } from 'quasar'
 
 
-const domain = 'http://localhost:8000'
+const domain = 'https://django-vite-blog.herokuapp.com'
+    // const domain =
+    //     import.meta.env.VITE_WEBSITE_ORIGIN
+
+axios.defaults.baseURL = window.location.origin
+axios.defaults.headers = {
+    'Host': import.meta.env.VITE_WEBSITE_ORIGIN
+}
 
 const axiosExternal = axios.create({
+    baseURL: domain,
     timeout: 50000,
     headers: {
         'X-CSRFToken': Cookies.get('csrftoken')
@@ -12,7 +20,7 @@ const axiosExternal = axios.create({
     withCredentials: true
 })
 const fetchWithCredentials = axios.create({
-    baseURL: `${domain}/api`,
+    baseURL: `${ domain }/api`,
     timeout: 50000,
     headers: {
         'X-CSRFToken': Cookies.get('csrftoken')
@@ -29,7 +37,7 @@ const fetchUserWithCredentials = axios.create({
 })
 
 const fetchAllowAny = axios.create({
-    baseURL: `${domain}/api`,
+    baseURL: `/api`,
     timeout: 50000,
     headers: {
         'X-CSRFToken': Cookies.get('csrftoken'),

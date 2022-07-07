@@ -24,31 +24,32 @@ services:
             app_net:
                 ipv4_address: 192.168.0.2
 
-    web:
-        build: .
-        volumes:
-            - .:/web
-        container_name: django_vite_container
-        restart: always
+    # web:
+    #     build: .
+    #     volumes:
+    #         - .:/web
+    #     container_name: django_vite_container
+    #     restart: always
 
-        ports:
-            - 8000:8000
-        image: web:django_vite
-        command: >
-            sh -c "python3 manage.py migrate && python3 manage.py search_index --rebuild -f && gunicorn --bind :8000 --workers=3 core.wsgi:application"
-        # sh -c  "python3 manage.py migrate && python3 manage.py search_index --rebuild -f && python3 manage.py runserver 0.0.0.0:8000"
-        # sh -c  "python3 manage.py migrate && python3 manage.py seed -a && python3 manage.py add-icons && python3 manage.py search_index --rebuild -f && python3 manage.py runserver 0.0.0.0:8000"
-        # command: sh -c python manage.py runserver 0.0.0.0:8000 && python manage.py search_index --rebuild -f
-        # command: sh -c "python manage.py runserver 0.0.0.0:8000"
-        depends_on:
-            db:
-                condition: service_healthy
-            # esearch:
-            #     condition: service_healthy
+    #     ports:
+    #         - 8000:8000
+    #     image: web:django_vite
+    #     command: >
+    #         sh -c "python3 manage.py migrate && python3 manage.py search_index --rebuild -f && gunicorn --bind :8000 --workers=3 core.wsgi:application"
+    #     # sh -c "python3 manage.py migrate && python3 manage.py search_index --rebuild -f && gunicorn --bind :8000 --workers=3 core.wsgi:application"
+    #     # sh -c  "python3 manage.py migrate && python3 manage.py search_index --rebuild -f && python3 manage.py runserver 0.0.0.0:8000"
+    #     # sh -c  "python3 manage.py migrate && python3 manage.py seed -a && python3 manage.py add-icons && python3 manage.py search_index --rebuild -f && python3 manage.py runserver 0.0.0.0:8000"
+    #     # command: sh -c python manage.py runserver 0.0.0.0:8000 && python manage.py search_index --rebuild -f
+    #     # command: sh -c "python manage.py runserver 0.0.0.0:8000"
+    #     depends_on:
+    #         db:
+    #             condition: service_healthy
+    #         # esearch:
+    #         #     condition: service_healthy
 
-        networks:
-            app_net:
-                ipv4_address: 192.168.0.5
+    #     networks:
+    #         app_net:
+    #             ipv4_address: 192.168.0.5
 
     pgadmin:
         container_name: pgadmin4

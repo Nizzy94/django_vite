@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 from PIL import Image
-from core.settings import SITE_NAME
+# import core.settings.settings
 from .models import Blog, Category, Subscription, Tag
 from django.template.loader import get_template
 from django.conf import settings
@@ -78,7 +78,7 @@ class BlogAdmin(admin.ModelAdmin):
                         'title': post.title,
                         'excerpt': post.excerpt,
                         'site_name': settings.SITE_NAME,
-                        'post_link': "%s%s" % (settings.SITE_DOMAIN, post.get_absolute_url()),
+                        'post_link': "%s%s" % (settings.SITE_ORIGIN, post.get_absolute_url()),
                     }
                     text_content = plaintext_template.render(d)
                     html_content = html_template.render(d)

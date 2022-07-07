@@ -1,16 +1,24 @@
+
+from django.conf import settings
 from blog.models import Comment
-from core.settings import BASE_DIR, STATICFILES_DIRS
+# from core.settings.settings import BASE_DIR, STATICFILES_DIRS
 from django.core.files.images import ImageFile
 import os
+import boto3
+import io
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
-from PIL import Image
+# from PIL import Image
 from django.utils.text import slugify
 from blog.models import Blog, Category, Tag
-from importlib_metadata import email
+# from importlib_metadata import email
 from faker.providers import BaseProvider
 from faker import Faker
 from django.core.management.base import BaseCommand
+# from django.core.files.storage import default_storage as storage
+
+# from django.conf import settings
+# from core.storages import MediaStorage
 
 
 CATEGORIES = [
@@ -34,8 +42,37 @@ TAGS = [
     'Medicine',
 ]
 
-# IMG_DIR = BASE_DIR / '../unicart_django/unicart_market/static/images/ecommerce-images/JPEG'
-IMG_DIR = BASE_DIR / 'static/JPEG'
+IMG_LIST = [
+    "brown-shopping-bags-5956.jpg",
+    "background-bags-black-cardboard-346748.jpg",
+    "blue-master-card-on-denim-pocket-164571.jpg",
+    "classic-clothes-commerce-fashion-298863.jpg",
+    "ecommerce-2140604_1920.jpg",
+    "smile-2072908_1920.jpg",
+    "woman-1030895_1920.jpg",
+    "woman-3040029_1920.jpg",
+    "woman-in-brown-and-gray-t-shirt-sitting-on-brown-wooden-949670.jpg"
+]
+
+
+def downloadDirectoryFroms3(self, bucketName, remoteDirectoryName):
+
+    s3_resource = boto3.resource(
+        's3',
+        aws_access_key_id=settings.AWS_S3_ACCESS_KEY_ID,
+        aws_secret_access_key=settings.AWS_S3_SECRET_ACCESS_KEY
+    )
+    bucket = s3_resource.Bucket(bucketName)
+
+    el = self.random_element(IMG_LIST)
+    path = 'media/%s/%s' % (remoteDirectoryName, el)
+    obj = bucket.Object(path)
+
+    return {'stream': obj.get(), 'path': path}
+
+
+# IMG_DIR = BASE_DIR / 'static/JPEG'
+IMG_DIR = 'JPEG'
 
 
 class Provider(BaseProvider):
@@ -58,8 +95,7 @@ class Provider(BaseProvider):
         return self.random_element(cats)
 
     def random_comment(self, blog):
-        # print('in rand com')
-        # comments = blog.comments.all()
+
         comments = blog.comments.filter(parent=None)
         if comments.count() < 1:
             # print('com count less than one')
@@ -71,9 +107,19 @@ class Provider(BaseProvider):
         return rand_com_or_null
 
     def save_image(self):
+        file = downloadDirectoryFroms3(
+            self,
+            settings.AWS_STORAGE_BUCKET_NAME, IMG_DIR
+        )
 
-        img_list = os.listdir(IMG_DIR)
-        return self.random_element(img_list)
+        return file
+
+    # def save_image(self):
+    #     downloadDirectoryFroms3(
+    #         settings.AWS_STORAGE_BUCKET_NAME, 'JPEG')
+
+    #     img_list = os.listdir(IMG_DIR)
+    #     return self.random_element(img_list)
 
 
 class Command(BaseCommand):
@@ -179,11 +225,21 @@ class Command(BaseCommand):
             self.stdout.write(self.style.NOTICE("Adding blogs..."))
 
             for _ in range(100):
-                image_name = fake.save_image()
+                # image_name = fake.save_image()
+                res = fake.save_image()
+                image_name = res['path'].split("/")[-1]
+                stream = res['stream']
 
-                img_obj = open(IMG_DIR / image_name, 'rb')
+                # img_obj = Image.open(res['stream'])
+                # print(img_obj.path)
+                # img = img_obj.save(res['path'])
+
+                img_obj = stream['Body']
+                # img_obj = open(IMG_DIR / image_name, 'rb')
+                print(res['path'].split("/")[-1])
 
                 img = ImageFile(img_obj, name=image_name)
+                # img = ImageFile(img_obj, name=image_name)
 
                 cat = fake.random_category()
                 title = fake.text(max_nb_chars=50)
