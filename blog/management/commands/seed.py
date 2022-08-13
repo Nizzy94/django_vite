@@ -1,21 +1,23 @@
 
 from django.conf import settings
 from blog.models import Comment
-# from core.settings.settings import BASE_DIR, STATICFILES_DIRS
+from core.settings.settings import BASE_DIR
 from django.core.files.images import ImageFile
 import os
 import boto3
 import io
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
-# from PIL import Image
+from PIL import Image
 from django.utils.text import slugify
 from blog.models import Blog, Category, Tag
 # from importlib_metadata import email
 from faker.providers import BaseProvider
 from faker import Faker
 from django.core.management.base import BaseCommand
-# from django.core.files.storage import default_storage as storage
+from django.core.files.storage import default_storage as storage
+
+from blog.utils import cropper
 
 # from django.conf import settings
 # from core.storages import MediaStorage
@@ -114,16 +116,87 @@ class Provider(BaseProvider):
 
         return file
 
-    # def save_image(self):
-    #     downloadDirectoryFroms3(
-    #         settings.AWS_STORAGE_BUCKET_NAME, 'JPEG')
-
-    #     img_list = os.listdir(IMG_DIR)
-    #     return self.random_element(img_list)
+    def select_image(self):
+        img_list = os.listdir(IMG_DIR)
+        return self.random_element(img_list)
 
 
 class Command(BaseCommand):
     help = 'Seed database'
+
+    def seed_blogs(self, fake):
+        blogs = Blog.objects.all()
+
+        self.stdout.write(self.style.NOTICE("Deleting blogs..."))
+        blogs.delete()
+        self.stdout.write(self.style.SUCCESS("Blogs deleted."))
+
+        # blogs_num = 0
+        self.stdout.write(self.style.NOTICE("Adding blogs..."))
+
+        for _ in range(100):
+            # image_name = fake.save_image()
+            res = fake.save_image()
+            image_name = res['path'].split("/")[-1]
+            # image_name = fake.select_image()
+            stream = res['stream']
+
+            # img_obj = Image.open(res['stream'])
+            # print(img_obj.path)
+            # img = img_obj.save(res['path'])
+
+            img_obj = stream['Body']
+            # img_obj = '%s/%s' % (IMG_DIR, image_name)
+            # img_obj = '%s/%s' % (IMG_DIR, image_name)
+            coords = (600, 600)
+
+            img = cropper(img_obj, coords, image_name)
+
+            # print(res['path'].split("/")[-1])
+
+            # img = ImageFile(img_obj, name=image_name)
+            # im = Image.open(img)
+            # print(im.size)
+            # im = im.resize((200, 200))
+            # im = im.thumbnail((200, 200))
+            # im = im.convert('RGB')
+            # print(storage.save(img.name))
+
+            cat = fake.random_category()
+            title = fake.text(max_nb_chars=50)
+            # excerpt = fake.sentence(nb_words=15)
+            author = fake.random_author()
+            paragraphs = []
+            excerpts = []
+            html = "<div>"
+
+            # print(fake.paragraphs(nb=10))
+            excerpt = html+f"<p>{fake.text(max_nb_chars=130)}</p></div>"
+
+            for _ in range(5):
+                paragraphs.append(fake.paragraph(nb_sentences=20))
+
+            for para in paragraphs:
+                html += f"<p>{para}</p><br>"
+
+            body = html+"</div>"
+
+            blog = Blog.objects.create(
+                category=cat,
+                title=title,
+                excerpt=excerpt,
+                image=img,
+                author=author,
+                body=body
+            )
+
+            blog_tags = fake.random_tags()
+
+            for tag in blog_tags:
+                blog.tags.add(tag)
+
+            # self.stdout.write('Adding blogs: %d' % ((blogs_num/50)*100,))
+        self.stdout.write(self.style.SUCCESS("Blogs added."))
 
     def seed_comments(self, fake):
         comments = Comment.objects.all()
@@ -158,6 +231,11 @@ class Command(BaseCommand):
             help='Add only comments to database',
         )
         parser.add_argument(
+            '--blogs', '-b',
+            action='store_true',
+            help='Add only blogs to database',
+        )
+        parser.add_argument(
             '-a', '--all',
             action='store_true',
             help='Add all to database',
@@ -171,6 +249,8 @@ class Command(BaseCommand):
 
         if kwargs['comments']:
             self.seed_comments(fake)
+        if kwargs['comments']:
+            self.seed_blogs(fake)
 
         if kwargs['all']:
             if not_super_user.count() > 0:
@@ -215,66 +295,6 @@ class Command(BaseCommand):
 
             self.stdout.write(self.style.SUCCESS("Tags added."))
 
-            blogs = Blog.objects.all()
-
-            self.stdout.write(self.style.NOTICE("Deleting blogs..."))
-            blogs.delete()
-            self.stdout.write(self.style.SUCCESS("Blogs deleted."))
-
-            # blogs_num = 0
-            self.stdout.write(self.style.NOTICE("Adding blogs..."))
-
-            for _ in range(100):
-                # image_name = fake.save_image()
-                res = fake.save_image()
-                image_name = res['path'].split("/")[-1]
-                stream = res['stream']
-
-                # img_obj = Image.open(res['stream'])
-                # print(img_obj.path)
-                # img = img_obj.save(res['path'])
-
-                img_obj = stream['Body']
-                # img_obj = open(IMG_DIR / image_name, 'rb')
-                print(res['path'].split("/")[-1])
-
-                img = ImageFile(img_obj, name=image_name)
-                # img = ImageFile(img_obj, name=image_name)
-
-                cat = fake.random_category()
-                title = fake.text(max_nb_chars=50)
-                # excerpt = fake.sentence(nb_words=15)
-                author = fake.random_author()
-                paragraphs = []
-                excerpts = []
-                html = "<div>"
-
-                # print(fake.paragraphs(nb=10))
-                excerpt = html+f"<p>{fake.text(max_nb_chars=130)}</p></div>"
-
-                for _ in range(5):
-                    paragraphs.append(fake.paragraph(nb_sentences=20))
-
-                for para in paragraphs:
-                    html += f"<p>{para}</p><br>"
-
-                body = html+"</div>"
-
-                blog = Blog.objects.create(
-                    category=cat,
-                    title=title,
-                    excerpt=excerpt,
-                    image=img,
-                    author=author,
-                    body=body
-                )
-
-                blog_tags = fake.random_tags()
-
-                for tag in blog_tags:
-                    blog.tags.add(tag)
-
-                # self.stdout.write('Adding blogs: %d' % ((blogs_num/50)*100,))
-            self.stdout.write(self.style.SUCCESS("Blogs added."))
+            self.seed_blogs(fake)
 
             self.seed_comments(fake)

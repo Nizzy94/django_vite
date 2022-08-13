@@ -6,7 +6,10 @@ const getQueries = () => {
 
     const getRedirectUrl = () => {
         // const redirect_url = queries.value.get("next");
-        const redirect_url = `${window.location.origin}${queries.value.get("next")}`;
+        const nextUrl = queries.value.has("next") ? queries.value.get("next") : ''
+        const redirect_url = `${window.location.origin}${nextUrl}`;
+
+        // const redirect_url = `${window.location.origin}${queries.value.get("next")}`;
 
         return redirect_url ? redirect_url : ''
     }

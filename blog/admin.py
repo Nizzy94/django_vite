@@ -45,17 +45,39 @@ class BlogAdmin(admin.ModelAdmin):
     date_hierarchy = "created_at"
     exclude = ["created_at", "updated_at", 'slug']
 
-    def save_model(self, request, obj, form, change):
+    def save_model(self, request, obj, form, change, *args, **kwargs):
         print({
-            # 'req': request.POST.get(),
             'obj': obj,
             'form':  form,
             'change': change
         })
 
+        # img = Image.open(obj.image)
+
+        # if img.height > 200 or img.width > 200:
+        #     output_size = (200, 200)
+        #     img = img.convert('RGB')
+        #     img = img.resize(output_size)
+        #     # img = img.thumbnail(output_size)
+        #     # img.point(lambda i: i * 2)
+
+        #     print(img.size)
+
+        #     # sfile = io.BytesIO()
+        #     img.save(obj.image, format='JPEG')
+
+        #     print('sfile: ', obj.image)
+        data = {
+            'obj': obj,
+            'form':  form,
+            'change': change
+        }
+
         if not change:
             obj.author = request.user
-            obj.save()
+            kwargs['data'] = data
+            print(kwargs)
+            obj.save(self, *args, **kwargs, image=obj['image'])
 
             post = Blog.objects.get(id=obj.id)
 

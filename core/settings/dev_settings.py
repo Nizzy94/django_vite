@@ -312,11 +312,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 CKEDITOR_UPLOAD_PATH = "ck-uploads/"
 
-# CKEDITOR_CONFIGS = {
-#     "default": {
-#         'skin': 'moono_dark',
-#     }
-# }
+CKEDITOR_CONFIGS = {
+    "default": {
+        "removePlugins": "stylesheetparser",
+    }
+}
 
 CKEDITOR_ALLOW_NONIMAGE_FILES = False
 
